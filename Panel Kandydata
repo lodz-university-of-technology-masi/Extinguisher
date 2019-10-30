@@ -1,0 +1,9 @@
+Panel kandyata
+
+-	solveTest(); 	 otwiera test do rozwiązania
+-	showResults(); pozwala na sprawdzenie wyników
+-	showTest(); 	 pokazuje testy przypisane do konta
+
+-	logout();
+
+-	setLanguage(); pozwala wybrać język panelu (?????)
