@@ -1,0 +1,33 @@
+
+
+DbConnection {
+    public DbConnection(String dbName, String connectionURI)
+    //konstrukor nawiąże połączenie z bazą danych. connectionURI powinno zawierać wszystkie dane potrzebne do połączenia (adres bazy i login, hasło)
+    
+    finalize()
+    //rozłączenie połączenia z bazą danych
+    
+    private void connectToDatabase(String dbName, String connectionURI)
+    public List<String> getListOfCollections()
+    //zwróci liste z nazwami wszystkich kolekcji jakie występują w bazie danych
+    
+    public List<Document> getCollectionContent(String collectionName)
+    //lista z zawartością kolekcji
+    
+    public Long getSizeOfCollection(String collectionName)
+    //zostanie zwrócony rozmiar kolekcji (ile elementów się w niej znajdują)
+    
+    public void addDocument(String collectionName, Document doc)
+    //dodaje Document (typ przechowuje dane w postaci BSON, jest to taki JSON, ale pozwala przechowywać dane w postaci binarnej
+    //jeżeli doc nie ma pola _id, zostanie ono dodane w metodzie
+    
+    public Document getDocument(String collectionName, Long _id)
+    //zwroci dokument o danym _id. 
+    
+    public void modifyDocument(String collectionName, Long _id, Document newDocument)
+    //zamienia aktualny dokument o podanym id na inny dokument newDocument
+    
+    public void deleteDocument(String collectionName, Long _id)
+    //usuwa wpis o danym _id
+    }
+    
