@@ -1,0 +1,9 @@
+Panel kandyata
+
+-	solveTest(); 	 otwiera test do rozwiązania, ostwiera HTML z wygenerowanym testem
+-	showResults(); pozwala na sprawdzenie wyników, odnosi się do bazy danych i pobiera wynik, bądź wyniki rozwiązanych testów
+-	showTest(); 	 pokazuje testy przypisane do konta, pozwala na wyświetlenie listy testów do rozwiązania przez użytkownika
+
+-	logout();
+
+-	setLanguage(); pozwala wybrać język panelu (?????)

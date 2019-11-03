@@ -1,0 +1,12 @@
+Moduł translatora:
+
+Yandex Api
+
+translateTextFromOrginalVersion(String text); - tłumaczenie tekstu przekaznaego w łańcuchu (trzeba dogarnąc jak ten Yandex działa)
+
+setLanguageToTranslation(); - wybór języka do translacji, spośród wybranych
+
+showLanguateList(); - wylistowanie dostępnych jezyków
+
+lookupMethod(String text); - wyszukuje słowa lub frazy w słowniku i zwraca liste lub tablice z synonimami
+
