@@ -1,0 +1,46 @@
+Test Model
+----------------------------
+Test Repository 
+
+Test save(Test entity)
+Optional<Test> findById(int id)
+List<Test> findAll()
+Boolean existsById(int id)
+void deleteById(int id)
+void delete(Test entity)
+long count()
+--------------------------
+Test Service 
+Test create(Test entity)
+Test update(Test entity)
+void delete(Test entity)
+void deleteById(int id)
+Test get(int id)
+List<Test> getAll()
+Test createTestWithRandomQuestions(int points) 
+ returns new tests created from questions in repository with max given points
+Test createTestWithRandomQuestions(int points, List<Question> questions) 
+ returns new tests created from questions in given list with max given points
+++++++++++++++++++++++++++++++++++++++++++++++
+Question Model
+-------------------------
+Question Repository
+Question save(Question entity)
+Optional<Questiont> findById(int id)
+List<Question> findAll()
+Boolean existsById(int id)
+void deleteById(int id)
+void delete(Question entity)
+long count()
+--------------------------
+Question Service 
+Question create(Question entity)
+Question update(Question entity)
+void delete(Question entity)
+void deleteById(int id)
+Question get(int id)
+List<Question> getAll()
+List<Question> getAllByType(Type type)
+returns list of questions by given type
+List<Question> getAllByPoints(int points)
+returns list of questions by given points
