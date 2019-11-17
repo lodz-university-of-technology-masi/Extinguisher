@@ -56,47 +56,15 @@ color: black;
 }
 
 @media(min-width:1024px) {
-    
-    .App div.login form label {
-        text-align: center;
-        margin: auto;
-        font-family: Arial, Helvetica, sans-serif;
-        color:white;
-    }
-    .App div.login form span {
-       display: block;
-       color: red;
-    }
-    .App div.login h3 {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    z-index: 1;
-    border: 2px solid white;
-    background-color: transparent;
-    padding: 10px;
-    color: white;
-    transition: .5s;
+    .App div.login form button {
+        font-size: 40px;
+        padding: 20px;
     }
     .App div.login form label input{
-        font-family: Arial, Helvetica, sans-serif;
-    color: black;
-    
+       font-size: 30px;
     }
-    .App div.login form button {
-        background-color: transparent;
-        font-family: Arial, Helvetica, sans-serif;
-        border: 2px solid #fff;
-        color: #fff;
-        font-size: 20px;
-        padding: 10px;
-        margin: auto;
-        justify-items: flex-end;
+    .App div.login form label {
+        font-size: 40px;
     }
-    .App div.login form button:hover {
-        background-color: #fff;
-        color:#000;
-        cursor: pointer;
-        transition: .4s;
-    }
+
 }

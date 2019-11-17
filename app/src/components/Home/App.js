@@ -5,7 +5,7 @@ import Header from './Header'
 import Main from './Main'
 import Login from './Login'
 import Register from './Register'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 class App extends Component {
   render() {
@@ -13,10 +13,11 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Header />
-          <Route path="/home" exact component={Main} />
-          <Route path="/login" exact component={Login} />
-          <Route path="/register" exact component={Register} />
-
+          <Switch>
+            <Route exact path="/" component={Main} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
+          </Switch>
           <Footer />
         </div>
       </BrowserRouter>
