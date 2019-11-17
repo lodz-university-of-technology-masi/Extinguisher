@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../style/Login.css'
+import { Auth } from 'aws-amplify'
 class Login extends Component {
     state = {
         username: "",
@@ -18,7 +19,7 @@ class Login extends Component {
         let username = false
         let password = false
         let correct = false
-        if (this.state.username.length > 10 && this.state.username.indexOf(' ') === -1) {
+        if (this.state.username.length > 5 && this.state.username.indexOf(' ') === -1) {
             username = true
         }
         if (this.state.password.length > 8) {
@@ -37,6 +38,7 @@ class Login extends Component {
             [name]: e.target.value
         })
     }
+    /**dodac async */
     handleSubmit = e => {
         e.preventDefault()
 
@@ -50,6 +52,14 @@ class Login extends Component {
                     password: false,
                 }
             })
+            try {
+                /**await */
+                const vall = Auth.signIn(this.state.username, this.state.password);
+                console.log(vall)
+                alert("Logged in");
+            } catch (e) {
+                alert(e.message);
+            }
         }
         else {
             this.setState({
@@ -93,3 +103,4 @@ class Login extends Component {
 }
 
 export default Login;
+
