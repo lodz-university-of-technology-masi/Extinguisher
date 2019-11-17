@@ -32,14 +32,14 @@ class Login extends Component {
             correct, username, password
         })
     }
+
     handleChange = (e) => {
         const name = e.target.name;
         this.setState({
             [name]: e.target.value
         })
-    }
-    /**dodac async */
-    handleSubmit = e => {
+    };
+    handleSubmit = async (e) => {
         e.preventDefault()
 
         const validation = this.formValidation()
@@ -53,9 +53,9 @@ class Login extends Component {
                 }
             })
             try {
-                /**await */
-                const vall = Auth.signIn(this.state.username, this.state.password);
-                console.log(vall)
+
+                await Auth.signIn(this.state.username, this.state.password);
+                // console.log(vall)
                 alert("Logged in");
             } catch (e) {
                 alert(e.message);
