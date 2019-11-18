@@ -1,0 +1,27 @@
+*{
+padding: 0;
+margin: 0;
+box-sizing: border-box;
+}
+body {
+  background-color: #444;
+}
+.App{
+  margin: 0 auto;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  max-width: 1600px;
+}
+header {
+flex-grow: 1;
+/***/
+}
+div.App>div {
+flex-grow: 4;
+}
+footer {
+flex-grow: 1;
+text-align: center;
+min-height: 4vh;
+}
