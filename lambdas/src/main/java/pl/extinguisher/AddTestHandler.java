@@ -1,11 +1,10 @@
 package pl.extinguisher;
 
-import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Table;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.regions.Regions;
@@ -69,11 +68,11 @@ public class AddTestHandler implements RequestHandler<Object, String> {
        return getMessage("Ok");
     }
 
-    public String getMessage(String message) {
+    public static String getMessage(String message) {
         return "{ \"message\": \"" + message + "\" }";
     }
 
-    public String getMessage(String message, String error) {
+    public static String getMessage(String message, String error) {
         return "{ \"message\": \"" + message + "\", \"error\": \"" + error + "\" }";
     }
 
