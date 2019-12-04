@@ -1,0 +1,22 @@
+Panel rekrutera 
+
+- deleteCandidate();   usuwa kandydata z bazy 
+- showCandidates();    wyswietla tabele z wszystkimi kandydatami ( przechodzi do innego html z tabela nvm) 
+- addCandidate();	z ręki dodac nowego kandydata
+
+- showTests();         przechodzi do html z tabela z wylisotwanymi testami ( nie wiemy jeszcze jak robimy czy kazdy test losowy czy na stale beda tworzone testy)
+- beginTest();		rozpoczecie testu z kodem wejscia po czym podaje go kandydatom  lub przypisuje test do kandydatow
+- closeTest();		konczy test z roznych przyczyn ktos sciagal na przyklad XD
+
+-openQuestions;  	Otwiera widok z wszystkimi pytaniami 
+	-addQuestion;	Dodaje nowe pytanie
+	-deleteQuestion; Usuwa pytanie
+- configureTest()            Otwiera html z mozliwosca edycji testu
+	- addQuestion();	dodaje pytanie do testu
+	- deleteQuestion();	usuwa pytanie z testu
+- createTest();			Otwiera html taki sam co do edycji testu tylko ze jest to pusty test ( nowiutki)
+- deleteTest();			usuwa test z bazy
+- showScores();			Wyswietla tabele z wynikami kandydatow ( dla poszczegolnego testu )
+- logout();			ELO wychodze bo 16
+
+

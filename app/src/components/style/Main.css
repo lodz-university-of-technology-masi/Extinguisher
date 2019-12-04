@@ -1,0 +1,7 @@
+.App>div.main {
+    background-color: #76a1a7;
+}
+
+.App>div.main>h1{
+font-size: 60px;
+}
