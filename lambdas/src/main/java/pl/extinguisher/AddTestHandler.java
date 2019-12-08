@@ -17,7 +17,6 @@ import java.util.UUID;
 import java.lang.Exception;
 import java.io.StringWriter;
 import java.io.PrintWriter;
-import java.util.HashMap;
 //import org.json.*;
 
 public class AddTestHandler implements RequestHandler<Object, String> {
@@ -26,7 +25,16 @@ public class AddTestHandler implements RequestHandler<Object, String> {
         context.getLogger().log("Input: " + input);
        // JSONObject jsonInput = new JSONObject(input);
         //String output = jsonInput.getString("recruiterID");
-        LinkedHashMap<String, Object> inputMap = (LinkedHashMap<String, Object>) input;
+        LinkedHashMap<String, Object> inputMap;
+        try {
+        inputMap = (LinkedHashMap<String, Object>) input;
+        } catch(Exception e) {
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            String sStackTrace = sw.toString(); // stack trace as a string
+            return getMessage("Error", sStackTrace);
+        }
        // String output = inputMap.get("recruiterID");
        List<LinkedHashMap<String, String>> questionsList;
        try {
@@ -41,6 +49,7 @@ public class AddTestHandler implements RequestHandler<Object, String> {
       // String output = "";
       // List<HashMap> hashedQList =
         for (LinkedHashMap<String, String> q : questionsList) {
+            q.put("QuestionID", UUID.randomUUID().toString());
         //    HashMap<String, String> hashQuestions = new HashMap<String, String>();
             for(String key : q.keySet()) {
                if(key == "avaibleAnswers") {
@@ -50,8 +59,8 @@ public class AddTestHandler implements RequestHandler<Object, String> {
                }
             }
        }
-       LinkedHashMap<String, String> firstQuestion = (LinkedHashMap<String, String>) questionsList.get(0);
-       String firstQuestionType = firstQuestion.get("type");
+      // LinkedHashMap<String, String> firstQuestion = (LinkedHashMap<String, String>) questionsList.get(0);
+      // String firstQuestionType = firstQuestion.get("type");
        final AmazonDynamoDBClient client = new AmazonDynamoDBClient(new EnvironmentVariableCredentialsProvider());
        // final AmazonDynamoDBClient client = AmazonDynamoDBClientBuilder.defaultClient();
         client.withRegion(Regions.US_EAST_1); // specify the region you created the table in.
