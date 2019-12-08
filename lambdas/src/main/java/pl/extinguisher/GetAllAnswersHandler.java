@@ -24,7 +24,7 @@ import com.google.gson.JsonParser;
 
 public class GetAllAnswersHandler implements RequestHandler<Object, String> {
     @Override
-    public Object handleRequest(Object input, Context context) {
+    public String handleRequest(Object input, Context context) {
         context.getLogger().log("Input: " + input);
         final AmazonDynamoDBClient client = new AmazonDynamoDBClient(new EnvironmentVariableCredentialsProvider());
          client.withRegion(Regions.US_EAST_1); // specify the region you created the table in.
@@ -50,8 +50,6 @@ public class GetAllAnswersHandler implements RequestHandler<Object, String> {
             String sStackTrace = sw.toString(); // stack trace as a string
             return AddTestHandler.getMessage("Unable to scan table", sStackTrace);
         }
-        JsonElement jsonTree = JsonParser.parseString(output);
-        JsonObject jsonOutput = jsonTree.getAsJsonObject();
-        return jsonOutput;
+        return output;
     }
 }
