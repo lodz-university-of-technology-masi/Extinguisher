@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import '../style/Register.css'
 import 'aws-amplify'
 import { CognitoUserPool, CognitoUserAttribute } from 'amazon-cognito-identity-js';
-
 class Register extends Component {
     state = {
         username: "",
@@ -15,6 +14,7 @@ class Register extends Component {
             password: false,
         }
     }
+
     messages = {
         username_incorect: 'Name has to be longer than 10 signs and cannot contain space',
         email_incorect: 'email does not contain @ ',
@@ -63,6 +63,7 @@ class Register extends Component {
             })
 
 
+
             var poolData = {
                 UserPoolId: 'us-east-1_BfxnMv90t',
                 ClientId: '61qf8cn3re4asgfmvp6kha15r2'
@@ -94,6 +95,7 @@ class Register extends Component {
                 cognitoUser.confirmRegistration = true;
                 console.log('user name is ' + cognitoUser.getUsername());
             });
+
         }
         else {
             this.setState({

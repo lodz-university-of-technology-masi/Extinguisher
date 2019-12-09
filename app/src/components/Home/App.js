@@ -1,4 +1,5 @@
-import React, { Component, useState } from 'react';
+
+import React, { Component } from 'react';
 import '../style/App.css';
 import Footer from './Footer'
 import Header from './Header'
@@ -39,6 +40,7 @@ class App extends Component {
   }
 
 
+class App extends Component {
   render() {
     return (
       <BrowserRouter>

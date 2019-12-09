@@ -3,6 +3,7 @@
     display: flex;
     flex-grow: 1;
     flex-direction: column;
+
 }
 
 .App div.login form {
@@ -33,6 +34,7 @@ letter-spacing: 1px;
 }
 .App div.login form input::placeholder{
     color: white;
+
 }
 .App div.login h3 {
 position: fixed;
@@ -45,7 +47,6 @@ padding: 10px;
 color: white;
 transition: .5s;
 }
-
 .App div.login form button {
     background-color: transparent;
     font-family: Arial, Helvetica, sans-serif;
@@ -86,6 +87,7 @@ background-color: #fff;
         padding: 20px;
     }
     .App div.login form input{
+
        font-size: 30px;
     }
     .App div.login form label {
