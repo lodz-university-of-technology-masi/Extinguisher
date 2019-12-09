@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../style/AddTest.css'
-import { Auth } from 'aws-amplify'
+import axios from 'axios';
 
 
 
@@ -15,7 +15,8 @@ class AddTest extends Component {
             type: false,
         },
         types:["Open","Closed"],
-        questionArray:[]
+        questionArray:[],
+        toEdit:""
     }
     
         messages = {
@@ -53,112 +54,121 @@ class AddTest extends Component {
                 [name]:document.getElementById(name)
             })
         }
-        handleSubmit = async (e) => {
-            e.preventDefault()
-            const validation = this.formValidation()
-            console.log(validation)
-            if (validation.correct) {
-                this.setState({
-                    message: 'Send, please wait',
-                    errors: {
-                        question: false,
-                        type: false,
-                    }
-                })
-                try {   
-                    
-                    await Auth.confirmSignUp(this.state.question, this.state.type);
-                    // console.log(vall)
-                    alert("User confirmed");
-                } catch (e) {
-                    alert(e.message);
-                }
-            }
-            else {
-                this.setState({
-                    errors: {
-                        type: !validation.type,
-                        question: !validation.question,
-                    }
-                })
-            }
-        }
         componentDidUpdate() {
             if (this.state.message !== '') {
                 setTimeout(() => this.setState({
                     message: ''
-                }), 9000);
+                }), 1000);
             }
+        }
+        handleEdit=(e)=>{
+            if(this.state.questionArray[e].type =='W'){
+
+                document.getElementById("questionType").selectedIndex = "1";
+            }
+            else
+            
+            document.getElementById("questionType").selectedIndex="0";
+            
+            this.setState({
+                question:this.state.questionArray[e].questionContent,
+                type:this.state.questionArray[e].type,
+                toEdit:{
+                        type:this.state.questionArray[e].type,
+                        language:"PL",
+                        numberOfAvaibleAnswers:this.state.questionArray[e].numberOfAvaibleAnswers,
+                        questionContent:this.state.questionArray[e].questionContent,
+                        avaibleAnswers:this.state.questionArray[e].avaibleAnswers
+                        
+                    }
+                }
+            )
+        }
+        handleSendRequest(){
+            let data={
+                recruiterID:1234,
+                testName:this.state.testName,
+                questionList:this.state.questionArray
+            }
+            console.log(JSON.stringify(data));
+            axios.post('http://arn:aws:execute-api:us-east-1:374991088908:wjdhyrfow4/*/POST/tests', data)
+              .then(function (response) {
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
         }
         handleQuestionSubmit=(e)=>{
 
             this.state.questionArray.push(e);
                 
         }
+        handleDeleteQuestion=(e)=>{
+            
+            this.state.questionArray.splice(e,1);
+        }
         render() {
             
             return (
-             
+              
                 <div className="addQuestion">
-                     <label htmlFor="testName">testName:
+                    <div>
+                        <label>Test Name: 
+                        <input type="testName" id="testName" name="testName" value={this.state.testName} onChange={this.handleChange} />
+                        </label>
+                    </div>
+                     <label htmlFor="question">Question:
                     <input type="question" id="question" name="question" value={this.state.question} onChange={this.handleChange} />
                     </label>
                     <label htmlFor="type">Chose question type
                     </label>
-                    <select id ='testType' onChange={()=>{
+                    <select id ='questionType' onChange={()=>{
         
         this.setState(
             
             {
-            type:document.getElementById('testType').value,
+            type:document.getElementById('questionType').value,
         })
-       // this.setState();
     }}>
         <option value='O'>Open</option>
         <option value ='W'>Closed</option>
     </select>
-                    <QuestionType type={this.state.type} question={this.state.question} pusher={this.handleQuestionSubmit}/>,
+                    <QuestionType toEdit={this.state.toEdit} type={this.state.type} question={this.state.question} pusher={this.handleQuestionSubmit}/>
+                    <QuestionViewComponent handlerEdit = {this.handleEdit} handlerDelete={this.handleDeleteQuestion} questionArray={this.state.questionArray}></QuestionViewComponent> 
+                    <button onClick={()=>{this.handleSendRequest() }}>Save Test</button>
                </div>
             );
         }
-
- 
 }
 class OpenQuestion extends Component{
     constructor(props){
         super(props);
-    this.state={
-                chceSieTuDostacZInnegoComponentu:"Ale nie moge"
+    this.state={        
     }
-    
 }
-
-handleQuestionSubmit(){
-    var avaibleAnswers = ""
-    var numberOfAvaibleAnswers= 0;
-
-           var questionObj={
-                type:this.state.type,
-                language:"PL",
-                numberOfAvaibleAnswers:numberOfAvaibleAnswers,
-                questionContent:this.props.question,
-                avaibleAnswers:avaibleAnswers    
-            }
-            console.log(questionObj)
-        
-}
+    handleQuestionSubmit = ()=>{
+        var numberOfAvaibleAnswers = 0;
+     var avaibleAnswers=""
+                var questionObj={
+                    type:"O",
+                    language:"PL",
+                    numberOfAvaibleAnswers:numberOfAvaibleAnswers,
+                    questionContent:this.props.question,
+                    avaibleAnswers:avaibleAnswers         
+                }
+                console.log(questionObj)
+                this.props.pusher(questionObj);
+    }
     render(){
-
         return <div>
-            <div>DZIALA OPEN QUESTION HERE</div>
-        <button onSubmit={this.handleQuestionSubmit}>submit</button>
+        <button onClick={this.handleQuestionSubmit}>submit</button>
 </div>
     }
 }
 class ClosedQuestion extends Component{
-    
-    constructor(props){
 
+    constructor(props){
     super(props);
     this.state={
         numbers:[2,3,4,5,6],
@@ -179,8 +189,6 @@ class ClosedQuestion extends Component{
     }
     console.log(this)
     }
-    
-
     handleQuestionSubmit = ()=>{
        
         
@@ -194,7 +202,7 @@ class ClosedQuestion extends Component{
         avaibleAnswers= avaibleAnswers.substring(0,avaibleAnswers.length-1);
             
                 var questionObj={
-                    type:"O",
+                    type:"W",
                     language:"PL",
                     numberOfAvaibleAnswers:numberOfAvaibleAnswers,
                     questionContent:this.props.question,
@@ -261,10 +269,50 @@ class QuestionType extends Component{
 }
     render(){
         if ( this.props.type == "O") {
-            return <OpenQuestion  pusher={this.props.pusher} question={this.props.question} />;
+            return <OpenQuestion toEdit={this.toEdit} pusher={this.props.pusher} question={this.props.question} />;
         }
   
-        return <ClosedQuestion pusher={this.props.pusher} question={this.props.question}/>;
+        return <ClosedQuestion  toEdit={this.toEdit} pusher={this.props.pusher} question={this.props.question}/>;
         }
     }
+    class QuestionViewComponent extends Component{
+
+        constructor(props){
+            super(props)
+            this.state={
+            }
+        }
+        componentDidMount() {
+            setInterval(() => {
+                this.setState(() => {
+                    console.log('setting state');
+                    return { nothing : "" }
+                });
+            }, 1000);
+        }
+
+        createButtonList(){
+            var questionList=[];
+            
+            for(let i=0; i<this.props.questionArray.length; i++)
+            {
+                let type;
+                if(this.props.questionArray[i].type=="W") type="Closed Question with " + this.props.questionArray[i].numberOfAvaibleAnswers +" answers"
+                else
+                type="Open Question"
+            questionList.push(<li> {this.props.questionArray[i].questionContent} {type}
+            <button  onClick={()=>this.props.handlerDelete(i)}>delete</button>
+            </li>)
+            }
+            return questionList
+        
+    }
+       
+    
+        render(){
+        return <div>
+            {this.createButtonList()}
+        </div>
+    }
+}
 export default AddTest;

@@ -7,6 +7,8 @@ import Login from './Login'
 import Register from './Register'
 import Confirm from './Confirm'
 import AddTest from './AddTest'
+import 'bootstrap/dist/css/bootstrap.css';
+
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 class App extends Component {
