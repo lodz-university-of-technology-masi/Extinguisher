@@ -1,0 +1,15 @@
+
+th, td, thead {
+    border: 1px solid black;
+    text-align: center;
+  }
+
+table {
+    width: 80%;
+    margin-left:10%; 
+    margin-right:15%;
+}
+
+h1 {
+    margin-left: 10%;
+}
