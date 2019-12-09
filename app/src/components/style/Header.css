@@ -1,5 +1,5 @@
 nav {
-    background-color: #aaa;
+    background-color: #9CB6D9;
 }
 nav>ul {
     display: flex;
@@ -11,7 +11,7 @@ nav>ul>li {
     display: block;
     text-align: center;
     flex-grow: 1;
-    line-height: 80px;
+    line-height: 60px;
 }
 nav>ul>li>a {
     display: block;
@@ -19,11 +19,11 @@ nav>ul>li>a {
     text-decoration: none;
 }
 nav>ul>li>a:hover {
-    background-color: #222;
+    background-color: #466C8C;
 }
 
 
-@media(min-height:1024px) {
+@media(min-width:1024px) {
     nav>ul {
         flex-direction: row;
     }
