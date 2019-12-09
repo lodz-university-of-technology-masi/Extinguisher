@@ -10,6 +10,7 @@ import AddTest from './AddTest'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { Auth } from 'aws-amplify';
 
+
 class App extends Component {
   state = {
     isAuthenticated: false,
