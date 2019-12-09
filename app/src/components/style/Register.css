@@ -1,6 +1,8 @@
 .App div.register {
-    background-color: #1f1f1f;
+    background-color: #1E2D40;
     display: flex;
+    flex-grow: 1;
+    flex-direction: column;
 }
 
 .App div.register form {
@@ -8,16 +10,30 @@
     /***/
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
 
+}
+.App div.register form input::placeholder{
+    color: white;
+}
+.App div.register form input {
+    background-color: #A6786D;
+    border: none;
+    align-self: center;
+    margin: auto 40px;
+     font-family: Arial, Helvetica, sans-serif;
+     color:white;
+     width: 50%;
+     line-height: 80px;text-transform: uppercase;
+letter-spacing: 1px;
+ }
 .App div.register form label {
     text-align: center;
     margin: auto;
     font-family: Arial, Helvetica, sans-serif;
     color:white;
 }
+
+
 .App div.register form span {
    display: block;
    color: red;
@@ -33,11 +49,7 @@ padding: 10px;
 color: white;
 transition: .5s;
 }
-.App div.register form label input{
-    font-family: Arial, Helvetica, sans-serif;
-color: black;
 
-}
 .App div.register form button {
     background-color: transparent;
     font-family: Arial, Helvetica, sans-serif;
@@ -62,7 +74,7 @@ color: black;
         font-size: 40px;
         padding: 20px;
     }
-    .App div.register form label input{
+    .App div.register form input{
        font-size: 30px;
     }
     .App div.register form label {
