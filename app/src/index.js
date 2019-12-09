@@ -7,6 +7,7 @@ import config from './config';
 import * as serviceWorker from './serviceWorker';
 
 
+
 Amplify.configure({
     Auth: {
         mandatorySignIn: true,

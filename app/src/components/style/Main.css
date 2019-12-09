@@ -1,7 +1,11 @@
-.App>div.main {
-    background-color: #76a1a7;
+.App>main {
+    background-color: #1E2D40;;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
-.App>div.main>h1{
+.App>main>h1{
+
 font-size: 60px;
 }

@@ -1,0 +1,87 @@
+.App div.confirm {
+    background-color: #1E2D40;;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+
+.App div.confirm form {
+    flex-grow: 1; 
+    /***/
+    display: flex;
+    flex-direction: column;
+
+}
+
+.App div.confirm form label {
+    text-align: center;
+    margin: auto;
+    font-family: Arial, Helvetica, sans-serif;
+    color:white;
+}
+.App div.confirm form input{
+    font-family: Arial, Helvetica, sans-serif;
+color: black;
+
+}
+.App div.confirm form input::placeholder{
+    color: white;
+}
+.App div.confirm form input {
+    background-color: #A6786D;
+    border: none;
+    align-self: center;
+    margin: auto 40px;
+     font-family: Arial, Helvetica, sans-serif;
+     color:white;
+     width: 50%;
+     line-height: 80px;text-transform: uppercase;
+     letter-spacing: 1px;
+ }
+.App div.confirm form span {
+   display: block;
+   color: red;
+}
+.App div.confirm h3 {
+position: fixed;
+top: 50%;
+left: 50%;
+z-index: 1;
+border: 2px solid white;
+background-color: transparent;
+padding: 10px;
+color: white;
+transition: .5s;
+}
+
+.App div.confirm form button {
+    background-color: transparent;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 2px solid #fff;
+    color: #fff;
+    font-size: 20px;
+    padding: 10px;
+    margin: auto;
+    justify-items: flex-end;
+}
+.App div.confirm form button:hover {
+    background-color: #fff;
+    color:#000;
+    cursor: pointer;
+    transition: .4s;
+}
+
+@media(min-width:1024px) {
+    .App div.confirm form button {
+        font-size: 40px;
+        padding: 20px;
+    }
+    .App div.confirm form input{
+       font-size: 30px;
+    }
+    .App div.confirm form label {
+        font-size: 40px;
+    }
+
+}

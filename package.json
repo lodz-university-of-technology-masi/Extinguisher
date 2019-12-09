@@ -1,0 +1,19 @@
+{
+  "name": "chmurka",
+  "version": "1.0.0",
+  "description": "Application created on cloud computing system classes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lodz-university-of-technology-masi/Extinguisher.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lodz-university-of-technology-masi/Extinguisher/issues"
+  },
+  "homepage": "https://github.com/lodz-university-of-technology-masi/Extinguisher#readme"
+}
