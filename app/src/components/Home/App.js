@@ -11,7 +11,6 @@ import AddTest from './AddTest'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { Auth } from 'aws-amplify';
 
-
 class App extends Component {
   state = {
     isAuthenticated: false,
@@ -35,12 +34,12 @@ class App extends Component {
   }
 
   logout = async () => {
-    await Auth.signOut();
     this.setAuth(false);
+    await Auth.signOut();
+    this.setUser(null)
+
   }
 
-
-class App extends Component {
   render() {
     return (
       <BrowserRouter>
