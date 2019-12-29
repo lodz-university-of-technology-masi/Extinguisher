@@ -1,11 +1,10 @@
-import React, {Component, useState, useContext} from 'react';
+import React, {Component} from 'react';
 import '../style/Login.css'
 import {Auth} from 'aws-amplify'
 import {Redirect} from 'react-router-dom'
 import {AppContext} from "../context/AppContext";
-import LoadingSpinner from "./LoadingSpinner"
 
-class Login extends Component {
+class Login2 extends Component {
     static contextType = AppContext;
     state = {
         email: "",
@@ -62,27 +61,17 @@ class Login extends Component {
             });
 
             try {
-                const {userp, auth} = this.context;
-                const [user, setUser] = userp;
-                const [isAuthenticated, setIsAuthenticated] = auth;
-                await Auth.signIn(this.state.email, this.state.password)
-                    .then(user => {
-                        console.log(user);
-                        setIsAuthenticated(true);
-                        setUser(user);
-                        this.setState({
-                            redirect: true
-                        })
-                    })
-                    .catch(err => this.setState({
-                        message: err.message,
-                        loading: false
-                    }));
+                const {login} = this.context;
+
+                login(this.state.email, this.state.password)
+                    .then(this.setState({redirect: true}))
+                    .catch(err => this.setState({message: err.message}));
 
             } catch (e) {
                 alert(e.message);
             }
-        } else {
+        }
+        else {
             this.setState({
                 errors: {
                     email: !validation.email,
@@ -94,15 +83,10 @@ class Login extends Component {
 
 
     handleForgot = () => {
-        if (this.state.email.length < 1) {
-            this.setState({message: 'please enter email'})
-        } else {
-            this.setState({message: `check your email:${this.state.email}`});
-            Auth.forgotPassword(this.state.email)
-                .then(data => console.log(data))
-                .catch(err => console.log(err));
-        }
-    }
+        Auth.forgotPassword(this.state.email)
+            .then(data => console.log(data))
+            .catch(err => console.log(err));
+    };
 
     render() {
 
@@ -113,26 +97,23 @@ class Login extends Component {
             return (
                 <div className="login">
                     <form onSubmit={this.handleSubmit}>
-                        <h2>Login</h2>
                         <input type="text" id="user" placeholder="email" name="email" value={this.state.email}
                                onChange={this.handleChange}/>
                         {this.state.errors.email && <span> {this.messages.email_incorect}</span>}
                         <input type="password" id="password" placeholder="password" name="password"
                                value={this.state.password} onChange={this.handleChange}/>
                         {this.state.errors.password && <span> {this.messages.password_incorect}</span>}
-
-                        <button type="submit">Confirm</button>
+                        {/*<div className="wrap">*/}
+                            <button type="submit">Confirm</button>
+                            {/*{this.state.loading && <LoadingSpinner/>}</div>*/}
                     </form>
-                    <div className="others">
-                        <button onClick={this.handleForgot}>Forgot Password</button>
-                        {this.state.loading && <LoadingSpinner/>}
-                        {this.state.message.length > 1 && <span> {this.state.message}</span>}
-                    </div>
+                    <button onClick={this.handleForgot}>Forgot Password</button>
+
                 </div>
             );
         }
     }
 }
 
-export default Login;
+export default Login2;
 

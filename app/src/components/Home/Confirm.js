@@ -83,11 +83,8 @@ class Confirm extends Component {
 
             <div className="confirm">
                 <form onSubmit={this.handleSubmit}>
-                    {/* <label htmlFor="user">email:</label> */}
                     <input placeholder="Email" type="text" id="user" name="email" value={this.state.email} onChange={this.handleChange} />
                     {this.state.errors.email && <span> {this.messages.username_incorect}</span>}
-
-                    {/* <label htmlFor="code">Code:</label> */}
                     <input placeholder="Code" type="code" name="code" id="code" value={this.state.code} onChange={this.handleChange} />
                     {this.state.errors.code && <span> {this.messages.code_incorect}</span>}
 

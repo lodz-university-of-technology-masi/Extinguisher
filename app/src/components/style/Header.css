@@ -1,32 +1,38 @@
 nav {
-    background-color: #9CB6D9;
+    background-color: #fff;
 
 }
-nav>ul {
+
+nav > ul {
     display: flex;
     flex-direction: column;
     list-style: none;
-
+    border-bottom: 2px solid black;
 }
-nav>ul>li {
+
+nav > ul > li {
     display: block;
     text-align: center;
     flex-grow: 1;
     line-height: 60px;
 
 }
-nav>ul>li>a {
+
+nav > ul > li > a {
     display: block;
-    color: white;
+    color: #000;
     text-decoration: none;
+    transition: .4s;
 }
-nav>ul>li>a:hover {
-    background-color: #466C8C;
+
+nav > ul > li > a:hover {
+    background-color: #000;
+    color: #fff;
 }
 
 
-@media(min-width:1024px) {
-    nav>ul {
+@media (min-width: 1024px) {
+    nav > ul {
         flex-direction: row;
     }
 }
