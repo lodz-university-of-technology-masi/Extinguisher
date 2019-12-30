@@ -1,95 +1,83 @@
 .App main div.login {
-    background-color: #1E2D40;
     display: flex;
     flex-grow: 1;
-    flex-direction: column;
-
+    margin-left: 5%;
 }
 
 .App div.login form {
-    flex-grow: 1; 
+    flex-grow: 1;
     flex-direction: column;
-  display: flex;
+    display: flex;
+    justify-content: space-around;
 }
 
 
-.App div.login form span {
-   display: block;
-   color: red;
+.App div.Login form h2 {
+
 }
+
+.App div.login span {
+    display: block;
+    color: red;
+}
+
 .App div.login form input {
-    background-color: #A6786D;
-    border: none;
-   align-self: center;
-   margin: auto 40px;
-    font-family: Arial, Helvetica, sans-serif;
-    color:white;
-    width: 50%;
-    line-height: 80px;
-}
-.App div.login form input{
-    font-family: Arial, Helvetica, sans-serif;
-text-transform: uppercase;
-letter-spacing: 1px;
-}
-.App div.login form input::placeholder{
-    color: white;
-
-}
-.App div.login h3 {
-position: fixed;
-top: 50%;
-left: 50%;
-z-index: 1;
-border: 2px solid white;
-background-color: transparent;
-padding: 10px;
-color: white;
-transition: .5s;
-}
-.App div.login form button {
-    background-color: transparent;
-    font-family: Arial, Helvetica, sans-serif;
-    border: 2px solid #fff;
-    color: #fff;
-    font-size: 20px;
-    padding: 10px;
-    margin: auto;
-    justify-items: flex-end;
-}
-.App div.login form button:hover {
-    background-color: #fff;
-    color:#000;
-    cursor: pointer;
+    border: 2px solid #000;
+    color: #000;
+    /*align-self: flex-start;*/
+    width: 30%;
+    line-height: 60px;
     transition: .4s;
 }
+
+.App div.login form input:hover {
+    width: 60%;
+}
+
+.App div.login form input::placeholder {
+    padding: 20px;
+    text-transform: capitalize;
+}
+
 
 .App div.login button {
     background-color: transparent;
-    font-family: Arial, Helvetica, sans-serif;
-    border: 2px solid #fff;
-    color: #fff;
+    border: 2px solid #000;
+    text-transform: uppercase;
+    color: #000;
     font-size: 20px;
-    padding: 10px;
-    margin: auto;
-    margin-bottom: 10px;
+    padding: 15px;
+    margin: 0 auto 0 0 ;
 }
+
 .App div.login button:hover {
-background-color: #fff;
-    color:#000;
+    background-color: #000;
+    color: #fff;
     cursor: pointer;
     transition: .4s;
 }
 
-@media(min-width:1024px) {
+.App div.login div.others {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.App div.login div.others> div {
+   transform: translateX(+50px);
+}
+
+@media (min-width: 1024px) {
     .App div.login form button {
         font-size: 40px;
         padding: 20px;
     }
-    .App div.login form input{
 
-       font-size: 30px;
+    .App div.login form input {
+
+        font-size: 30px;
     }
+
     .App div.login form label {
         font-size: 40px;
     }
