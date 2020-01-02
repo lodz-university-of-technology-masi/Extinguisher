@@ -9,6 +9,9 @@ import Confirm from './Confirm'
 import AddTest from './AddTest'
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
 import {AppProvider} from "../context/AppContext";
+import UserPanel from '../UserPanel/UserPanel'
+import UserTestList from '../UserPanel/UserTestList'
+import UserTestView from '../UserPanel/UserTestView'
 
 class App extends Component {
 
@@ -26,6 +29,10 @@ class App extends Component {
                                 <Route exact path="/logout" render={() => (<Redirect to="/"/>)}/>
                                 <Route exact path="/confirm" component={Confirm}/>
                                 <Route exact path="/addTest" component={AddTest}/>
+                                <Route exact path="/userPanel" component={UserPanel}/>
+                                <Route exact path="/userTestList" component={UserTestList}/>
+                                <Route exact path="/userTestView" component={UserTestView}/>
+
                             </Switch>
                         </main>
                         <Footer/>

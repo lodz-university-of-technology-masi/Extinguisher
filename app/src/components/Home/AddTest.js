@@ -29,7 +29,7 @@ class AddTest extends Component {
             let type = false
             let correct = false
             
-            if (this.state.type=="W" || this.state.type =="O") {
+            if (this.state.type==="W" || this.state.type ==="O") {
                 type = true
             }
             if (this.state.question.length > 0) {
@@ -62,7 +62,7 @@ class AddTest extends Component {
             }
         }
         handleEdit=(e)=>{
-            if(this.state.questionArray[e].type =='W'){
+            if(this.state.questionArray[e].type ==='W'){
 
                 document.getElementById("questionType").selectedIndex = "1";
             }
@@ -166,6 +166,7 @@ class OpenQuestion extends Component{
 </div>
     }
 }
+
 class ClosedQuestion extends Component{
 
     constructor(props){
@@ -268,13 +269,14 @@ class QuestionType extends Component{
 
 }
     render(){
-        if ( this.props.type == "O") {
+        if ( this.props.type === "O") {
             return <OpenQuestion toEdit={this.toEdit} pusher={this.props.pusher} question={this.props.question} />;
         }
   
         return <ClosedQuestion  toEdit={this.toEdit} pusher={this.props.pusher} question={this.props.question}/>;
         }
     }
+
     class QuestionViewComponent extends Component{
 
         constructor(props){
@@ -297,7 +299,7 @@ class QuestionType extends Component{
             for(let i=0; i<this.props.questionArray.length; i++)
             {
                 let type;
-                if(this.props.questionArray[i].type=="W") type="Closed Question with " + this.props.questionArray[i].numberOfAvaibleAnswers +" answers"
+                if(this.props.questionArray[i].type==="W") type="Closed Question with " + this.props.questionArray[i].numberOfAvaibleAnswers +" answers"
                 else
                 type="Open Question"
             questionList.push(<li> {this.props.questionArray[i].questionContent} {type}

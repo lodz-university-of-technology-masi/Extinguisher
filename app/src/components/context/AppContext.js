@@ -1,4 +1,4 @@
-import React, {Component, useState, createContext} from 'react';
+import React, {useState, createContext} from 'react';
 import {Auth} from "aws-amplify";
 
 export const AppContext = createContext();
