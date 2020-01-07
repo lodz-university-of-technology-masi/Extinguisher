@@ -20,7 +20,8 @@ function TestListPosition(props) {
               <Link to={{
                   pathname: '/userTestView',
                   state: {
-                      data: props.test.questionsList                  }
+                      data: props.test.questionsList,
+                      testID: props.test.TestID}
               }}>Open Test</Link>
             </td>
         </tr>
