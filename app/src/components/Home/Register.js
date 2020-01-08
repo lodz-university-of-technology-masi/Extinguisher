@@ -5,6 +5,7 @@ import {CognitoUserPool, CognitoUserAttribute} from 'amazon-cognito-identity-js'
 import {Auth} from "aws-amplify";
 import {Redirect} from "react-router-dom";
 import LoadingSpinner from "./LoadingSpinner";
+import {Alert, Button, Container, Form, FormControl, FormLabel, Spinner} from "react-bootstrap";
 
 class Register extends Component {
     state = {
@@ -135,32 +136,63 @@ class Register extends Component {
     }
 
     render() {
-        if (this.state.isOk) {
+const {isOk,username,email,errors,loading,message,password} = this.state;
+        if (isOk) {
             return (
                 <Redirect to="/confirm"/>);
         }
 
         return (
-            <div className="register">
-                <form onSubmit={this.handleSubmit}>
-                    <h2>Register</h2>
-                    <input type="text" placeholder="Username" id="user" name="username" value={this.state.username}
-                           onChange={this.handleChange}/>
-                    {this.state.errors.username && <span> {this.messages.username_incorect}</span>}
-
-                    <input type="email" placeholder="Email" id="email" name="email" value={this.state.email}
-                           onChange={this.handleChange}/>
-                    {this.state.errors.email && <span> {this.messages.email_incorect}</span>}
-
-                    <input type="password" placeholder="Password" name="password" id="password"
-                           value={this.state.password} onChange={this.handleChange}/>
-                    {this.state.errors.password && <span> {this.messages.password_incorect}</span>}
-
-
-                        <button type="submit">Confirm</button>
-                        {this.state.loading && <LoadingSpinner/>}
-                </form>
-            </div>
+            <Container>
+                <Form onSubmit={this.handleSubmit}>
+                    <h1>Register</h1>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl type="text" placeholder="Email" value={email} onChange={(event) => {
+                        this.setState({email: event.target.value})
+                    }}
+                    />
+                    {errors.email && <Alert variant="danger"> {this.messages.email_incorect}</Alert>}
+                    <FormLabel>Username</FormLabel>
+                    <FormControl type="text" placeholder="Username" value={username} onChange={(event) => {
+                        this.setState({username: event.target.value})
+                    }}
+                    />
+                    {errors.username && <Alert variant="danger"> {this.messages.username_incorect}</Alert>}
+                    <FormLabel>Password</FormLabel>
+                    <FormControl type="password" placeholder="Password" value={password}
+                                 onChange={(event) => {
+                                     this.setState({password: event.target.value})
+                                 }}
+                    />
+                    {this.state.errors.password &&
+                    <Alert variant="danger"> {this.messages.password_incorect}</Alert>}
+                    <Button variant="primary" type="submit">
+                        Submit
+                    </Button>
+                    {this.state.loading && <Spinner animation="border"/>}
+                    {this.state.message.length > 1 && <Alert variant="danger">{this.state.message}</Alert>}
+                </Form>
+            </Container>
+            // <div className="register">
+            //     <form onSubmit={this.handleSubmit}>
+            //         <h2>Register</h2>
+            //         <input type="text" placeholder="Username" id="user" name="username" value={this.state.username}
+            //                onChange={this.handleChange}/>
+            //         {this.state.errors.username && <span> {this.messages.username_incorect}</span>}
+            //
+            //         <input type="email" placeholder="Email" id="email" name="email" value={this.state.email}
+            //                onChange={this.handleChange}/>
+            //         {this.state.errors.email && <span> {this.messages.email_incorect}</span>}
+            //
+            //         <input type="password" placeholder="Password" name="password" id="password"
+            //                value={this.state.password} onChange={this.handleChange}/>
+            //         {this.state.errors.password && <span> {this.messages.password_incorect}</span>}
+            //
+            //
+            //             <button type="submit">Confirm</button>
+            //             {this.state.loading && <LoadingSpinner/>}
+            //     </form>
+            // </div>
         )
             ;
     }

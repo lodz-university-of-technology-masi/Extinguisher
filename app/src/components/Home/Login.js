@@ -4,6 +4,7 @@ import {Auth} from 'aws-amplify'
 import {Redirect} from 'react-router-dom'
 import {AppContext} from "../context/AppContext";
 import LoadingSpinner from "./LoadingSpinner"
+import {Alert, Button, Container, Form, FormControl, FormLabel, Spinner} from "react-bootstrap";
 
 class Login extends Component {
     static contextType = AppContext;
@@ -67,7 +68,6 @@ class Login extends Component {
                 const [isAuthenticated, setIsAuthenticated] = auth;
                 await Auth.signIn(this.state.email, this.state.password)
                     .then(user => {
-                        console.log(user);
                         setIsAuthenticated(true);
                         setUser(user);
                         this.setState({
@@ -105,30 +105,37 @@ class Login extends Component {
     }
 
     render() {
-
-        if (this.state.redirect) {
+        const {redirect, email, message, password, loading, errors} = this.state;
+        if (redirect) {
             return (
                 <Redirect to="/"/>)
         } else {
             return (
-                <div className="login">
-                    <form onSubmit={this.handleSubmit}>
-                        <h2>Login</h2>
-                        <input type="text" id="user" placeholder="email" name="email" value={this.state.email}
-                               onChange={this.handleChange}/>
-                        {this.state.errors.email && <span> {this.messages.email_incorect}</span>}
-                        <input type="password" id="password" placeholder="password" name="password"
-                               value={this.state.password} onChange={this.handleChange}/>
-                        {this.state.errors.password && <span> {this.messages.password_incorect}</span>}
-
-                        <button type="submit">Confirm</button>
-                    </form>
-                    <div className="others">
-                        <button onClick={this.handleForgot}>Forgot Password</button>
-                        {this.state.loading && <LoadingSpinner/>}
-                        {this.state.message.length > 1 && <span> {this.state.message}</span>}
-                    </div>
-                </div>
+                <Container>
+                    <Form onSubmit={this.handleSubmit}>
+                        <h1>Login</h1>
+                        <FormLabel>Username/Email</FormLabel>
+                        <FormControl type="text" placeholder="Email" value={email} onChange={(event) => {
+                            this.setState({email: event.target.value})
+                        }}
+                        />
+                        {this.state.errors.email && <Alert variant="danger"> {this.messages.email_incorect}</Alert>}
+                        <FormLabel>Password</FormLabel>
+                        <FormControl type="password" placeholder="Password" value={password}
+                                     onChange={(event) => {
+                                         this.setState({password: event.target.value})
+                                     }}
+                        />
+                        {this.state.errors.password &&
+                        <Alert variant="danger"> {this.messages.password_incorect}</Alert>}
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                        {this.state.loading && <Spinner animation="border"/>}
+                        {this.state.message.length > 1 && <Alert variant="danger">{this.state.message}</Alert>}
+                    </Form>
+                    <Button variant="info" onClick={this.handleForgot}> Forgot Password</Button>
+                </Container>
             );
         }
     }

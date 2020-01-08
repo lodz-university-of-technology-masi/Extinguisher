@@ -4,8 +4,6 @@ import axios from 'axios';
 import AddQuestion from "./AddQuestion.js"
 import QuestionsView from "./QuestionsView.js"
 
-
-
 class AddTest extends Component {
 
     constructor(props){
@@ -21,12 +19,14 @@ class AddTest extends Component {
         }
         
        
+
         handleChange = (e) => {
             let name = e.target.id;
             this.setState({
                 [name]: e.target.value
             })
         };
+
        
         handleQuestionSubmit=(question)=>{
                 let arr = this.state.questionArray;
@@ -34,6 +34,7 @@ class AddTest extends Component {
                 this.setState({
                     questionArray:arr
                 })
+
         }
         handleSendRequest=()=>{
             let data={

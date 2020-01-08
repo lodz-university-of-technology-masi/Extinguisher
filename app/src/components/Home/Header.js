@@ -19,6 +19,7 @@ const Header = () => {
                             setUser(false);
                         }} to="/logout">Logout</Link></li>
                         <li><Link to="/addTest">Add Test</Link></li>
+                        <li><Link to="/userPanel">User Panel</Link></li>
                     </>
                     :
                     <>

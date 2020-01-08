@@ -20,7 +20,7 @@ class Confirm extends Component {
         let email = false
         let code = false
         let correct = false
-        if (this.state.code.length == 6) {
+        if (this.state.code.length === 6) {
             code = true
         }
         if (this.state.email.length > 5 && this.state.email.indexOf(' ') === -1) {
