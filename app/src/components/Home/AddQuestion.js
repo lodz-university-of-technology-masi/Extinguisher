@@ -10,7 +10,7 @@ class AddQuestion extends Component {
         numberOfAvaibleAnswers:4,
         isOpen:true,
         answers:[],
-        ifAnswersAreCorrect:[],
+        ifAnswersAreCorrect:[false,false,false,false,false,false,false],
         errors: {
             question: false,
             type: false,
@@ -80,20 +80,25 @@ toggleChange = (e) => {
 handleClosedQuestionSubmit = ()=>{
  let numberOfAvaibleAnswers = this.state.numberOfAvaibleAnswers;
  let avaibleAnswers=""
+ let isCorrect="";
         for(let i =0;i<this.state.numberOfAvaibleAnswers;i++)
         {
-        avaibleAnswers+=eval('this.state.answers['+i+']');
+        avaibleAnswers+=this.state.answers[i];
         avaibleAnswers+="|";
+        isCorrect+=this.state.ifAnswersAreCorrect[i];
+        isCorrect+="|";
         }
+        isCorrect=isCorrect.substring(0,isCorrect.length-1);
     avaibleAnswers= avaibleAnswers.substring(0,avaibleAnswers.length-1);
             var questionObj={
                 type:"W",
                 language:"PL",
                 numberOfAvaibleAnswers:numberOfAvaibleAnswers,
                 questionContent:this.state.question,
-                avaibleAnswers:avaibleAnswers
+                avaibleAnswers:avaibleAnswers,
+                correctArray:isCorrect
             }
-          
+          console.log(questionObj);
             
             this.props.handleQuestionSubmit(questionObj);
 }

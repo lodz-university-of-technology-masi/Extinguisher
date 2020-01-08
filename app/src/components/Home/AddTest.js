@@ -42,7 +42,7 @@ class AddTest extends Component {
                 questionList:this.state.questionArray
             }
             console.log(JSON.stringify(data));
-            axios.post('http://arn:aws:execute-api:us-east-1:374991088908:wjdhyrfow4/*/POST/tests', data)
+            axios.post('https://d1yalzslbd.execute-api.us-east-1.amazonaws.com/prod/tests', data)
               .then(function (response) {
                 console.log(response);
               })
