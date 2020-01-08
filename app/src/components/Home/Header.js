@@ -1,7 +1,8 @@
 import React, {useState, useContext} from 'react';
 import '../style/Header.css'
-import {Link} from 'react-router-dom'
 import {AppContext} from "../context/AppContext";
+import {Nav, Navbar} from "react-bootstrap";
+import {Link, NavLink} from "react-router-dom";
 
 const Header = () => {
 
@@ -9,26 +10,29 @@ const Header = () => {
     const [user, setUser] = userp;
     const [isAuthenticated, setIsAuthenticated] = auth;
     return (
-        <nav>
-            <ul>
-                <li><Link to="/">Home</Link></li>
-                {isAuthenticated ?
-                    <>
-                        <li><Link onClick={() => {
-                            setIsAuthenticated(false);
-                            setUser(false);
-                        }} to="/logout">Logout</Link></li>
-                        <li><Link to="/addTest">Add Test</Link></li>
-                        <li><Link to="/userPanel">User Panel</Link></li>
-                    </>
-                    :
-                    <>
-                        <li><Link to="/login">Sign In</Link></li>
-                        <li><Link to="/register">Sign Up</Link></li>
-                        <li><Link to="/confirm">Confirm</Link></li>
-                    </>}
-            </ul>
-        </nav>
+        <Navbar bg="light" expand="lg">
+            <Navbar.Brand as={NavLink} exact to="/">Home</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+            <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="mr-auto">
+                    {isAuthenticated ?
+                        <>
+                            <Nav.Link as={NavLink} exact to="/addTest">AddTest</Nav.Link>
+                            <Nav.Link as={NavLink} exact to="/userPanel">UserPanel</Nav.Link>
+                            <Nav.Link as={NavLink} exact to="/userTestList">UserTestList</Nav.Link>
+                            <Nav.Link as={NavLink} exact to="/userTestView">UserTestView</Nav.Link>
+                            <Nav.Link as={NavLink} exact to="/logout">Logout</Nav.Link>
+                        </>
+                        :
+                        <>
+                            <Nav.Link as={NavLink} exact to="/login">Login</Nav.Link>
+                            < Nav.Link as={NavLink} exact to="/register"> Register</Nav.Link>
+                            <Nav.Link as={NavLink} exact to="/confirm"> Confirm</Nav.Link>
+                        </>}
+                </Nav>
+            </Navbar.Collapse>
+        </Navbar>
+
     );
 }
 

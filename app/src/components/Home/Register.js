@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import '../style/Register.css'
 import 'aws-amplify'
-import {CognitoUserPool, CognitoUserAttribute} from 'amazon-cognito-identity-js';
 import {Auth} from "aws-amplify";
 import {Redirect} from "react-router-dom";
-import LoadingSpinner from "./LoadingSpinner";
 import {Alert, Button, Container, Form, FormControl, FormLabel, Spinner} from "react-bootstrap";
 
 class Register extends Component {
@@ -136,7 +134,7 @@ class Register extends Component {
     }
 
     render() {
-const {isOk,username,email,errors,loading,message,password} = this.state;
+        const {isOk, username, email, errors, loading, message, password} = this.state;
         if (isOk) {
             return (
                 <Redirect to="/confirm"/>);
@@ -173,26 +171,6 @@ const {isOk,username,email,errors,loading,message,password} = this.state;
                     {this.state.message.length > 1 && <Alert variant="danger">{this.state.message}</Alert>}
                 </Form>
             </Container>
-            // <div className="register">
-            //     <form onSubmit={this.handleSubmit}>
-            //         <h2>Register</h2>
-            //         <input type="text" placeholder="Username" id="user" name="username" value={this.state.username}
-            //                onChange={this.handleChange}/>
-            //         {this.state.errors.username && <span> {this.messages.username_incorect}</span>}
-            //
-            //         <input type="email" placeholder="Email" id="email" name="email" value={this.state.email}
-            //                onChange={this.handleChange}/>
-            //         {this.state.errors.email && <span> {this.messages.email_incorect}</span>}
-            //
-            //         <input type="password" placeholder="Password" name="password" id="password"
-            //                value={this.state.password} onChange={this.handleChange}/>
-            //         {this.state.errors.password && <span> {this.messages.password_incorect}</span>}
-            //
-            //
-            //             <button type="submit">Confirm</button>
-            //             {this.state.loading && <LoadingSpinner/>}
-            //     </form>
-            // </div>
         )
             ;
     }
