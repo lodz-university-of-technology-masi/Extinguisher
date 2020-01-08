@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import '../style/App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from './Footer'
 import Header from './Header'
 import Main from './Main'
@@ -12,13 +13,14 @@ import {AppProvider} from "../context/AppContext";
 import UserPanel from '../UserPanel/UserPanel'
 import UserTestList from '../UserPanel/UserTestList'
 import UserTestView from '../UserPanel/UserTestView'
+import NotFound from "../pages/NotFound";
 
 class App extends Component {
 
     render() {
         return (
-             <BrowserRouter>
-                 <AppProvider>
+            <BrowserRouter>
+                <AppProvider>
                     <div className="App">
                         <Header/>
                         <main>
@@ -32,13 +34,13 @@ class App extends Component {
                                 <Route exact path="/userPanel" component={UserPanel}/>
                                 <Route exact path="/userTestList" component={UserTestList}/>
                                 <Route exact path="/userTestView" component={UserTestView}/>
-
+                                <Route component={NotFound}/>
                             </Switch>
                         </main>
                         <Footer/>
                     </div>
-                 </AppProvider>
-             </BrowserRouter>
+                </AppProvider>
+            </BrowserRouter>
         );
     }
 }
