@@ -38,9 +38,9 @@ class AddTest extends Component {
         }
         handleSendRequest=()=>{
             let data={
-                recruiterID:1234,
+                recruiterID:"1234",
                 testName:this.state.testName,
-                questionList:this.state.questionArray
+                questionsList:this.state.questionArray
             }
             console.log(JSON.stringify(data));
             axios.post('https://d1yalzslbd.execute-api.us-east-1.amazonaws.com/prod/tests', data)
