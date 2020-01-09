@@ -7,14 +7,16 @@
             "langugage": "PL",
             "questionContent": "Opisz swoje doświadczenie z przetwarzaniem w chmurze",
             "numberOfAvaibleAnswers": "0",
-            "avaibleAnswers": ""
+            "avaibleAnswers": "",
+            "correctAnswers": ""
         },
         {
             "type": "W",
             "langugage": "PL",
             "questionContent": "Czy ty lubisz przetwarzanie w chmurze",
             "numberOfAvaibleAnswers": "2",
-            "avaibleAnswers": "Tak|Nie"
+            "avaibleAnswers": "Tak|Nie",
+            "correctAnswers": "Tak"
         }
     ]
 }

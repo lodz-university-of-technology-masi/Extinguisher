@@ -17,14 +17,12 @@ import java.util.UUID;
 import java.lang.Exception;
 import java.io.StringWriter;
 import java.io.PrintWriter;
-//import org.json.*;
+
 
 public class AddTestHandler implements RequestHandler<Object, String> {
     @Override
     public String handleRequest(Object input, Context context) {
         context.getLogger().log("Input: " + input);
-       // JSONObject jsonInput = new JSONObject(input);
-        //String output = jsonInput.getString("recruiterID");
         LinkedHashMap<String, Object> inputMap;
         try {
         inputMap = (LinkedHashMap<String, Object>) input;
@@ -32,10 +30,9 @@ public class AddTestHandler implements RequestHandler<Object, String> {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
-            String sStackTrace = sw.toString(); // stack trace as a string
-            return getMessage("Error", sStackTrace);
+            String sStackTrace = sw.toString();
+            return Response.getMessage("Error", sStackTrace);
         }
-       // String output = inputMap.get("recruiterID");
        List<LinkedHashMap<String, String>> questionsList;
        try {
             questionsList = (ArrayList<LinkedHashMap<String, String>>) inputMap.get("questionsList");
@@ -43,46 +40,31 @@ public class AddTestHandler implements RequestHandler<Object, String> {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
-            String sStackTrace = sw.toString(); // stack trace as a string
-            return getMessage("Error", sStackTrace);
+            String sStackTrace = sw.toString();
+            return Response.getMessage("Error", sStackTrace);
        } 
-      // String output = "";
-      // List<HashMap> hashedQList =
-        for (LinkedHashMap<String, String> q : questionsList) {
-            q.put("QuestionID", UUID.randomUUID().toString());
-        //    HashMap<String, String> hashQuestions = new HashMap<String, String>();
-            for(String key : q.keySet()) {
-               if(key == "avaibleAnswers") {
-                   if(q.get("avaibleAnswers") == "") {
-                        q.put("avaibleAnswers", "_");
-                   }
-               }
-            }
-       }
-      // LinkedHashMap<String, String> firstQuestion = (LinkedHashMap<String, String>) questionsList.get(0);
-      // String firstQuestionType = firstQuestion.get("type");
+      for(LinkedHashMap<String, String> map : questionsList) {
+        map.put("QuestionID", UUID.randomUUID().toString());
+        for(String key : map.keySet()) {
+         if(map.get(key) == "") {
+             map.put(key, "_");
+         }
+        }
+      }
+
+
        final AmazonDynamoDBClient client = new AmazonDynamoDBClient(new EnvironmentVariableCredentialsProvider());
-       // final AmazonDynamoDBClient client = AmazonDynamoDBClientBuilder.defaultClient();
-        client.withRegion(Regions.US_EAST_1); // specify the region you created the table in.
+        client.withRegion(Regions.US_EAST_1);
         DynamoDB dynamoDB = new DynamoDB(client);
         Table table = dynamoDB.getTable("Tests");
          final Item item = new Item()
-                 .withPrimaryKey("TestID", UUID.randomUUID().toString()) // Every item gets a unique id
-                 .withString("recruiterID", (String) inputMap.get("recruiterID"))
+                 .withPrimaryKey("TestID", UUID.randomUUID().toString())
+                 .withString("RecruiterID", (String) inputMap.get("RecruiterID"))
                  .withString("testName", (String) inputMap.get("testName"))
                  .withList("questionsList", questionsList);
-        //         .withDouble("lat", input.getLat())
-        //         .withDouble("lng", input.getLng());
         table.putItem(item);
-       return getMessage("Ok");
+       return Response.getMessage("Ok");
     }
 
-    public static String getMessage(String message) {
-        return "{ \"message\": \"" + message + "\" }";
-    }
-
-    public static String getMessage(String message, String error) {
-        return "{ \"message\": \"" + message + "\", \"error\": \"" + error + "\" }";
-    }
 
 }
