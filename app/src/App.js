@@ -1,20 +1,21 @@
 import React, {Component} from 'react';
-import '../style/App.css';
+import './style/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Footer from './Footer'
-import Header from './Header'
-import Main from './Main'
-import Login from './Login'
-import Register from './Register'
-import Confirm from './Confirm'
-import AddTest from './AddTest'
+import Footer from './components/Footer'
+import Header from './components/Header'
+import Main from './components/Main'
+import Login from './components/Login'
+import Register from './components/Register'
+import Confirm from './pages/Confirm'
+import AddTest from './pages/AddTest'
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
-import {AppProvider} from "../context/AppContext";
-import UserPanel from '../UserPanel/UserPanel'
-import UserTestList from '../UserPanel/UserTestList'
-import UserTestView from '../UserPanel/UserTestView'
-import NotFound from "../pages/NotFound";
-import ProtectedRoute from "./ProtectedRoute";
+import {AppProvider} from "./context/AppContext";
+import UserPanel from './UserPanel/UserPanel'
+import UserTestList from './UserPanel/UserTestList'
+import UserTestView from './UserPanel/UserTestView'
+import NotFound from "./pages/NotFound";
+import ProtectedRoute from "./components/ProtectedRoute";
+import YandexTranslation from "./yandex/YandexTranslation";
 
 class App extends Component {
 
@@ -31,10 +32,12 @@ class App extends Component {
                                 <Route exact path="/register" component={Register}/>
                                 <Route exact path="/confirm" component={Confirm}/>
                                 <Route exact path="/logout" render={() => (<Redirect to="/"/>)}/>
+                                <Route exact path="/yandex" component={YandexTranslation}/>
                                 <ProtectedRoute exact path="/addTest" component={AddTest}/>
                                 <ProtectedRoute exact path="/userPanel" component={UserPanel}/>
                                 <ProtectedRoute exact path="/userTestList" component={UserTestList}/>
                                 <ProtectedRoute exact path="/userTestView" component={UserTestView}/>
+
                                 <Route component={NotFound}/>
                             </Switch>
                         </main>

@@ -1,15 +1,13 @@
 import React, {useContext} from 'react';
 import '../style/Main.css'
 import {AppContext} from "../context/AppContext";
-import LoadingSpinner from "./LoadingSpinner"
-import {Button, Jumbotron} from "react-bootstrap";
+import {Jumbotron} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
 const Main = () => {
     const {userp, auth} = useContext(AppContext);
     const [isAuthenticated, setIsAuthenticated] = auth;
     const [user, setUser] = userp;
-    console.log("USERP OBJ:", user);
     return (
         <div className="container">
             <Jumbotron>

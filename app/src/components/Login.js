@@ -1,9 +1,8 @@
-import React, {Component, useState, useContext} from 'react';
+import React, {Component} from 'react';
 import '../style/Login.css'
 import {Auth} from 'aws-amplify'
 import {Redirect} from 'react-router-dom'
 import {AppContext} from "../context/AppContext";
-import LoadingSpinner from "./LoadingSpinner"
 import {Alert, Button, Container, Form, FormControl, FormLabel, Spinner} from "react-bootstrap";
 
 class Login extends Component {
@@ -66,7 +65,6 @@ class Login extends Component {
                 const {userp, auth} = this.context;
                 const [user, setUser] = userp;
                 const [isAuthenticated, setIsAuthenticated] = auth;
-                console.log(this.state.email, this.state.password)
                 await Auth.signIn(this.state.email, this.state.password)
                     .then(user => {
                         setIsAuthenticated(true);

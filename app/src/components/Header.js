@@ -3,6 +3,7 @@ import '../style/Header.css'
 import {AppContext} from "../context/AppContext";
 import {Nav, Navbar} from "react-bootstrap";
 import {Link, NavLink} from "react-router-dom";
+import Auth from "@aws-amplify/auth/lib/Auth";
 
 const Header = () => {
 
@@ -21,7 +22,13 @@ const Header = () => {
                             <Nav.Link as={NavLink} exact to="/userPanel">UserPanel</Nav.Link>
                             <Nav.Link as={NavLink} exact to="/userTestList">UserTestList</Nav.Link>
                             <Nav.Link as={NavLink} exact to="/userTestView">UserTestView</Nav.Link>
-                            <Nav.Link as={NavLink} exact to="/logout">Logout</Nav.Link>
+                            <Nav.Link as={NavLink} onClick={async () => {
+                                let currentUser = Auth.userPool.getCurrentUser();
+                                console.log(currentUser);
+                                // await Auth.signOut();
+                                setUser(null);
+                                setIsAuthenticated(false)
+                            }} exact to="/logout">Logout</Nav.Link>
                         </>
                         :
                         <>

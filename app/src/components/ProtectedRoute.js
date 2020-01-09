@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
-import {Link, Redirect, Route} from "react-router-dom";
+import {Link, Route} from "react-router-dom";
 import {AppContext} from "../context/AppContext";
-import {Button, Container} from "react-bootstrap";
+import {Container} from "react-bootstrap";
 
 export const ProtectedRoute = ({component: Component, ...rest}) => {
     const {userp, auth} = useContext(AppContext);
