@@ -1,25 +1,19 @@
 import React, {useState, useContext} from 'react';
 import '../style/Header.css'
 import {Link} from 'react-router-dom'
-import {AppContext} from "../context/AppContext";
+import {AppContext} from "../../context/AppContext";
 
-const Header = () => {
+const Header3 = () => {
 
-    const {userp, auth} = useContext(AppContext);
-    const [user, setUser] = userp;
-    const [isAuthenticated, setIsAuthenticated] = auth;
+    const {isAuthenticated, logout} = useContext(AppContext);
     return (
         <nav>
             <ul>
                 <li><Link to="/">Home</Link></li>
                 {isAuthenticated ?
                     <>
-                        <li><Link onClick={() => {
-                            setIsAuthenticated(false);
-                            setUser(false);
-                        }} to="/logout">Logout</Link></li>
+                        <li><Link onClick={logout} to="/logout">Logout</Link></li>
                         <li><Link to="/addTest">Add Test</Link></li>
-                        <li><Link to="/userPanel">User Panel</Link></li>
                     </>
                     :
                     <>
@@ -32,4 +26,4 @@ const Header = () => {
     );
 }
 
-export default Header;
+export default Header3;

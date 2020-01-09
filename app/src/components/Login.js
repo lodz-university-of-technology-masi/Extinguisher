@@ -1,9 +1,8 @@
-import React, {Component, useState, useContext} from 'react';
+import React, {Component} from 'react';
 import '../style/Login.css'
 import {Auth} from 'aws-amplify'
 import {Redirect} from 'react-router-dom'
 import {AppContext} from "../context/AppContext";
-import LoadingSpinner from "./LoadingSpinner"
 import {Alert, Button, Container, Form, FormControl, FormLabel, Spinner} from "react-bootstrap";
 
 class Login extends Component {
@@ -115,7 +114,7 @@ class Login extends Component {
                     <Form onSubmit={this.handleSubmit}>
                         <h1>Login</h1>
                         <FormLabel>Username/Email</FormLabel>
-                        <FormControl type="text" placeholder="Email" value={email} onChange={(event) => {
+                        <FormControl type="email" placeholder="Email" value={email} onChange={(event) => {
                             this.setState({email: event.target.value})
                         }}
                         />

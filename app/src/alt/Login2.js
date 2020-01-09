@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import '../style/Login.css'
 import {Auth} from 'aws-amplify'
 import {Redirect} from 'react-router-dom'
-import {AppContext} from "../context/AppContext";
+import {AppContext} from "../../context/AppContext";
 
 class Login2 extends Component {
     static contextType = AppContext;
