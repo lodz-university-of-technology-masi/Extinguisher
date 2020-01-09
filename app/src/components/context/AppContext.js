@@ -1,4 +1,4 @@
-import React, {useState, createContext} from 'react';
+import React, {useState, createContext,Component} from 'react';
 import {Auth} from "aws-amplify";
 
 export const AppContext = createContext();
@@ -17,13 +17,13 @@ export const AppProvider = props => {
 
 export const AppConsumer = AppContext.Consumer;
 
-// wersja z logowaniem, niedziala
+// // wersja z logowaniem, niedziala
 // export class AppProvider extends Component {
 //     state = {
 //         user: null,
 //         isAuthenticated: false
 //     };
-//
+
 //     login = async (email, password) => {
 //         return await Auth.signIn(email, password)
 //             .then(user => {
@@ -41,7 +41,7 @@ export const AppConsumer = AppContext.Consumer;
 //                 })
 //             })
 //     };
-//
+
 //     render() {
 //         const {user, isAuthenticated} = this.state;
 //         return (

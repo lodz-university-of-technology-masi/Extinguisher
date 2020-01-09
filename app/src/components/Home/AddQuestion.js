@@ -9,6 +9,7 @@ class AddQuestion extends Component {
         numbers:[2,3,4,5,6],
         numberOfAvaibleAnswers:4,
         isOpen:true,
+        openAnswer:"",
         answers:[],
         ifAnswersAreCorrect:[false,false,false,false,false,false,false],
         errors: {
@@ -66,7 +67,7 @@ toggleChange = (e) => {
   }
   handleOpenQuestionSubmit = ()=>{
     var numberOfAvaibleAnswers = 0;
- var avaibleAnswers=""
+ var avaibleAnswers=this.state.openAnswer
             var questionObj={
                 type:"O",
                 language:"PL",
@@ -93,7 +94,7 @@ handleClosedQuestionSubmit = ()=>{
             var questionObj={
                 type:"W",
                 language:"PL",
-                numberOfAvaibleAnswers:numberOfAvaibleAnswers,
+                numberOfAvaibleAnswers:numberOfAvaibleAnswers.toString(),
                 questionContent:this.state.question,
                 avaibleAnswers:avaibleAnswers,
                 correctArray:isCorrect
@@ -107,7 +108,7 @@ handleClosedQuestionSubmit = ()=>{
       <div>
           <label htmlFor="question">Answer:</label>
         <input className="form-control mb-4" 
-               name="openAnswer"/>
+               id ="openAnswer" name="openAnswer" onChange={this.handleChangeName}/>
         <div className="row mt-4">
           <button  onClick={this.handleOpenQuestionSubmit} type="submit" className="btn btn-primary">
             Add question to test
@@ -152,7 +153,7 @@ render(){
         <>
           <div className="card border container mt-5">
             <header className="card-body row justify-content-center">
-            <h className="font-weight-bold mb-3">Add New Question</h>
+            <h2 className="font-weight-bold mb-3">Add New Question</h2>
             </header>
             {this.renderSwitchButton()}
             <div className="card-body">

@@ -1,12 +1,16 @@
-import React, { Component } from 'react';
+import React, {Component, useState, useContext} from 'react';
 import '../style/AddTest.css'
 import axios from 'axios';
 import AddQuestion from "./AddQuestion.js"
 import QuestionsView from "./QuestionsView.js"
+import Services from  "../services/services.js"
+import {AppContext} from "../context/AppContext.js"
+
 
 class AddTest extends Component {
-
+  static contextType = AppContext;
     constructor(props){
+     
     super(props)
         this.state = {
         testName:"",
@@ -37,19 +41,17 @@ class AddTest extends Component {
 
         }
         handleSendRequest=()=>{
+          const {userp, auth} = this.context;
+          const [user, setUser] = userp;
+          const [isAuthenticated, setIsAuthenticated] = auth;
             let data={
-                recruiterID:1234,
+                //recruiterID:user.username,
+                recruiterID:"test",
                 testName:this.state.testName,
-                questionList:this.state.questionArray
+                questionsList:this.state.questionArray
             }
             console.log(JSON.stringify(data));
-            axios.post('https://d1yalzslbd.execute-api.us-east-1.amazonaws.com/prod/tests', data)
-              .then(function (response) {
-                console.log(response);
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
+            console.log(Services.addTest(data));
         }
         handleDeleteQuestion=(e)=>{
             let arr = this.state.questionArray;
