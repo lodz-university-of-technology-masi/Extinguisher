@@ -25,12 +25,18 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.net.URL;
 
+import java.io.StringWriter;
+import java.io.PrintWriter;
+
 public class GetCsv implements RequestHandler<Map<String, Object>, ApiGatewayResponse> {
     @Override
     public ApiGatewayResponse handleRequest(Map<String, Object> request, Context context) {
 
         AWSLambdaClient lambdaClient;
         AmazonS3Client s3client = new AmazonS3Client(new EnvironmentVariableCredentialsProvider());
+
+        // ApiGatewayResponse res = new ApiGatewayResponse(200, request.toString());
+        // return res;
 
         // {
         //     String strInput = request.toString();
@@ -39,6 +45,26 @@ public class GetCsv implements RequestHandler<Map<String, Object>, ApiGatewayRes
         //     String key = instant.toString() + "_input";
         //     s3client.putObject("pl-extinguisher-logs-lambda", key, strInput);
         // }
+
+        TestID testID;
+        Gson gson = new Gson();
+       // JsonObject jsonObject = gson.toJsonTree(request.get("body").toString()).getAsJsonObject();
+        try {
+            testID = gson.fromJson(request.get("queryStringParameters").toString(), TestID.class);
+        } catch(Exception e) {
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            String sStackTrace = sw.toString();
+
+            ApiGatewayResponse res = new ApiGatewayResponse(400, sStackTrace);
+            return res;
+        }
+
+        // ApiGatewayResponse res = new ApiGatewayResponse(200, testID.getTestID());
+        // return res;
+        
+
 
         lambdaClient = new AWSLambdaClient(new EnvironmentVariableCredentialsProvider());
         lambdaClient.withRegion(Regions.US_EAST_1);
@@ -53,8 +79,8 @@ public class GetCsv implements RequestHandler<Map<String, Object>, ApiGatewayRes
     //   Instant instant = timestamp.toInstant();
     //   String key = instant.toString() + "_input";
     //   s3client.putObject("pl-extinguisher-logs-lambda", key, inputStr);
-      Gson gson = new Gson();
-      TestID testID = gson.fromJson(request.get("body").toString(), TestID.class);
+    //   Gson gson = new Gson();
+    //   TestID testID = gson.fromJson(request.get("body").toString(), TestID.class);
         // if(inputMap.get("TestID") == null) {
             
         //     ApiGatewayResponse res = new ApiGatewayResponse(500, "wrong");

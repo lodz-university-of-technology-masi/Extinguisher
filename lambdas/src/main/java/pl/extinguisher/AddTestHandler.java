@@ -9,9 +9,7 @@ import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.regions.Regions;
 
-import java.util.LinkedHashMap;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.UUID;
 import java.lang.Exception;
 import java.io.StringWriter;
@@ -19,7 +17,7 @@ import java.io.PrintWriter;
 
 import java.util.Map;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+
 
 
 public class AddTestHandler implements RequestHandler<Map<String, Object>, ApiGatewayResponse> {
@@ -37,6 +35,18 @@ public class AddTestHandler implements RequestHandler<Map<String, Object>, ApiGa
         try {
             test = gson.fromJson(request.get("body").toString(), Test.class);
         } catch(Exception e) {
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            String sStackTrace = sw.toString();
+
+            ApiGatewayResponse res = new ApiGatewayResponse(400, sStackTrace);
+            return res;
+        }
+
+        try {
+            test.validateTest();
+        } catch(TestException e) {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);

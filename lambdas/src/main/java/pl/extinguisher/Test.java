@@ -44,12 +44,20 @@ class Test{
     }
 
     public void validateTest() throws TestException {
-        if(recruiterID == "" || recruiterID == null) {
+        if(recruiterID.equals("") || recruiterID == null) {
             throw new TestException("recruiterID cannot be null");
         }
 
-        if(testName == "" || testName == null) {
+        if(testName.equals("") || testName == null) {
             throw new TestException("testName cannot be null");
+        }
+
+        if(questionsList == null) {
+            throw new TestException("Cannot initialize questionsList. Given questionsList: " + questionsList.toString());
+        }
+
+        if(questionsList.size() == 0) {
+            throw new TestException("questionsList size cannot be 0");
         }
     }
 

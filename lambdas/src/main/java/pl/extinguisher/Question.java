@@ -1,6 +1,7 @@
 package pl.extinguisher;
 
 import java.util.Map;
+import java.util.UUID;
 import java.util.HashMap;
 
 class Question {
@@ -10,8 +11,18 @@ class Question {
     Integer numberOfAvaibleAnswers;
     String avaibleAnswers;
     String correctAnswers;
+    private String questionID;
 
     public void validateQuestion() throws QuestionException {
+
+        if(questionID == null) {
+            questionID = UUID.randomUUID().toString();
+        }
+
+        if(questionID.equals("")) {
+            questionID = UUID.randomUUID().toString();
+        }
+
         if (!type.equals("O") && !type.equals("W") && !type.equals("L")) {
             throw new QuestionException("Illegal type of question. Given: " + type + " Expected: O or W or L.");
         }
@@ -62,8 +73,17 @@ class Question {
                 }
             }
         }
+
+        if(avaibleAnswers == null) {
+            avaibleAnswers = "_";
+        }
+
         if(avaibleAnswers.equals("") || avaibleAnswers == null || avaibleAnswers.equals("\'\'")) {
             avaibleAnswers = "_";
+        }
+
+        if(correctAnswers == null) {
+            correctAnswers = "_";
         }
 
         if(correctAnswers.equals("") || correctAnswers == null || avaibleAnswers.equals("\'\'")) {
@@ -79,12 +99,14 @@ class Question {
         this.numberOfAvaibleAnswers = numberOfAvaibleAnswers;
         this.avaibleAnswers = avaibleAnswers;
         this.correctAnswers = correctAnswers;
+        this.questionID = UUID.randomUUID().toString();
         validateQuestion();
     }
 
     public Map<String, Object> getMap() throws QuestionException {
         validateQuestion();
         Map<String, Object> ret = new HashMap<String, Object>();
+        ret.put("QuestionID", questionID);
         ret.put("type", type);
         ret.put("language", language);
         ret.put("questionContent", questionContent);
@@ -95,18 +117,27 @@ class Question {
         return ret;
     }
 
+
     @Override
     public String toString() {
         try {
-            return "{" + " type='" + getType() + "'" + ", language='" + getLanguage() + "'" + ", questionContent='"
-                    + getQuestionContent() + "'" + ", numberOfAvaibleAnswers='" + getNumberOfAvaibleAnswers() + "'"
-                    + ", avaibleAnswers='" + getAvaibleAnswers() + "'" + ", correctAnswers='" + getCorrectAnswers()
-                    + "'" + "}";
-        } catch (QuestionException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return "";
-        }
+        return "{" +
+            " type='" + getType() + "'" +
+            ", language='" + getLanguage() + "'" +
+            ", questionContent='" + getQuestionContent() + "'" +
+            ", numberOfAvaibleAnswers='" + getNumberOfAvaibleAnswers() + "'" +
+            ", avaibleAnswers='" + getAvaibleAnswers() + "'" +
+            ", correctAnswers='" + getCorrectAnswers() + "'" +
+            ", questionID='" + getQuestionID() + "'" +
+            "}";
+        }catch(Exception e) {
+                return e.getMessage();
+            }
+    }
+    
+
+    public String getQuestionID() throws QuestionException {
+        return this.questionID;
     }
 
     public String getType() throws QuestionException {
