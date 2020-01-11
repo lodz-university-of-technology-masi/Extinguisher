@@ -36,13 +36,23 @@ class AddTest extends Component {
         }
         console.log(JSON.stringify(data));
         // api.saveTest(data);
-        axios.post('https://d1yalzslbd.execute-api.us-east-1.amazonaws.com/prod/tests', data)
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        var myJSON = JSON.stringify(data);
+        // axios.post('https://d1yalzslbd.execute-api.us-east-1.amazonaws.com/prod/tests', myJSON)
+        //     .then(function (response) {
+        //         console.log(response);
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
+        var xhr = new XMLHttpRequest();
+	 xhr.onreadystatechange = function() {
+	    console.log(this.status);
+            console.log(this.response);
+    };
+
+        xhr.open("POST", "https://d1yalzslbd.execute-api.us-east-1.amazonaws.com/prod/tests", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send(myJSON);		
     }
     handleDeleteQuestion = (e) => {
         let arr = this.state.questionsList;

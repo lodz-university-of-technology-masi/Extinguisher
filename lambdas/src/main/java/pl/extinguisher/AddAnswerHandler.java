@@ -28,10 +28,9 @@ public class AddAnswerHandler implements RequestHandler<Object, String> {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
-            String sStackTrace = sw.toString(); // stack trace as a string
-            return AddTestHandler.getMessage("Error", sStackTrace);
+            String sStackTrace = sw.toString();
+            return Response.getMessage("Error", sStackTrace);
         }
-       // String output = inputMap.get("recruiterID");
        List<LinkedHashMap<String, String>> answersList;
        try {
             answersList = (ArrayList<LinkedHashMap<String, String>>) inputMap.get("answersList");
@@ -39,21 +38,28 @@ public class AddAnswerHandler implements RequestHandler<Object, String> {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
-            String sStackTrace = sw.toString(); // stack trace as a string
-            return AddTestHandler.getMessage("Error", sStackTrace);
+            String sStackTrace = sw.toString();
+            return Response.getMessage("Error", sStackTrace);
        }
        
+       for(LinkedHashMap<String, String> map : answersList) {
+           for(String key : map.keySet()) {
+            if(map.get(key) == "") {
+                map.put(key, "_");
+            }
+           }
+       }
        
        final AmazonDynamoDBClient client = new AmazonDynamoDBClient(new EnvironmentVariableCredentialsProvider());
-       // final AmazonDynamoDBClient client = AmazonDynamoDBClientBuilder.defaultClient();
-        client.withRegion(Regions.US_EAST_1); // specify the region you created the table in.
+        client.withRegion(Regions.US_EAST_1);
         DynamoDB dynamoDB = new DynamoDB(client);
         Table table = dynamoDB.getTable("TestAnswers");
          final Item item = new Item()
-                 .withPrimaryKey("TestAnswerID", UUID.randomUUID().toString()) // Every item gets a unique id
+                 .withPrimaryKey("TestAnswerID", UUID.randomUUID().toString())
                  .withString("CandidateID", (String) inputMap.get("CandidateID"))
+                 .with("TestID", inputMap.get("TestID"))
                  .withList("answersList", answersList);
         table.putItem(item);
-        return AddTestHandler.getMessage("Ok");
+        return Response.getMessage("Ok");
     }
 }
