@@ -16,6 +16,7 @@ import UserTestView from './UserPanel/UserTestView'
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import YandexTranslation from "./yandex/YandexTranslation";
+import Routes from "./components/Routes"
 
 class App extends Component {
 
@@ -26,20 +27,7 @@ class App extends Component {
                     <div className="App">
                         <Header/>
                         <main>
-                            <Switch>
-                                <Route exact path="/" component={Main}/>
-                                <Route exact path="/login" component={Login}/>
-                                <Route exact path="/register" component={Register}/>
-                                <Route exact path="/confirm" component={Confirm}/>
-                                <Route exact path="/logout" render={() => (<Redirect to="/"/>)}/>
-                                <Route exact path="/yandex" component={YandexTranslation}/>
-                                <ProtectedRoute exact path="/addTest" component={AddTest}/>
-                                <ProtectedRoute exact path="/userPanel" component={UserPanel}/>
-                                <ProtectedRoute exact path="/userTestList" component={UserTestList}/>
-                                <ProtectedRoute exact path="/userTestView" component={UserTestView}/>
-
-                                <Route component={NotFound}/>
-                            </Switch>
+                            <Routes></Routes>
                         </main>
                         <Footer/>
                     </div>

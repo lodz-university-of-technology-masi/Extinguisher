@@ -46,8 +46,8 @@ class Confirm extends Component {
         const {email, code} = this.state;
         e.preventDefault();
         const validation = this.formValidation();
-        console.log("Email:", email);
-        console.log("Code:", code);
+        //console.log("Email:", email);
+        //console.log("Code:", code);
         if (validation.correct) {
             this.setState({
                 errors: {
@@ -79,8 +79,8 @@ class Confirm extends Component {
             <Container>
                 <Form onSubmit={this.handleSubmit}>
                     <h1>Confirm Account</h1>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl type="email" placeholder="Email" value={email} onChange={(event) => {
+                    <FormLabel>Username</FormLabel>
+                    <FormControl type="text" placeholder="Username" value={email} onChange={(event) => {
                         this.setState({email: event.target.value})
                     }}
                     />
@@ -99,7 +99,7 @@ class Confirm extends Component {
                 <Button variant="primary" onClick={async () => {
                     try {
                         let s = await Auth.resendSignUp(email);
-                        console.log(s);
+                        //console.log(s);
                         alert("git")
                     } catch (e) {
                         alert("nah")

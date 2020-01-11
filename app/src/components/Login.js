@@ -67,8 +67,8 @@ class Login extends Component {
                 const [isAuthenticated, setIsAuthenticated] = auth;
                 await Auth.signIn(this.state.email, this.state.password)
                     .then(user => {
-                        setIsAuthenticated(true);
                         setUser(user);
+                        setIsAuthenticated(true);
                         this.setState({
                             redirect: true
                         })
@@ -114,7 +114,7 @@ class Login extends Component {
                     <Form onSubmit={this.handleSubmit}>
                         <h1>Login</h1>
                         <FormLabel>Username/Email</FormLabel>
-                        <FormControl type="email" placeholder="Email" value={email} onChange={(event) => {
+                        <FormControl type="text" placeholder="Email" value={email} onChange={(event) => {
                             this.setState({email: event.target.value})
                         }}
                         />

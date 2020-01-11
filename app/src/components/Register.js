@@ -66,11 +66,14 @@ class Register extends Component {
                 },
                 loading: true
             });
-
             Auth.signUp({
                 username,
                 password,
-                attributes: {email}
+                attributes: 
+            {
+                email:email,
+                'custom:role':'candidate'
+            }
             }).then(data => {
                 console.log(data);
                 this.setState({isOk: true})
