@@ -1,22 +1,24 @@
 {
-    "recruiterID": "1223",
-    "testName": "firstTest",
-    "questionsList": [
-        {
-            "type": "O",
-            "langugage": "PL",
-            "questionContent": "Opisz swoje doświadczenie z przetwarzaniem w chmurze",
-            "numberOfAvaibleAnswers": "0",
-            "avaibleAnswers": "",
-            "correctAnswers": ""
-        },
-        {
-            "type": "W",
-            "langugage": "PL",
-            "questionContent": "Czy ty lubisz przetwarzanie w chmurze",
-            "numberOfAvaibleAnswers": "2",
-            "avaibleAnswers": "Tak|Nie",
-            "correctAnswers": "Tak"
-        }
-    ]
+    "body": {
+        "recruiterID": "iddscas",
+        "testName": "anotherrrrtest",
+        "questionsList": [
+            {
+                "type": "O",
+                "language": "PL",
+                "questionContent": "Opisz swoje doswiadczenie z przetwarzaniem w chmurze",
+                "numberOfAvaibleAnswers": 0,
+                "avaibleAnswers": "",
+                "correctAnswers": ""
+            },
+            {
+                "type": "W",
+                "language": "PL",
+                "questionContent": "Czy ty lubisz przetwarzanie w chmurze",
+                "numberOfAvaibleAnswers": 2,
+                "avaibleAnswers": "Tak|Nie",
+                "correctAnswers": "Tak"
+            }
+        ]
+    }
 }
