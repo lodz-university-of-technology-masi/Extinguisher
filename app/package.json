@@ -18,12 +18,13 @@
     "react-scripts": "3.2.0",
     "react-spinkit": "^3.0.0",
     "semantic-ui-react": "^0.88.1",
-    "typescript": "^3.7.3"
+    "typescript": "^3.7.3",
+    "xmlhttprequest": "^1.8.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "mocha",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -40,5 +41,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "mocha": "^7.0.0"
   }
 }
