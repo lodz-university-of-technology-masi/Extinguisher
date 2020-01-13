@@ -8,7 +8,8 @@ class UserTestList extends Component {
         super()
         this.state = {
             data: [],
-            isDownloaded: false
+            isDownloaded: false,
+            userId: ""
         }
 
         this.handleClick = this.handleClick.bind(this)
@@ -16,33 +17,37 @@ class UserTestList extends Component {
     
     handleClick() {
          
-        axios.get('https://wjdhyrfow4.execute-api.us-east-1.amazonaws.com/production/tests')
+        //axios.get('https://wjdhyrfow4.execute-api.us-east-1.amazonaws.com/production/tests')
+        axios.get('https://d1yalzslbd.execute-api.us-east-1.amazonaws.com/prod/tests')
         .then(res => {
             let data = res.data;
-            let data2 = JSON.parse(data);
-
+            // console.log(data.body)
+            let data2 = JSON.parse(data.body);
+            // console.log(data2)
             this.setState({data: data2})
         }).catch(function (error) {
             console.log(error)});
         this.setState({isDownloaded: true})
+        // funkcja mapujaca po user id ?
+        // ew lambda powinna to robic
     }
 
     createTestList(){
         let arrLength = this.state.data.length     
         
         let TestList = this.state.data.map(test => 
-            <TestListPosition key={test.TestID} test = {test}/>
+            <TestListPosition key={test.testID} test = {test}/>
         )
         
         return (
             <table>
                 <thead>
                     <tr>
-                        <td>Test Id</td>
+                        <td>Test Name</td>
                         <td>Recruiter Id</td>
                         <td>Status</td>
                         <td>Go to the test</td>
-                    </tr>
+    nie                 </tr>
                 </thead>
                 <tbody>
                     {TestList}
@@ -57,7 +62,7 @@ class UserTestList extends Component {
             <div>
                 <h1>List testow !</h1>
                 <p><button onClick = {this.handleClick}>Download Test</button></p>
-                <div>{this.state.isDownloaded ? this.createTestList():<p>Not updated</p>}</div>
+             <div>{this.state.isDownloaded ? this.createTestList():<p>Not updated</p>}</div>
             </div>
         )
     }

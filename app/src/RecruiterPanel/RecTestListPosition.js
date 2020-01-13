@@ -1,10 +1,8 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import "./style/TestListPosition.css"
 
-function TestListPosition(props) {
-    const isSolved = false
-    //console.log(props.test.questionsList)
+function RecTestListPosition(props) {
+    // console.log(props.test)
     return (
         <tr>
             <td>
@@ -14,18 +12,23 @@ function TestListPosition(props) {
                 {props.test.recruiterID}
             </td>
             <td>
-              {isSolved}
+                {props.test.recruiterID}
             </td>
             <td>
+              {props.minPoints}/{props.maxPoints}
+            </td>
+             
+            <td>
               <Link to={{
-                  pathname: '/userTestView',
+                  pathname: '/recruiterTestView',
                   state: {
                       data: props.test.questionsList,
-                      testID: props.test.TestID}
-              }}>Open Test</Link>
+                      testID: props.test.TestID
+                    }
+              }}>Check Test</Link>
             </td>
         </tr>
     )
 }
 
-export  default TestListPosition
+export default RecTestListPosition;

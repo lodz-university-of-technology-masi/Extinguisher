@@ -16,7 +16,7 @@ class UserPanel extends Component {
     render(){
         return(
             <div>
-                <h1>Witaj </h1>
+                <h1>Witaj Kandydacie</h1>
                 <ul>
                     <li><Link to="/userTestList">Tests</Link></li>       
                 </ul>

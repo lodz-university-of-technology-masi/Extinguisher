@@ -141,10 +141,6 @@ class AddQuestion extends Component {
         );
     };
 
-    renderQuestion = () => {
-        return this.state.isOpen ? this.renderOpenQuestion() : this.renderClosedQuestion();
-    };
-
     render() {
         return (
             <>
@@ -158,7 +154,7 @@ class AddQuestion extends Component {
                             <input type="question" id="question" name="question" value={this.state.question}
                                    onChange={this.handleChangeName}/>
                         </label>
-                        {this.renderQuestion()}
+                        {this.state.isOpen ? this.renderOpenQuestion() : this.renderClosedQuestion()}
                     </div>
                 </div>
             </>
