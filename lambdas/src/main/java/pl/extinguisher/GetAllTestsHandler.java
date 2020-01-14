@@ -18,9 +18,9 @@ import com.amazonaws.services.dynamodbv2.document.spec.ScanSpec;
 import com.amazonaws.services.dynamodbv2.document.ItemCollection;
 
 
-public class GetAllTestsHandler implements RequestHandler<Object, String> {
+public class GetAllTestsHandler implements RequestHandler<Object, ApiGatewayResponse> {
     @Override
-    public String handleRequest(Object input, Context context) {
+    public ApiGatewayResponse handleRequest(Object input, Context context) {
         context.getLogger().log("Input: " + input);
         final AmazonDynamoDBClient client = new AmazonDynamoDBClient(new EnvironmentVariableCredentialsProvider());
          client.withRegion(Regions.US_EAST_1);
@@ -42,9 +42,11 @@ public class GetAllTestsHandler implements RequestHandler<Object, String> {
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
             String sStackTrace = sw.toString();
-            return Response.getMessage("Unable to scan table", sStackTrace);
+            ApiGatewayResponse res = new ApiGatewayResponse(400, "Unable to scan table " + e.getMessage());
+            return res;
         }
         output = output.replace(":\"_\"", ":\"\"");
-        return output;
+        ApiGatewayResponse res = new ApiGatewayResponse(200, output);
+        return res;
     }
 }
