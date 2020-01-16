@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import RecTestListPosition from './RecTestListPosition'
+import UUID from 'uuid'
 
 class RecruiterTestList extends Component {
     constructor(props){
@@ -32,9 +33,10 @@ class RecruiterTestList extends Component {
     handleClick() {
         // Get Testow / Get Odpowiedzi
         axios.get('https://d1yalzslbd.execute-api.us-east-1.amazonaws.com/prod/tests')
-        //axios.get('https://qx7qoru7xa.execute-api.us-east-1.amazonaws.com/prod2/answers')
+        //axios.get('https://qx7qoru7xa.execute-api.us-east-1.amazonaws.com/prod/answers')
         .then(res => {
-            let data = res.data;            
+            let data = res.data;  
+            console.log(data)          
             let data2 = JSON.parse(data.body);
             //console.log(data2)
             this.setState({data: data2})
@@ -47,7 +49,7 @@ class RecruiterTestList extends Component {
         let arrLength = this.state.data.length     
         
         let TestList = this.state.data.map(test => 
-            <RecTestListPosition key={test.TestID} test = {test} minPoints={0}
+            <RecTestListPosition key={UUID.uuid()} test = {test} minPoints={0}
                         maxPoints = {10} />
         )
         

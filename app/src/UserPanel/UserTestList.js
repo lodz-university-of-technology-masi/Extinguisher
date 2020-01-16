@@ -44,8 +44,8 @@ class UserTestList extends Component {
                 <thead>
                     <tr>
                         <td>Test Name</td>
-                        <td>Recruiter Id</td>
-                        <td>Status</td>
+                        <td>Status</td> 
+                        <td>Result</td>
                         <td>Go to the test</td>
     nie                 </tr>
                 </thead>

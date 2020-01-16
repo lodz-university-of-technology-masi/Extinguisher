@@ -4,8 +4,15 @@ class RecruiterTestView extends Component {
     constructor(props){
         super(props);
         this.state = {
+            TestID: "",
+            questions: [],
+
 
         }
+    }
+
+    componentDidMount(){
+        this.setState({questions: this.props.item.questions})
     }
 
     render(){

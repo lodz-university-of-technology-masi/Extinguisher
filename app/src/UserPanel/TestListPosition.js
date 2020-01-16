@@ -11,10 +11,10 @@ function TestListPosition(props) {
                 {props.test.testName}
             </td>
             <td>
-                {props.test.recruiterID}
+                Warunek sprawdzajacy isSolved/isCheckd/IsPassed i wyswietlajacy odpowiedni status no to chyba trzeba przrobic na komponent calosc
             </td>
             <td>
-              {isSolved}
+              Pobiera wynik z wpisu do bazy danych i opisuje  wynik 
             </td>
             <td>
               <Link to={{
