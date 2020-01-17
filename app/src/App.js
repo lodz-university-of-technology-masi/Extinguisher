@@ -16,6 +16,7 @@ import UserTestView from './UserPanel/UserTestView'
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import YandexTranslation from "./yandex/YandexTranslation";
+import UsersList from "./UserPanel/UsersList"
 
 class App extends Component {
 
@@ -37,7 +38,7 @@ class App extends Component {
                                 <ProtectedRoute exact path="/userPanel" component={UserPanel}/>
                                 <ProtectedRoute exact path="/userTestList" component={UserTestList}/>
                                 <ProtectedRoute exact path="/userTestView" component={UserTestView}/>
-
+                                <ProtectedRoute exact path="/usersList" component = {UsersList}/>
                                 <Route component={NotFound}/>
                             </Switch>
                         </main>

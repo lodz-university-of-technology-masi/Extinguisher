@@ -18,14 +18,14 @@ import com.amazonaws.services.dynamodbv2.document.spec.ScanSpec;
 import com.amazonaws.services.dynamodbv2.document.ItemCollection;
 
 
-public class GetAllTestsHandler implements RequestHandler<Object, ApiGatewayResponse> {
+public class GetAllCandidatesTests implements RequestHandler<Object, ApiGatewayResponse> {
     @Override
     public ApiGatewayResponse handleRequest(Object input, Context context) {
         context.getLogger().log("Input: " + input);
         final AmazonDynamoDBClient client = new AmazonDynamoDBClient(new EnvironmentVariableCredentialsProvider());
-         client.withRegion(Regions.US_EAST_1);
-         DynamoDB dynamoDB = new DynamoDB(client);
-         Table table = dynamoDB.getTable("Tests");
+        client.withRegion(Regions.US_EAST_1);
+        DynamoDB dynamoDB = new DynamoDB(client);
+        Table table = dynamoDB.getTable("CandidatesTests");
         ScanSpec scanSpec = new ScanSpec();
         String output = "{\"testArray\":[";
         try {

@@ -70,7 +70,8 @@ class AddQuestion extends Component {
             language: "PL",
             numberOfAvaibleAnswers: numberOfAvaibleAnswers,
             questionContent: this.state.question,
-            avaibleAnswers: avaibleAnswers
+            avaibleAnswers: avaibleAnswers,
+            correctAnswers: ""
         }
 
         this.props.handleQuestionSubmit(questionObj);
@@ -93,7 +94,7 @@ class AddQuestion extends Component {
             numberOfAvaibleAnswers: numberOfAvaibleAnswers,
             questionContent: this.state.question,
             avaibleAnswers: avaibleAnswers,
-            correctArray: isCorrect
+            correctAnswers: isCorrect
         }
         console.log(questionObj);
 

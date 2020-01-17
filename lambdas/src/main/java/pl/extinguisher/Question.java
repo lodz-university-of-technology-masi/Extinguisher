@@ -1,30 +1,23 @@
 package pl.extinguisher;
 
-import java.util.Map;
-import java.util.UUID;
-import java.util.HashMap;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.*;
 
 class Question {
     String type;
     String language;
     String questionContent;
-    Integer numberOfAvaibleAnswers;
-    String avaibleAnswers;
-    String correctAnswers;
-    private String questionID;
+    List<String> availableAnswers;
+    List<String> correctAnswers;
 
     public void validateQuestion() throws QuestionException {
 
-        if(questionID == null) {
-            questionID = UUID.randomUUID().toString();
-        }
 
-        if(questionID.equals("")) {
-            questionID = UUID.randomUUID().toString();
-        }
-
-        if (!type.equals("O") && !type.equals("W") && !type.equals("L")) {
-            throw new QuestionException("Illegal type of question. Given: " + type + " Expected: O or W or L.");
+        if (!type.equals("O") && !type.equals("W")) {
+            throw new QuestionException("Illegal type of question. Given: " + type + " Expected: O or W.");
         }
 
         if (!language.equals("PL") && !language.equals("EN")) {
@@ -35,85 +28,51 @@ class Question {
             throw new QuestionException("questionContent cannot be null");
         }
 
-        if (numberOfAvaibleAnswers < 0 || numberOfAvaibleAnswers == null) {
-            throw new QuestionException("numberOfAvaibleAnswers need to be positive integer");
-        }
 
-        if (numberOfAvaibleAnswers == 0 && !(avaibleAnswers.equals("") || avaibleAnswers.equals("_"))) {
-            throw new QuestionException("avaibleAnswers should be empty when numberOfAvaibleAnswers equals 0");
-        }
-
-        if (numberOfAvaibleAnswers > 0) {
-            long delimiterCount = avaibleAnswers.chars().filter(ch -> ch == '|').count();
-            if ((numberOfAvaibleAnswers - 1) != delimiterCount) {
-                throw new QuestionException("Missing delimiter");
-            }
-        }
-
-        if (type.equals("L")) {
-            String[] splittedAvaibleAnswers = avaibleAnswers.split("\\|");
-            for (String answer : splittedAvaibleAnswers) {
-                try {
-                    double value = Double.parseDouble(answer);
-                   // value += 1.0;
-                } catch (Exception e) {
-                    throw new QuestionException(
-                            "When type equals L, all avaibleAnswers should be parsed to double. Illegal answer: "
-                                    + answer);
-                }
-            }
-        }
-
-        if (type.equals("W")) {
-            String[] splittedCorrectAnswers = correctAnswers.split("\\|");
-            for (String correct : splittedCorrectAnswers) {
-                if (!avaibleAnswers.contains(correct)) {
-                    throw new QuestionException(
-                            "correctAnswers entry should be in range of avaibleAnswers when type equals W");
-                }
-            }
-        }
-
-        if(avaibleAnswers == null) {
-            avaibleAnswers = "_";
-        }
-
-        if(avaibleAnswers.equals("") || avaibleAnswers == null || avaibleAnswers.equals("\'\'")) {
-            avaibleAnswers = "_";
-        }
-
-        if(correctAnswers == null) {
-            correctAnswers = "_";
-        }
-
-        if(correctAnswers.equals("") || correctAnswers == null || avaibleAnswers.equals("\'\'")) {
-            correctAnswers = "_";
-        }
     }
 
-    public Question(String type, String language, String questionContent, Integer numberOfAvaibleAnswers,
-            String avaibleAnswers, String correctAnswers) throws QuestionException {
+    public Question(String type, String language, String questionContent,
+            List<String> availableAnswers, List<String> correctAnswers) throws QuestionException {
         this.type = type;
         this.language = language;
         this.questionContent = questionContent;
-        this.numberOfAvaibleAnswers = numberOfAvaibleAnswers;
-        this.avaibleAnswers = avaibleAnswers;
+        this.availableAnswers = availableAnswers;
         this.correctAnswers = correctAnswers;
-        this.questionID = UUID.randomUUID().toString();
         validateQuestion();
     }
 
     public Map<String, Object> getMap() throws QuestionException {
         validateQuestion();
         Map<String, Object> ret = new HashMap<String, Object>();
-        ret.put("QuestionID", questionID);
         ret.put("type", type);
         ret.put("language", language);
         ret.put("questionContent", questionContent);
-        ret.put("numberOfAvaibleAnswers", numberOfAvaibleAnswers);
-        ret.put("avaibleAnswers", avaibleAnswers);
+        ret.put("availableAnswers", availableAnswers);
         ret.put("correctAnswers", correctAnswers);
 
+        return ret;
+    }
+    public Map<String, AttributeValue> getAttributeValueMap() throws QuestionException {
+        validateQuestion();
+        final Logger LOG = LogManager.getLogger(DeleteUserById.class);
+        LOG.info(availableAnswers.toString());
+        LOG.info(correctAnswers.toString());
+        Map<String, AttributeValue> ret = new HashMap<String,AttributeValue>();
+        List<AttributeValue> list = new ArrayList<>();
+        for(int i=0;i<availableAnswers.size();i++)
+        {
+            list.add(new AttributeValue(availableAnswers.get(i)));
+        }
+        ret.put("availableAnswers",  new AttributeValue().withL(list));
+        list = new ArrayList<>();
+        for(int i=0;i<correctAnswers.size();i++)
+        {
+            list.add(new AttributeValue(correctAnswers.get(i)));
+        }
+        ret.put("correctAnswers",  new AttributeValue().withL(list));
+        ret.put("type",  new AttributeValue(type));
+        ret.put("language",  new AttributeValue(language));
+        ret.put("questionContent",  new AttributeValue(questionContent));
         return ret;
     }
 
@@ -125,10 +84,8 @@ class Question {
             " type='" + getType() + "'" +
             ", language='" + getLanguage() + "'" +
             ", questionContent='" + getQuestionContent() + "'" +
-            ", numberOfAvaibleAnswers='" + getNumberOfAvaibleAnswers() + "'" +
-            ", avaibleAnswers='" + getAvaibleAnswers() + "'" +
+            ", availableAnswers='" + getAvailableAnswers().toString() + "'" +
             ", correctAnswers='" + getCorrectAnswers() + "'" +
-            ", questionID='" + getQuestionID() + "'" +
             "}";
         }catch(Exception e) {
                 return e.getMessage();
@@ -136,9 +93,7 @@ class Question {
     }
     
 
-    public String getQuestionID() throws QuestionException {
-        return this.questionID;
-    }
+
 
     public String getType() throws QuestionException {
         return this.type;
@@ -164,28 +119,15 @@ class Question {
         this.questionContent = questionContent;
     }
 
-    public Integer getNumberOfAvaibleAnswers() {
-        return this.numberOfAvaibleAnswers;
+    public List<String> getAvailableAnswers() {
+        return availableAnswers;
     }
 
-    public void setNumberOfAvaibleAnswers(Integer numberOfAvaibleAnswers) {
-        this.numberOfAvaibleAnswers = numberOfAvaibleAnswers;
+    public List<String> getCorrectAnswers() {
+        return correctAnswers;
     }
 
-    public String getAvaibleAnswers() {
-        return this.avaibleAnswers;
-    }
-
-    public void setAvaibleAnswers(String avaibleAnswers) {
-        this.avaibleAnswers = avaibleAnswers;
-    }
-
-    public String getCorrectAnswers() {
-        return this.correctAnswers;
-    }
-
-    public void setCorrectAnswers(String correctAnswers) {
+    public void setCorrectAnswers(List<String> correctAnswers) {
         this.correctAnswers = correctAnswers;
     }
-
 }

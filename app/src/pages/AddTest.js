@@ -32,7 +32,13 @@ class AddTest extends Component {
         let data = {
             recruiterID: user.username,
             testName: this.state.testName,
-            questionsList: this.state.questionsList
+            questionsList: this.state.questionsList,
+            answersList:"",
+            userID:"",
+            isSolved:"false",
+            isChecked:"false",
+            isPassed:"false",
+            result:"-1"
         }
         console.log(JSON.stringify(data));
         // api.saveTest(data);

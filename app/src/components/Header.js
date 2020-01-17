@@ -22,6 +22,7 @@ const Header = () => {
                             <Nav.Link as={NavLink} exact to="/userPanel">UserPanel</Nav.Link>
                             <Nav.Link as={NavLink} exact to="/userTestList">UserTestList</Nav.Link>
                             <Nav.Link as={NavLink} exact to="/userTestView">UserTestView</Nav.Link>
+                            <Nav.Link as={NavLink} exact to="usersList"> User Lists</Nav.Link>
                             <Nav.Link as={NavLink} onClick={async () => {
                                 let currentUser = Auth.userPool.getCurrentUser();
                                 console.log(currentUser);

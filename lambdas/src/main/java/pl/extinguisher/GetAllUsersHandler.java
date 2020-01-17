@@ -24,35 +24,42 @@ import com.amazonaws.services.dynamodbv2.document.spec.ScanSpec;
 import com.amazonaws.services.dynamodbv2.document.ItemCollection;
 import com.amazonaws.services.cognitoidp.*;
 
-public class GetAllUsersHandler implements RequestHandler<Object, String> {
+public class GetAllUsersHandler implements RequestHandler<Object, ApiGatewayResponse> {
     @Override
-    public String handleRequest(Object input, Context context) {
+    public ApiGatewayResponse handleRequest(Object input, Context context) {
         context.getLogger().log("Input: " + input);
         final AWSCognitoIdentityProviderClient cognitoClient = new AWSCognitoIdentityProviderClient();
 
         final AmazonDynamoDBClient client = new AmazonDynamoDBClient(new EnvironmentVariableCredentialsProvider());
         client.withRegion(Regions.US_EAST_1);
-        String output = "{[";
+        String output = "{\"userArray\":[";
         try {
             List<UserType> listResult = cognitoClient.listUsers(new ListUsersRequest().withUserPoolId("us-east-1_M3dMBNpHE")).getUsers();
             for(int i =0;i<listResult.size();i++)
             {
+                output+= "{";
                 output += "\"userName\":\"" + listResult.get(i).getUsername()+ "\",";
                 List<AttributeType> attributes = listResult.get(i).getAttributes();
                 for(int j=0;j<attributes.size();j++)
                 {
+                    if(attributes.get(j).getName().equals("custom:role"))
+                        attributes.get(j).setName("custom_role");
                     output += "\"" + attributes.get(j).getName() + "\":\"" + attributes.get(j).getValue()+ "\",";
                 }
+                output = output.substring(0,output.length()-1);
+                output+= "},";
             }
-            output.substring(0,output.length()-2);
+            output = output.substring(0,output.length()-1);
             output += "]}";
         } catch(Exception e) {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
             String sStackTrace = sw.toString();
-            return Response.getMessage("Unable to scan users", sStackTrace);
+            ApiGatewayResponse res = new ApiGatewayResponse(400, "Unable to scan users" + e.getMessage());
+            return res;
         }
-        return output;
+        ApiGatewayResponse res = new ApiGatewayResponse(200, output);
+        return res;
     }
 }

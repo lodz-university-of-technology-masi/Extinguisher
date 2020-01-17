@@ -22,22 +22,24 @@ import com.amazonaws.services.dynamodbv2.document.ItemCollection;
 import com.amazonaws.services.cognitoidp.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-        public class DeleteUserById implements RequestHandler<Object , ApiGatewayResponse> {
-            private static final Logger LOG = LogManager.getLogger(pl.extinguisher.DeleteUserById.class);
+        public class DeleteUserById implements RequestHandler<Map<String, Object>, ApiGatewayResponse> {
+            private static final Logger LOG = LogManager.getLogger(DeleteUserById.class);
             @Override
-            public ApiGatewayResponse handleRequest(Object input, Context context) {
+            public ApiGatewayResponse handleRequest(Map<String, Object> request, Context context) {
 
-                context.getLogger().log("Input: " + input);
-                LinkedHashMap<String, Object> inputMap;
+                context.getLogger().log("Input: " +  request.get("body").toString());
                 String userName;
+                BodyHelperClass bodyHelperClass;
+                Gson gson = new Gson();
                 AdminDeleteUserResult result;
                 final AWSCognitoIdentityProviderClient cognitoClient = new AWSCognitoIdentityProviderClient();
                 try {
-                    inputMap = (LinkedHashMap<String, Object>) input;
-                    userName =  (String) inputMap.get("userName");
+                    bodyHelperClass = gson.fromJson(request.get("body").toString(), BodyHelperClass.class);
+                    userName = bodyHelperClass.userName;
                     result = cognitoClient.adminDeleteUser(new AdminDeleteUserRequest().withUserPoolId("us-east-1_M3dMBNpHE").withUsername(userName));
                 }
                 catch(Exception e)
@@ -53,4 +55,15 @@ import org.apache.logging.log4j.Logger;
                 ApiGatewayResponse res = new ApiGatewayResponse(200,result.toString() );
                 return res;
             }
+        }
+
+        class BodyHelperClass{
+            String userName;
+
+            BodyHelperClass(String userName)
+            {
+                this.userName = userName;
+            }
+
+
         }

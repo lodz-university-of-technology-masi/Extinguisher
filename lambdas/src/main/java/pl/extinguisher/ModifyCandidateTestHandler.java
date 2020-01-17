@@ -22,8 +22,6 @@ import com.amazonaws.services.dynamodbv2.model.ReturnValue;
 import com.amazonaws.services.dynamodbv2.model.UpdateItemRequest;
 import com.amazonaws.services.dynamodbv2.model.UpdateItemResult;
 import com.google.gson.Gson;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 
 import java.util.*;
@@ -32,9 +30,7 @@ import java.io.StringWriter;
 import java.io.PrintWriter;
 
 
-public class ModifyTestHandler implements RequestHandler<Map<String, Object>, ApiGatewayResponse> {
-    final Logger LOG = LogManager.getLogger(DeleteUserById.class);
-
+public class ModifyCandidateTestHandler implements RequestHandler<Map<String, Object>, ApiGatewayResponse> {
     @Override
     public ApiGatewayResponse handleRequest(Map<String, Object> request, Context context) {
 
@@ -42,10 +38,16 @@ public class ModifyTestHandler implements RequestHandler<Map<String, Object>, Ap
         Gson gson = new Gson();
         // JsonObject jsonObject = gson.toJsonTree(request.get("body").toString()).getAsJsonObject();
         try {
-            LOG.info(request.get("body").toString());
-
             test = gson.fromJson(request.get("body").toString(), Test.class);
-            LOG.info(test.getQuestionsList().toString());
+        } catch (Exception e) {
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            String sStackTrace = sw.toString();
+            ApiGatewayResponse res = new ApiGatewayResponse(400, sStackTrace);
+            return res;
+        }
+        try {
             test.validateTest();
         } catch (TestException e) {
             StringWriter sw = new StringWriter();
@@ -56,28 +58,33 @@ public class ModifyTestHandler implements RequestHandler<Map<String, Object>, Ap
             ApiGatewayResponse res = new ApiGatewayResponse(400, sStackTrace);
             return res;
         }
-        UpdateItemResult result = new UpdateItemResult();
 
         final AmazonDynamoDBClient client = new AmazonDynamoDBClient(new EnvironmentVariableCredentialsProvider());
         client.withRegion(Regions.US_EAST_1);
+
         UpdateItemRequest requestUpdate = new UpdateItemRequest();
-        requestUpdate.setTableName("Tests");
+
+        requestUpdate.setTableName("CandidatesTests");
+
         requestUpdate.setReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
+
         requestUpdate.setReturnValues(ReturnValue.UPDATED_OLD);
         Map<String, AttributeValue> keysMap = new HashMap<>();
         keysMap.put("testName", new AttributeValue(test.getTestName()));
+        keysMap.put("userID", new AttributeValue(test.getUserID()));
         requestUpdate.setKey(keysMap);
-
         Map<String, AttributeValueUpdate> map = new HashMap<>();
-
-
-        try{
-            map.put("questionsList", new AttributeValueUpdate(new AttributeValue().withL(test.getAttributeList()),"PUT"));
-            requestUpdate.setAttributeUpdates(map);
-         result =  client.updateItem(requestUpdate);
-
-        }
-        catch (Exception e) {
+        map.put("answersList", new AttributeValueUpdate(new AttributeValue().withL(test.getAnswersListAttribute()),"PUT"));
+        map.put("isSolved", new AttributeValueUpdate(new AttributeValue().withBOOL(true),"PUT"));
+        map.put("isChecked", new AttributeValueUpdate(new AttributeValue().withBOOL(test.isChecked()),"PUT"));
+        map.put("isPassed", new AttributeValueUpdate(new AttributeValue().withBOOL(test.isPassed()),"PUT"));
+        map.put("result", new AttributeValueUpdate(new AttributeValue().withN((Integer.toString(test.getResult()))),"PUT"));
+        requestUpdate.setAttributeUpdates(map);
+        UpdateItemResult updateItemResult = new UpdateItemResult();
+try{
+    updateItemResult = client.updateItem(requestUpdate);
+}
+         catch (Exception e) {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
@@ -87,7 +94,7 @@ public class ModifyTestHandler implements RequestHandler<Map<String, Object>, Ap
         }
         /* Create a Map of Primary Key attributes */
 
-        ApiGatewayResponse res = new ApiGatewayResponse(201, "Updated" + result.toString());
+        ApiGatewayResponse res = new ApiGatewayResponse(201, updateItemResult.toString());
         return res;
 
     }

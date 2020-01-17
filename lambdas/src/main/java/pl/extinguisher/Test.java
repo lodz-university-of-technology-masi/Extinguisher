@@ -1,5 +1,8 @@
 package pl.extinguisher;
 
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import org.w3c.dom.Attr;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,11 +12,60 @@ class Test{
     private String recruiterID;
     private String testName;
     private List<Question> questionsList;
+    private List<String> answersList;
+    private String userID;
+    private boolean isSolved;
+    private boolean isChecked;
+    private boolean isPassed;
+    private int result;
 
-    public Test(String recruiterID, String testName, List<Question> questionsList) {
+    public Test(String recruiterID, String testName, List<Question> questionsList, List<String> answersList, String userID, boolean isSolved, boolean isChecked, boolean isPassed, int result) {
         this.recruiterID = recruiterID;
         this.testName = testName;
         this.questionsList = questionsList;
+        this.answersList = answersList;
+        this.userID = userID;
+        this.isSolved = isSolved;
+        this.isChecked = isChecked;
+        this.isPassed = isPassed;
+        this.result = result;
+    }
+
+    public List<String> getAnswersList() {
+        return answersList;
+    }
+public List<AttributeValue> getAnswersListAttribute(){
+        ArrayList<AttributeValue> list = new ArrayList<>();
+        for(int i=0;i<answersList.size();i++)
+            list.add(new AttributeValue(answersList.get(i)));
+        return list;
+}
+
+    public List<AttributeValue> getAnswersListAttributeForCandidateUpdate(){
+        ArrayList<AttributeValue> list = new ArrayList<>();
+        for(int i=0;i<answersList.size();i++) {
+            list.add(new AttributeValue(answersList.get(i)));
+        }
+            return list;
+    }
+    public String getUserID() {
+        return userID;
+    }
+
+    public boolean isSolved() {
+        return isSolved;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public boolean isPassed() {
+        return isPassed;
+    }
+
+    public int getResult() {
+        return result;
     }
 
     @Override
@@ -30,17 +82,20 @@ class Test{
         }
     }
 
-    public List<Map<String, Object>> getQuestionsListMap() throws TestException {
-        List<Map<String, Object>> ret = new ArrayList<Map<String, Object>>();
-        for(Question q : questionsList) {
+
+    public List<AttributeValue> getAttributeList() throws TestException{
+        List <AttributeValue> list = new ArrayList<>();
+        for(Question q:questionsList) {
             try {
-            ret.add(q.getMap());
-            }catch(QuestionException e) {
-                throw new TestException(e.getMessage());
+                list.add(new AttributeValue().withM(q.getAttributeValueMap()));
+            }
+            catch(QuestionException e){
+                throw new TestException((e.getMessage()));
             }
         }
 
-        return ret;
+
+        return list;
     }
 
     public void validateTest() throws TestException {
