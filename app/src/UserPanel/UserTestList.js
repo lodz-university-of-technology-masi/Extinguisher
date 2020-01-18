@@ -12,22 +12,18 @@ class UserTestList extends Component {
             userId: "YoLepiejDamp"
         }
 
-        this.handleClick = this.handleClick.bind(this)
+      
     }
     
-    handleClick() {
-         //https://ng6oznbmy0.execute-api.us-east-1.amazonaws.com/dev/getcandidatestestsbyuserid
-        //axios.get('https://wjdhyrfow4.execute-api.us-east-1.amazonaws.com/production/tests')
-        axios.get('https://d1yalzslbd.execute-api.us-east-1.amazonaws.com/prod/tests')
-        axios.get('https://ng6oznbmy0.execute-api.us-east-1.amazonaws.com/dev/getcandidatestestsbyuserid'+'?userID='+this.state.userId)
-        .then(res => {
-            let data = res.data;
-            // console.log(data.body)
-            let data2 = JSON.parse(data.body);
-            // console.log(data2)
-            this.setState({data: data2})
-        }).catch(function (error) {
-            console.log(error)});
+    async componentDidMount() {
+
+        try {
+            let data = await axios.get('https://ng6oznbmy0.execute-api.us-east-1.amazonaws.com/dev/getcandidatestestsbyuserid'+'?userID='+this.state.userId);
+            this.setState({data: data.data.testArray})
+        } catch(error) {
+            console.log("error: ", error);
+        }
+
         this.setState({isDownloaded: true})
     }
 
@@ -42,11 +38,11 @@ class UserTestList extends Component {
             <table>
                 <thead>
                     <tr>
-                        <td>Test Name</td>
+                        <td>Nazwa Test</td>
                         <td>Status</td> 
-                        <td>Result</td>
-                        <td>Go to the test</td>
-    nie                 </tr>
+                        <td>Wynik</td>
+                        <td>Rozwiaz test</td>
+                    </tr>
                 </thead>
                 <tbody>
                     {TestList}
@@ -60,8 +56,7 @@ class UserTestList extends Component {
         return(
             <div>
                 <h1>List testow !</h1>
-                <p><button onClick = {this.handleClick}>Download Test</button></p>
-             <div>{this.state.isDownloaded ? this.createTestList():<p>Not updated</p>}</div>
+                <div>{this.state.isDownloaded ? this.createTestList():<p>Not updated</p>}</div>
             </div>
         )
     }

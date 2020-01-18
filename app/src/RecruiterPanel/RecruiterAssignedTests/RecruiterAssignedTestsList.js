@@ -32,7 +32,7 @@ class RecruiterAssignedTestList extends Component {
         let TestList = this.state.data.map(test => 
             <RecruiterAssignedTestListPosition key={uuid()} test = {test}/> )
 
-        console.log(TestList)
+ 
 
         return (
             <div>
@@ -59,8 +59,7 @@ class RecruiterAssignedTestList extends Component {
         return(
             <div>
                 <h1>Lista testów wszystkich kandydatów</h1>                
-            
-                
+                {this.state.isDownloaded ? this.createTestList() : <div>Not yet</div>}
             </div>
         )
     }

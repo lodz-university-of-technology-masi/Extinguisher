@@ -7,19 +7,23 @@ class RecruiterAssignedTestListPosition extends Component {
     constructor(props){
         super(props);
         this.state = {
-            data: {}
+            data: {},
+            questionsNumber: 0
         }
     }
 
-    componentDidMount() {
-
-        this.setState({
+    async componentDidMount() {
+        await this.setState({
             data: this.props.test
+        })
+        let liczba = this.state.data.questionsList.length
+        this.setState({
+            questionsNumber: liczba
         })
     }
 
     countMaxResult(){
-        let a = this.state.data.questionsList.length
+        let a =  this.state.questionsNumber
         let points = 2
         return a * points
     }
@@ -46,10 +50,10 @@ class RecruiterAssignedTestListPosition extends Component {
                     {this.state.data.userID}
                 </td>
                 <td>
-                   ddd {/* {this.state.data.result} / {this.countMaxResult()} */}
+                  {this.state.data.result} / {this.countMaxResult()}
                 </td>
                 <td>
-                  ccc  {/* {this.setStatus()} */}
+                  {this.setStatus()}
                 </td>
                 <td>
                     Wywołanie przejscia do okna sprawdzania
