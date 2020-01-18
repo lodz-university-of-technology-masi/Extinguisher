@@ -1,27 +1,25 @@
 import React, {Component} from 'react'
 
-class RecruiterTestView extends Component {
+class RecruiterPlankTestView extends Component {
     constructor(props){
         super(props);
         this.state = {
             TestID: "",
-            questions: [],
-
-
+            data: {}
         }
     }
 
     componentDidMount(){
-        this.setState({questions: this.props.item.questions})
+        this.setState({data: this.props.location.state})
     }
 
     render(){
         return(
             <div>
-                <h1>No to jest test do sprawdzenia !</h1>
+                <h1>Podgląd pustego testu do modyfikacji</h1>
             </div>
         )
     }
 }
 
-export default RecruiterTestView
+export default RecruiterPlankTestView

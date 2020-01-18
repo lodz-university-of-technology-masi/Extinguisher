@@ -16,9 +16,12 @@ import UserTestView from './UserPanel/UserTestView'
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import YandexTranslation from "./yandex/YandexTranslation";
-import RecruiterTestView from "./RecruiterPanel/RecruiterTestView"
+
 import RecruiterPanel from "./RecruiterPanel/RecruiterPanel"
-import RecruiterTestList from "./RecruiterPanel/RecruiterTestList"
+import RecruiterPlankTestList from "./RecruiterPanel/RecruiterPlankTests/RecruiterPlankTestList"
+import RecruiterPlankTestView from "./RecruiterPanel/RecruiterPlankTests/RecruiterPlankTestView"
+
+import RecruiterAssignedTestList from "./RecruiterPanel/RecruiterAssignedTests/RecruiterAssignedTestsList"
 
 class App extends Component {
 
@@ -45,9 +48,15 @@ class App extends Component {
 
                                 <Route exact path="/userTestList" component={UserTestList}/>
                                 <Route exact path="/userTestView" component={UserTestView}/>
+
                                 <Route exact path="/recruiterPanel" component={RecruiterPanel}/> 
-                                <Route exact path="/recruiterTestView" component={RecruiterTestView}/> 
-                                <Route exact path="/recruiterTestList" component={RecruiterTestList}/>
+
+                                <Route exact path="/recruiterPlankTestView" component={RecruiterPlankTestView}/> 
+                                <Route exact path="/recruiterPlankTestList" component={RecruiterPlankTestList}/>
+
+                                <Route exact path="/recruiterAssignedTestList" component={RecruiterAssignedTestList}/>
+
+
                                 
                                 <Route component={NotFound}/>
                             </Switch>

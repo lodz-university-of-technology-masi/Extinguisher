@@ -9,16 +9,17 @@ class UserTestList extends Component {
         this.state = {
             data: [],
             isDownloaded: false,
-            userId: ""
+            userId: "YoLepiejDamp"
         }
 
         this.handleClick = this.handleClick.bind(this)
     }
     
     handleClick() {
-         
+         //https://ng6oznbmy0.execute-api.us-east-1.amazonaws.com/dev/getcandidatestestsbyuserid
         //axios.get('https://wjdhyrfow4.execute-api.us-east-1.amazonaws.com/production/tests')
         axios.get('https://d1yalzslbd.execute-api.us-east-1.amazonaws.com/prod/tests')
+        axios.get('https://ng6oznbmy0.execute-api.us-east-1.amazonaws.com/dev/getcandidatestestsbyuserid'+'?userID='+this.state.userId)
         .then(res => {
             let data = res.data;
             // console.log(data.body)
@@ -28,8 +29,6 @@ class UserTestList extends Component {
         }).catch(function (error) {
             console.log(error)});
         this.setState({isDownloaded: true})
-        // funkcja mapujaca po user id ?
-        // ew lambda powinna to robic
     }
 
     createTestList(){
