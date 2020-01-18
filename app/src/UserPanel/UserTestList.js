@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import TestListPosition from './TestListPosition'
 import "./style/UserTestList.css"
+import uuid from 'react-uuid'
 
 class UserTestList extends Component {
     constructor(){
@@ -23,7 +24,7 @@ class UserTestList extends Component {
         } catch(error) {
             console.log("error: ", error);
         }
-
+        // dodać pobieranie nazwy uzytkownika
         this.setState({isDownloaded: true})
     }
 
@@ -31,7 +32,7 @@ class UserTestList extends Component {
         let arrLength = this.state.data.length     
         
         let TestList = this.state.data.map(test => 
-            <TestListPosition key={test.testID} test = {test}/>
+            <TestListPosition key={uuid()} test = {test}/>
         )
         
         return (

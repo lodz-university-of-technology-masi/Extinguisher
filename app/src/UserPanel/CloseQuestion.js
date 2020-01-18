@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import CloseQuestionElement from './CloseQuestionElement'
+import uuid from 'uuid';
 
 class ClosedQuestion extends Component {
     constructor(props){
         super(props)
         this.state = {
-            data: {},
-            avaibleAnswers: [],
-            answersNumber: 0,
-            givenAnswer: [],            
+            question: {},
+            answer: {}
         }
         this.createAnswerPoles = this.createAnswerPoles.bind(this);
         this.submitHandler = this.submitHandler.bind(this)
@@ -17,75 +16,76 @@ class ClosedQuestion extends Component {
     }
 
     componentDidMount(){
-        let avaibleAnswers = this.props.item.avaibleAnswers.split("|");
-        let ans = []
         
-        for (let i = 0 ; i < avaibleAnswers.length ; i ++ ) {
-           ans = [...ans,{avaibleAnswer: avaibleAnswers[i], isAnswer: false}]
-        }
+        
 
-        this.setState({
-            data: this.props.item,
-            questionID: this.props.item.QuestionID,
-            avaibleAnswers: ans,         
-            answersNumber: this.props.item.numberOfAvaibleAnswers
-                    })
+        // let avaiableAnswers = this.props.item.availableAnswers;
+        // console.log(avaiableAnswers)
+        // let ans = []
         
+        // for (let i = 0 ; i <avaiableAnswers.length ; i ++ ) {
+        //    ans = [...ans,{avaiableAnswer: avaiableAnswers[i], isAnswer: false}]
+        // }
+        // console.log(ans)
+        // this.setState({
+        //     data: this.props.item,
+        //     avaiableAnswers: ans
+        //             })
+        // // console.log(this.state)
     }
 
 
     dataFromChildHandler(data){
-        let obj = []
-        for (let i = 0 ; i < this.state.avaibleAnswers.length ; i ++ ) {
-            if(data.avaibleAnswer == this.state.avaibleAnswers[i].avaibleAnswer){
-                obj = [...obj,{avaibleAnswer: this.state.avaibleAnswers[i].avaibleAnswer, isAnswer: data.isAnswer}]
-            } else {
-                obj = [...obj,{avaibleAnswer: this.state.avaibleAnswers[i].avaibleAnswer, isAnswer: this.state.avaibleAnswers[i].isAnswer}]
-            }
-         }
-         console.log(obj)
-         this.setState({avaibleAnswers: obj})
+        // let obj = []
+    
+        // for (let i = 0 ; i < this.state.avaiableAnswers.length; i++){
+        //     if(data.avaiableAnswer == this.state.avaiableAnswers[i].avaiableAnswer){
+        //         obj = [...obj,{avaiableAnswer: this.state.avaiableAnswers[i].avaiableAnswer, isAnswer: data.isAnswer}]
+        //     } else {
+        //         obj = [...obj,{avaiableAnswer: this.state.avaiableAnswers[i].avaiableAnswer, isAnswer: this.state.avaiableAnswers[i].isAnswer}]
+        //     }
+        // }
+        // this.setState({avaiableAnswers: obj})
     }
 
     createAnswerPoles(){
-        let poles = []
-        let key = 0;
- 
-        poles = this.state.avaibleAnswers.map(( answer , key) => 
-            <CloseQuestionElement key = {key+1} answer={answer} handlerFromParent={this.dataFromChildHandler}/> 
-        )
-        
-        return(
-        <p>{poles}</p>
-        )
+        // let poles = []
+        // console.log("create ", this.state.avaiableAnswers)
+        // poles = this.state.avaiableAnswers.map(answer => 
+        //     <CloseQuestionElement key = {uuid()} answer={answer} handlerFromParent={this.dataFromChildHandler}/> 
+        // )
+        // return(
+        // <p>{poles}</p>
+        //)
     }
 
     submitHandler(evt){
-        evt.preventDefault();
-        let finalAnswer = ""
-        let collectAnswers = []
-        for (let i = 0; i < this.state.avaibleAnswers.length; i++) {
-            if(this.state.avaibleAnswers[i].isAnswer){
-                collectAnswers.push(this.state.avaibleAnswers[i].avaibleAnswer)
-            }
-        }
-        finalAnswer = collectAnswers.join("|")
-        console.log(finalAnswer)
-        let obj = {
-            questionID: this.state.questionID,
-            answerContent: finalAnswer
-        }
-        this.props.handlerFromParant(obj);
+        // evt.preventDefault();
+
+        // // let finalAnswer = ""
+        // let collectAnswers = []
+        // for (let i = 0; i < this.state.avaiableAnswers.length; i++) {
+        //     if(this.state.avaiableAnswers[i].isAnswer){
+        //         collectAnswers.push(this.state.avaiableAnswers[i].avaiableAnswer)
+        //     }
+        // }
+        // // finalAnswer = collectAnswers.join("|")
+        // //console.log(finalAnswer)
+        // let obj = {
+        //     //questionID: this.state.questionID,
+        //     answerContent: collectAnswers
+        // }
+        // this.props.handlerFromParant(obj);
     }
 
     render(){
         return(
             <div>
-                <p>{this.state.data.questionContent}</p>
+                {/* <p>{this.state.data.questionContent}</p>
                 <form onSubmit={this.submitHandler}>                
                     {this.createAnswerPoles()}
                     <input type="submit"/>
-                </form>   
+                </form>    */}
                 
             </div>
             

@@ -1,48 +1,60 @@
 import React, { Component } from 'react'
+import { EC2MetadataCredentials } from 'aws-sdk';
 
 class OpenQuestion extends Component {
     constructor(props){
         super(props)
         this.state = {
-            QuestionID: "",
-            question: "",
-            answer: ""
+            question: {},
+            answer: {}
         }
 
        this.handleChange = this.handleChange.bind(this);
-       this.submitHandler = this.submitHandler.bind(this);
+       this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount(){
-        this.setState({
-            QuestionID: this.props.item.QuestionID,
-            question: this.props.item.questionContent
-        })
-
+        this.setState(
+            {
+                question: this.props.question,
+                answer: this.props.answer
+            }
+        )
     }
 
-    handleChange(event){
-        this.setState({answer: event.target.value})
+    async handleChange(event){
+        let ans = await event.target.value
+        this.setState(
+            prevState => (
+                {
+                    answer: {
+                        index: prevState.answer.index,
+                        answer: [ans]
+                    }
+                }
+            )   
+        )
+
+        
     }
 
-    // nazwy do zmiany bo sa tragiczne !
-    submitHandler(evt){
+    handleSubmit(evt) {
         evt.preventDefault();
-        let obj = {
-            questionID: this.state.QuestionID,
-            answerContent: this.state.answer
-        }
-        this.props.handlerFromParant(obj);
+        let obj = this.state.answer;
+        this.props.handlerFromParent(obj);
+        
+       
     }
 
     render(){
         return(
             <div>
-                <p>{this.state.question}</p>
-                <form onSubmit={this.submitHandler}>
-                    <input type="text" onChange={this.handleChange}/>
-                    <input type="submit"/>                       
+                <p>{this.state.question.questionContent}</p>
+                <form>
+                    <input type="text" placeholder={this.state.answer.answer}  onChange={this.handleChange}/>
+                    <button onClick={this.handleSubmit}> + </button>        
                 </form> 
+              
             </div>
         )
     }

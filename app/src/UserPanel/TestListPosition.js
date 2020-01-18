@@ -17,6 +17,8 @@ class TestListPosition extends Component {
             }
         )
 
+        console.log("Moj data to przeslania",this.state.data)
+        
         let liczba = this.state.data.questionsList.length
         this.setState({
             questionsNumber: liczba
@@ -26,6 +28,7 @@ class TestListPosition extends Component {
     countMaxResult(){
         let a =  this.state.questionsNumber
         let points = 2
+        
         return a * points
     }
 
@@ -57,8 +60,8 @@ class TestListPosition extends Component {
                 <Link to={{
                     pathname: '/userTestView',
                     state: {
-                        data: this.state.questionsList,
-                        testName: this.state.testName}
+                        data: this.state.data
+                    }
                 }}>Open Test</Link>
                 </td>
             </tr>

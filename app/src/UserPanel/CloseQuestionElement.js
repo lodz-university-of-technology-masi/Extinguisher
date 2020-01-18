@@ -11,26 +11,29 @@ class CloseQuestionElement extends Component {
     }
 
     componentDidMount(){
-        this.setState({answer: this.props.answer.avaibleAnswer,
+        this.setState({answer: this.props.answer.avaiableAnswer,
                             checked: this.props.answer.isAnswer})
     }
 
+
     handleCheckBoxChange(event) {
-        this.setState({checked: event.target.checked});
+        this.setState({checked: event.target.value});
      
         let obj = {
-            avaibleAnswer: this.state.answer,
+           avaiableAnswer: this.state.answer,
             isAnswer: !this.state.checked
         } 
-  
-        this.props.handlerFromParent(obj)      
+        
+       this.props.handlerFromParent(obj)      
     }
+
+ 
 
     render(){
         return(
             <label>
                 {this.state.answer}
-                <input type="checkbox" value={this.state.checked} onChange={this.handleCheckBoxChange}/>
+                <input type="checkbox" value={this.state.checked}  onChange={this.handleCheckBoxChange}/>
             </label>
         )
     }
