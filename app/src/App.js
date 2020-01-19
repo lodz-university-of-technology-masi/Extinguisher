@@ -33,13 +33,13 @@ class App extends Component {
                     <div className="App">
                         <Header/>
                         <main>
+                            <YandexTranslation/>>
                             <Switch>
                                 <Route exact path="/" component={Main}/>
                                 <Route exact path="/login" component={Login}/>
                                 <Route exact path="/register" component={Register}/>
                                 {/*<Route exact path="/confirm" component={Confirm}/>*/}
                                 <Route exact path="/logout" render={() => (<Redirect to="/"/>)}/>
-                                <Route exact path="/yandex" component={YandexTranslation}/>
                                 <ProtectedRoute exact path="/addTest" component={AddTest}/>
                                 <ProtectedRoute exact path="/userPanel" component={UserPanel}/>
                                 {/* <ProtectedRoute exact path="/userTestList" component={UserTestList}/>
@@ -50,16 +50,16 @@ class App extends Component {
                                 <Route exact path="/userTestList" component={UserTestList}/>
                                 <Route exact path="/userTestView" component={UserTestView}/>
 
-                                <Route exact path="/recruiterPanel" component={RecruiterPanel}/> 
+                                <Route exact path="/recruiterPanel" component={RecruiterPanel}/>
 
-                                <Route exact path="/recruiterPlankTestView" component={RecruiterPlankTestView}/> 
+                                <Route exact path="/recruiterPlankTestView" component={RecruiterPlankTestView}/>
                                 <Route exact path="/recruiterPlankTestList" component={RecruiterPlankTestList}/>
 
                                 <Route exact path="/recruiterAssignedTestList" component={RecruiterAssignedTestList}/>
                                 <Route exact path="/recruiterCheckTestView" component={RecruiterCheckTestView}/>
 
 
-                                
+
                                 <Route component={NotFound}/>
                             </Switch>
                         </main>
