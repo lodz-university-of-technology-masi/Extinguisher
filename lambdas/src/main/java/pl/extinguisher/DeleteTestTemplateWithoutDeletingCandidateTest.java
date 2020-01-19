@@ -26,20 +26,21 @@ public class DeleteTestTemplateWithoutDeletingCandidateTest implements RequestHa
     public ApiGatewayResponse handleRequest(Map<String, Object> request, Context context) {
 
         final AmazonDynamoDBClient client = new AmazonDynamoDBClient(new EnvironmentVariableCredentialsProvider());
-        Map<String, String> map = (HashMap<String,String>) request.get("queryStringParameters");
-        String testName = map.get("testName");
+
         client.withRegion(Regions.US_EAST_1);
         DynamoDB dynamoDB = new DynamoDB(client);
-        Gson gson = new Gson();
+
 
 
         DeleteItemResult response;
         int counter = 0;
         try {
-
+            Gson gson = new Gson();
+            BodyHelper bodyHelper;
+            bodyHelper =gson.fromJson(request.get("queryStringParameters").toString(),BodyHelper.class);
             DeleteItemRequest requestDelete = new DeleteItemRequest().withTableName("Tests").withReturnConsumedCapacity("TOTAL");
 
-            requestDelete.addKeyEntry("testName", new AttributeValue(testName));
+            requestDelete.addKeyEntry("testName", new AttributeValue(bodyHelper.testName));
             response = client.deleteItem(requestDelete);
             requestDelete.clearKeyEntries();
             counter += response.getConsumedCapacity().getCapacityUnits();
@@ -56,7 +57,9 @@ public class DeleteTestTemplateWithoutDeletingCandidateTest implements RequestHa
         ApiGatewayResponse res = new ApiGatewayResponse(201, Integer.toString(counter) + " Tests have been deleted" + response);
         return res;
     }
-
+class BodyHelper {
+        String testName;
+}
 
 
 

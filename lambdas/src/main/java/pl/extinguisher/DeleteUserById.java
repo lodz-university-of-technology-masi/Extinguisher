@@ -31,20 +31,16 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
             public ApiGatewayResponse handleRequest(Map<String, Object> request, Context context) {
 
 
-                Map<String, String> map = (HashMap<String,String>) request.get("queryStringParameters");
-                context.getLogger().log("Input: " +  request.get("body").toString());
-                String userName;
-                BodyHelperClass bodyHelperClass;
-                Gson gson = new Gson();
+
                 AdminDeleteUserResult result;
-                userName = map.get("userName");
+
                 final AWSCognitoIdentityProviderClient cognitoClient = new AWSCognitoIdentityProviderClient();
                 try {
-                    userName = map.get("userName");
-                    result = cognitoClient.adminDeleteUser(new AdminDeleteUserRequest().withUserPoolId("us-east-1_M3dMBNpHE").withUsername(userName));
-                }
-                catch(Exception e)
-                {
+                    Gson gson = new Gson();
+                        BodyHelper bodyHelper =gson.fromJson(request.get("queryStringParameters").toString(),BodyHelper.class);
+                    result = cognitoClient.adminDeleteUser(new AdminDeleteUserRequest().withUserPoolId("us-east-1_M3dMBNpHE").withUsername(bodyHelper.userName));
+
+                } catch (Exception e) {
                     StringWriter sw = new StringWriter();
                     PrintWriter pw = new PrintWriter(sw);
                     e.printStackTrace(pw);
@@ -53,18 +49,12 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
                     return res;
                 }
 
-                ApiGatewayResponse res = new ApiGatewayResponse(200,result.toString() );
+                ApiGatewayResponse res = new ApiGatewayResponse(200, result.toString());
                 return res;
             }
-        }
 
-        class BodyHelperClass{
-            String userName;
-
-            BodyHelperClass(String userName)
+            class  BodyHelper
             {
-                this.userName = userName;
+                String userName;
             }
-
-
         }

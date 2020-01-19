@@ -28,20 +28,22 @@ public class DeleteTestCandidate implements RequestHandler<Map<String, Object>, 
         final AmazonDynamoDBClient client = new AmazonDynamoDBClient(new EnvironmentVariableCredentialsProvider());
         client.withRegion(Regions.US_EAST_1);
         DynamoDB dynamoDB = new DynamoDB(client);
-        Map<String, String> map = (HashMap<String,String>) request.get("queryStringParameters");
-        Table table = dynamoDB.getTable("CandidatesTests");
+
+            Table table = dynamoDB.getTable("CandidatesTests");
 
         DeleteItemResult response = new DeleteItemResult();
         int counter=0;
         try{
-            String testName = map.get("testName");
-            String userName = map.get("userName");
+            Gson gson = new Gson();
+            BodyHelper bodyHelper;
+            bodyHelper =gson.fromJson(request.get("queryStringParameters").toString(), BodyHelper.class);
+
             DeleteItemRequest requestDelete = new DeleteItemRequest().withTableName("CandidatesTests").withReturnConsumedCapacity("TOTAL");
 
 
 
-            requestDelete.addKeyEntry("userID",new AttributeValue(userName));
-            requestDelete.addKeyEntry("testName",new AttributeValue(testName));
+            requestDelete.addKeyEntry("userID",new AttributeValue(bodyHelper.userName));
+            requestDelete.addKeyEntry("testName",new AttributeValue(bodyHelper.testName));
             response =  client.deleteItem(requestDelete);
             requestDelete.clearKeyEntries();
 
@@ -59,7 +61,10 @@ public class DeleteTestCandidate implements RequestHandler<Map<String, Object>, 
     ApiGatewayResponse res = new ApiGatewayResponse(201, " Tests have been deleted" + response);
         return res;
 }
-
+class BodyHelper {
+        String userName;
+        String testName;
+}
 
 
 
