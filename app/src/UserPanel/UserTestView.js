@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-
+import {Button, Container, FormControl, FormLabel, Form} from "react-bootstrap";
 import OpenQuestion from './OpenQuestion'
 import ClosedQuestion from './CloseQuestion'
 import uuid from 'uuid';
@@ -69,9 +69,9 @@ class UserTestView extends Component {
         
         //answer={this.state.answers[question.index]}
         return (
-            <div>
+            <Form.Group>
                 {rendered}
-            </div>
+            </Form.Group>
         )
         
     }
@@ -112,6 +112,10 @@ class UserTestView extends Component {
         let arr2 = questionsList.flat()
         console.log(arr2)
 
+        
+
+
+
         await this.setState(
             {
                 data: {
@@ -140,13 +144,12 @@ class UserTestView extends Component {
     
     render(){
         return(
-            <div>
-                <h1>Podgląd testu</h1>
-                {this.state.flag ? this.createTest() : <p>Not updated ...</p>}
+            <Container>
+                <h1>Podgląd testu: {this.state.data.testName}</h1>
+                {this.state.flag ? this.createTest() : <p>Loading...</p>}
 
-                {this.allowEndTest() ? <button onClick={this.handleEndTest}>Zakoncz</button> : <p>Proszę, zatwierdź odpowiedzi</p>}
-                
-            </div>
+                {this.allowEndTest() ? <button onClick={this.handleEndTest}>Zakoncz</button> : <p>Proszę, zatwierdź odpowiedzi</p>}          
+            </Container>
         )
     }
 }

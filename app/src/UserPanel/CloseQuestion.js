@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import CloseQuestionElement from './CloseQuestionElement'
 import uuid from 'uuid';
+import {Form,FormLabel} from "react-bootstrap";
+
 
 class ClosedQuestion extends Component {
     constructor(props){
@@ -50,21 +52,21 @@ class ClosedQuestion extends Component {
                 <CloseQuestionElement key = {uuid()} avaiableAnswer={avaiableAnswer} handlerFromParent={this.dataFromChildHandler}/> )
        
         return(
-        <p>{poles}</p>
+        <label className="form-inline">{poles}</label>
         )
     }
 
     submitHandler(evt){
         evt.preventDefault();
 
-        // Tutaj zamiast tablicy zrobic string
         let arr = []
         for (let i = 0 ; i < this.state.temp.length; i ++) {
             if (this.state.temp[i].isCorrect === true) {
-                arr.push(this.state.temp[i].posAnswer)
+               arr.push(this.state.temp[i].posAnswer)
             }
         }
-        this.state.answer.answer = arr;
+        let arr2 = arr.join("|")
+        this.state.answer.answer = arr2;
   
 
         this.props.handlerFromParent(this.state.answer);
@@ -72,20 +74,20 @@ class ClosedQuestion extends Component {
 
     render(){
         return(
-            <div>
-                <p>{this.state.question.questionContent}</p>
-                <div>
-                    <span>
-                        <form>
-                            {this.state.flag ? this.createAnswerPoles() : <p>Loading ...</p>}
-                        </form>
-                    </span>
-                    <span>
-                        <button onClick={this.submitHandler}>+</button>
-                    </span>
-                </div>
-            </div>
-            
+                             
+             <form >
+                 <label className="form-inline">
+                    {this.state.question.questionContent}  
+                 </label>
+                <label className="form-inline">
+                    {this.state.flag ? this.createAnswerPoles() : <p>Loading ...</p>}
+                    <button onClick={this.submitHandler}>+</button>
+                </label>   
+                
+                
+            </form>
+ 
+              
         )
     }
 }

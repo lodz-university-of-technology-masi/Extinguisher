@@ -12,6 +12,7 @@ class RecruiterPlankTestView extends Component {
     componentDidMount(){
         this.setState({data: this.props.location.state})
     }
+    
 
     render(){
         return(
