@@ -23,6 +23,23 @@ class Login extends Component {
         password_incorect: 'Password has to be longer than 6 signs',
     };
 
+    componentDidMount() {
+        const {userp, auth} = this.context;
+        const [user, setUser] = userp;
+        const [isAuthenticated, setIsAuthenticated] = auth;
+
+        if (!isAuthenticated) {
+            Auth.currentAuthenticatedUser()
+                .then(r => {
+                    setUser(r);
+                    setIsAuthenticated(true);
+                    this.setState({redirect: true})
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+    }
 
     formValidation = () => {
         let email = false;
@@ -31,7 +48,7 @@ class Login extends Component {
         if (this.state.email.length > 5 && this.state.email.indexOf(' ') === -1) {
             email = true
         }
-        if (this.state.password.length > 8) {
+        if (this.state.password.length > 6) {
             password = true;
         }
         if (email && password) {
@@ -67,6 +84,7 @@ class Login extends Component {
                 const [isAuthenticated, setIsAuthenticated] = auth;
                 await Auth.signIn(this.state.email, this.state.password)
                     .then(user => {
+                        console.log(user);
                         setIsAuthenticated(true);
                         setUser(user);
                         this.setState({
@@ -77,10 +95,10 @@ class Login extends Component {
                         message: err.message,
                         loading: false
                     }));
-
             } catch (e) {
                 alert(e.message);
             }
+
         } else {
             this.setState({
                 errors: {
@@ -101,9 +119,10 @@ class Login extends Component {
                 .then(data => console.log(data))
                 .catch(err => console.log(err));
         }
-    }
+    };
 
     render() {
+
         const {redirect, email, message, password, loading, errors} = this.state;
         if (redirect) {
             return (
@@ -114,7 +133,7 @@ class Login extends Component {
                     <Form onSubmit={this.handleSubmit}>
                         <h1>Login</h1>
                         <FormLabel>Username/Email</FormLabel>
-                        <FormControl type="email" placeholder="Email" value={email} onChange={(event) => {
+                        <FormControl type="text" placeholder="Username or Email" value={email} onChange={(event) => {
                             this.setState({email: event.target.value})
                         }}
                         />
