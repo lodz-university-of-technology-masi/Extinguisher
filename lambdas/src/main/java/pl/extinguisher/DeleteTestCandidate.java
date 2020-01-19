@@ -28,48 +28,40 @@ public class DeleteTestCandidate implements RequestHandler<Map<String, Object>, 
         final AmazonDynamoDBClient client = new AmazonDynamoDBClient(new EnvironmentVariableCredentialsProvider());
         client.withRegion(Regions.US_EAST_1);
         DynamoDB dynamoDB = new DynamoDB(client);
-        Gson gson = new Gson();
+        Map<String, String> map = (HashMap<String,String>) request.get("queryStringParameters");
         Table table = dynamoDB.getTable("CandidatesTests");
-        BodyHelper bodyHelper;
+
         DeleteItemResult response = new DeleteItemResult();
-    int counter=0;
+        int counter=0;
         try{
-            bodyHelper = gson.fromJson(request.get("body").toString(), BodyHelper.class);
+            String testName = map.get("testName");
+            String userName = map.get("userName");
             DeleteItemRequest requestDelete = new DeleteItemRequest().withTableName("CandidatesTests").withReturnConsumedCapacity("TOTAL");
-            Map<String, AttributeValue> map = new HashMap<>();
 
-            for(int i=0;i<bodyHelper.candidates.size();i++) {
-                requestDelete.addKeyEntry("userID",new AttributeValue(bodyHelper.candidates.get(i)));
-                requestDelete.addKeyEntry("testName",new AttributeValue(bodyHelper.testName));
-                response =  client.deleteItem(requestDelete);
-                requestDelete.clearKeyEntries();
-                if(response.getConsumedCapacity().getCapacityUnits()>0)
-                    counter++;
 
-            }
 
-        } catch(Exception e) {
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-            String sStackTrace = sw.toString();
-            ApiGatewayResponse res = new ApiGatewayResponse(400, "Unable to delete test "  + " but deleted tests to this moment number: " + counter);
-            return res;
+            requestDelete.addKeyEntry("userID",new AttributeValue(userName));
+            requestDelete.addKeyEntry("testName",new AttributeValue(testName));
+            response =  client.deleteItem(requestDelete);
+            requestDelete.clearKeyEntries();
+
+
         }
-
-        ApiGatewayResponse res = new ApiGatewayResponse(201, Integer.toString(counter) + " Tests have been deleted" + response);
+        catch(Exception e) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        e.printStackTrace(pw);
+        String sStackTrace = sw.toString();
+        ApiGatewayResponse res = new ApiGatewayResponse(400, "Unable to delete test ");
         return res;
     }
 
-    class BodyHelper{
-        List<String> candidates;
-        String testName;
+    ApiGatewayResponse res = new ApiGatewayResponse(201, " Tests have been deleted" + response);
+        return res;
+}
 
-        public BodyHelper(List<String> candidates, String testName) {
-            this.candidates = candidates;
-            this.testName = testName;
-        }
-    }
+
+
 
 }
 

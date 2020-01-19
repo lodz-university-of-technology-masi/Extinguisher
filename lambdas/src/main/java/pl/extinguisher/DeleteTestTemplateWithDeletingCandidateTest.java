@@ -26,18 +26,18 @@ public class DeleteTestTemplateWithDeletingCandidateTest implements RequestHandl
         final AmazonDynamoDBClient client = new AmazonDynamoDBClient(new EnvironmentVariableCredentialsProvider());
         client.withRegion(Regions.US_EAST_1);
         DynamoDB dynamoDB = new DynamoDB(client);
-        Gson gson = new Gson();
+        Map<String, String> map = (HashMap<String,String>) request.get("queryStringParameters");
+        String testName = map.get("testName");
 
-        BodyHelper bodyHelper;
         Table table = dynamoDB.getTable("CandidatesTests");
         DeleteItemResult response = new DeleteItemResult();
         int counter = 0;
         try {
-            bodyHelper = gson.fromJson(request.get("body").toString(), BodyHelper.class);
-            DeleteItemRequest requestDelete = new DeleteItemRequest().withTableName("Tests").withReturnConsumedCapacity("TOTAL");
-            Map<String, AttributeValue> map = new HashMap<>();
 
-                requestDelete.addKeyEntry("testName", new AttributeValue(bodyHelper.testName));
+            DeleteItemRequest requestDelete = new DeleteItemRequest().withTableName("Tests").withReturnConsumedCapacity("TOTAL");
+
+
+                requestDelete.addKeyEntry("testName", new AttributeValue(testName));
                 response = client.deleteItem(requestDelete);
                 requestDelete.clearKeyEntries();
                 counter += response.getConsumedCapacity().getCapacityUnits();
@@ -46,7 +46,7 @@ public class DeleteTestTemplateWithDeletingCandidateTest implements RequestHandl
             QuerySpec spec = new QuerySpec()
                     .withKeyConditionExpression("testName= :givenTest")
                     .withValueMap(new ValueMap()
-                            .withString(":givenTest", bodyHelper.testName));
+                            .withString(":givenTest", testName));
 
             ItemCollection<QueryOutcome> items = table.query(spec);
             Iterator<Item> iterator = items.iterator();
@@ -56,7 +56,7 @@ public class DeleteTestTemplateWithDeletingCandidateTest implements RequestHandl
                 String userName = item.getString("userID");
 
                 requestDelete = new DeleteItemRequest().withTableName("CandidatesTests").withReturnConsumedCapacity("TOTAL");
-                requestDelete.addKeyEntry("testName", new AttributeValue(bodyHelper.testName));
+                requestDelete.addKeyEntry("testName", new AttributeValue(testName));
                 requestDelete.addKeyEntry("userID",new AttributeValue(userName));
                 response = client.deleteItem(requestDelete);
                 requestDelete.clearKeyEntries();

@@ -30,15 +30,17 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
             @Override
             public ApiGatewayResponse handleRequest(Map<String, Object> request, Context context) {
 
+
+                Map<String, String> map = (HashMap<String,String>) request.get("queryStringParameters");
                 context.getLogger().log("Input: " +  request.get("body").toString());
                 String userName;
                 BodyHelperClass bodyHelperClass;
                 Gson gson = new Gson();
                 AdminDeleteUserResult result;
+                userName = map.get("userName");
                 final AWSCognitoIdentityProviderClient cognitoClient = new AWSCognitoIdentityProviderClient();
                 try {
-                    bodyHelperClass = gson.fromJson(request.get("body").toString(), BodyHelperClass.class);
-                    userName = bodyHelperClass.userName;
+                    userName = map.get("userName");
                     result = cognitoClient.adminDeleteUser(new AdminDeleteUserRequest().withUserPoolId("us-east-1_M3dMBNpHE").withUsername(userName));
                 }
                 catch(Exception e)
