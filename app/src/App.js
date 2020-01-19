@@ -6,7 +6,7 @@ import Header from './components/Header'
 import Main from './components/Main'
 import Login from './components/Login'
 import Register from './components/Register'
-import Confirm from './pages/Confirm'
+import Confirm from './alt/Confirm'
 import AddTest from './pages/AddTest'
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
 import {AppProvider} from "./context/AppContext";
@@ -37,7 +37,7 @@ class App extends Component {
                                 <Route exact path="/" component={Main}/>
                                 <Route exact path="/login" component={Login}/>
                                 <Route exact path="/register" component={Register}/>
-                                <Route exact path="/confirm" component={Confirm}/>
+                                {/*<Route exact path="/confirm" component={Confirm}/>*/}
                                 <Route exact path="/logout" render={() => (<Redirect to="/"/>)}/>
                                 <Route exact path="/yandex" component={YandexTranslation}/>
                                 <ProtectedRoute exact path="/addTest" component={AddTest}/>

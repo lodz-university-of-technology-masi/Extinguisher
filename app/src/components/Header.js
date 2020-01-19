@@ -1,9 +1,8 @@
-import React, {useState, useContext} from 'react';
+import React, {useContext} from 'react';
 import '../style/Header.css'
 import {AppContext} from "../context/AppContext";
 import {Nav, Navbar} from "react-bootstrap";
-import {Link, NavLink} from "react-router-dom";
-import Auth from "@aws-amplify/auth/lib/Auth";
+import {NavLink} from "react-router-dom";
 
 const Header = () => {
 
@@ -24,18 +23,16 @@ const Header = () => {
                             <Nav.Link as={NavLink} exact to="/userTestView">UserTestView</Nav.Link>
                             <Nav.Link as={NavLink} exact to="/recruiterPanel">RecruiterPanel</Nav.Link>
                             <Nav.Link as={NavLink} onClick={async () => {
-                                let currentUser = Auth.userPool.getCurrentUser();
-                                console.log(currentUser);
-                                // await Auth.signOut();
                                 setUser(null);
-                                setIsAuthenticated(false)
+                                setIsAuthenticated(false);
+                                await user.signOut();
                             }} exact to="/logout">Logout</Nav.Link>
                         </>
                         :
                         <>
                             <Nav.Link as={NavLink} exact to="/login">Login</Nav.Link>
                             < Nav.Link as={NavLink} exact to="/register"> Register</Nav.Link>
-                            <Nav.Link as={NavLink} exact to="/confirm"> Confirm</Nav.Link>
+                            {/*<Nav.Link as={NavLink} exact to="/confirm"> Confirm</Nav.Link>*/}
                         </>}
                 </Nav>
             </Navbar.Collapse>

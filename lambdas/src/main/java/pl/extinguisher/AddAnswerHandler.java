@@ -45,6 +45,7 @@ public class AddAnswerHandler implements RequestHandler<Map<String, Object>, Api
         try {
             test.validateTest();
         } catch(TestException e) {
+ 
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
@@ -80,4 +81,5 @@ public class AddAnswerHandler implements RequestHandler<Map<String, Object>, Api
         ApiGatewayResponse res = new ApiGatewayResponse(201, "Created");
         return res;
         
+
 }

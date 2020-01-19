@@ -13,7 +13,10 @@ const Main = () => {
             <Jumbotron>
                 <h1>Recruiting app!</h1>
                 {isAuthenticated ?
-                    <h2>Witaj {user.username} </h2>
+                    <>
+                        <h2>Witaj {user.username} </h2>
+                        <h3>Twoja rola to: {user.getSignInUserSession().getIdToken().payload['custom:role']}</h3>
+                    </>
                     :
                     <><h1>Brak autentykacji </h1>  <Link to={`/login`} className="btn btn-success btn-md ml-3">Zaloguj
                         się!</Link></>
