@@ -17,6 +17,7 @@ class UserTestView extends Component {
             testView: true
         }
         this.handleData = this.handleData.bind(this);
+        this.handleEndTest = this.handleEndTest.bind(this);
         //this.createTest = this.createTest.bind(this);
     }
 
@@ -38,7 +39,8 @@ class UserTestView extends Component {
 
             let obj_a = {
                 index: i,
-                answer: []
+                answer: [],
+                isAnswered: false
             }
 
             this.state.questions.push(obj_b)
@@ -75,22 +77,65 @@ class UserTestView extends Component {
     }
 
     handleData(data) {
-       // console.log(data)
-       //this.setState({testView: false})
+
         let new_answers = []
         for (let i = 0 ; i < this.state.answers.length; i++) {
             if (data.index === this.state.answers[i].index) {
-                new_answers.push({index: data.index, answer: data.answer})
-                console.log("raz",new_answers)
+                new_answers.push({index: data.index, answer: data.answer, isAnswered: true})
             } else {
-                new_answers.push({index: this.state.answers[i].index, answer: this.state.answers[i].answer})
-                console.log("dwa",new_answers)
+                new_answers.push({index: this.state.answers[i].index, answer: this.state.answers[i].answer, isAnswered: this.state.answers[i].isAnswered})
             }
         }     
-
-        console.log("trze",new_answers)
         this.setState({answers: new_answers})
-          
+        
+    }
+
+    allowEndTest(){
+        
+        let isDone = false
+        for (let i = 0 ; i < this.state.answers.length; i++) {
+            if (isDone == false && this.state.answers[i].isAnswered == true) {
+                isDone = true;
+            } else {
+                isDone *= this.state.answers[i].isAnswered
+            }
+        }
+        
+        return isDone
+    }
+
+    async handleEndTest(){
+
+        //let questionsList = this.state.answers.map(answer => {return answer.answer})
+
+        let questionsList = this.state.answers.map(answer => {return answer.answer})
+        let arr2 = questionsList.flat()
+        console.log(arr2)
+
+        await this.setState(
+            {
+                data: {
+                    recruiterID: this.state.data.recruiterID,
+                    result: this.state.data.result,
+                    testName: this.state.data.testName,
+                    questionsList: this.state.data.questionsList,
+                    answersList: arr2,
+                    userID: this.state.data.userID,
+                    isSolved: true,
+                    isChecked: this.state.data.isChecked,
+                    isPassed: this.state.data.isPassed,
+                }
+            }
+        )
+        
+        let data = JSON.stringify(this.state.data)
+        console.log(data)
+
+        try {
+            await axios.post('https://ng6oznbmy0.execute-api.us-east-1.amazonaws.com/dev/modifycandidatetest', data);
+        } catch(error) {
+            console.log("error: ", error);
+        }
     }
     
     render(){
@@ -99,8 +144,8 @@ class UserTestView extends Component {
                 <h1>Podgląd testu</h1>
                 {this.state.flag ? this.createTest() : <p>Not updated ...</p>}
 
-                {/* {this.state.isSolved ? <button onClick={this.handleEndTest}>Close Your Test</button> : <button onClick={this.handleTestView}>Start Test</button>}
-                <div>{this.state.isSolved ? this.createTest() : null}</div> */}
+                {this.allowEndTest() ? <button onClick={this.handleEndTest}>Zakoncz</button> : <p>Proszę, zatwierdź odpowiedzi</p>}
+                
             </div>
         )
     }

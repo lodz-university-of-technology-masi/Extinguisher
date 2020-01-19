@@ -29,7 +29,8 @@ class OpenQuestion extends Component {
                 {
                     answer: {
                         index: prevState.answer.index,
-                        answer: [ans]
+                        answer: [ans],
+                        isisAnswered: true
                     }
                 }
             )   
@@ -42,7 +43,6 @@ class OpenQuestion extends Component {
         evt.preventDefault();
         let obj = this.state.answer;
         this.props.handlerFromParent(obj);
-        
        
     }
 

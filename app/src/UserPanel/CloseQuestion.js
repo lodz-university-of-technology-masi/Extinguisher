@@ -7,7 +7,9 @@ class ClosedQuestion extends Component {
         super(props)
         this.state = {
             question: {},
-            answer: {}
+            answer: {},
+            temp: [],
+            flag: false
         }
         this.createAnswerPoles = this.createAnswerPoles.bind(this);
         this.submitHandler = this.submitHandler.bind(this)
@@ -15,78 +17,72 @@ class ClosedQuestion extends Component {
         
     }
 
-    componentDidMount(){
+    async componentDidMount(){
         
-        
+        await this.setState(
+            {
+                question: this.props.question,
+                answer: this.props.answer,
+                flag: true 
+            }
+        )
 
-        // let avaiableAnswers = this.props.item.availableAnswers;
-        // console.log(avaiableAnswers)
-        // let ans = []
-        
-        // for (let i = 0 ; i <avaiableAnswers.length ; i ++ ) {
-        //    ans = [...ans,{avaiableAnswer: avaiableAnswers[i], isAnswer: false}]
-        // }
-        // console.log(ans)
-        // this.setState({
-        //     data: this.props.item,
-        //     avaiableAnswers: ans
-        //             })
-        // // console.log(this.state)
+        let arr = this.state.question.availableAnswers.map(answer => {return ({posAnswer: answer,
+                                                                     isCorrect: false})})
+       
+        this.setState({temp: arr})
     }
 
 
     dataFromChildHandler(data){
-        // let obj = []
-    
-        // for (let i = 0 ; i < this.state.avaiableAnswers.length; i++){
-        //     if(data.avaiableAnswer == this.state.avaiableAnswers[i].avaiableAnswer){
-        //         obj = [...obj,{avaiableAnswer: this.state.avaiableAnswers[i].avaiableAnswer, isAnswer: data.isAnswer}]
-        //     } else {
-        //         obj = [...obj,{avaiableAnswer: this.state.avaiableAnswers[i].avaiableAnswer, isAnswer: this.state.avaiableAnswers[i].isAnswer}]
-        //     }
-        // }
-        // this.setState({avaiableAnswers: obj})
+
+        for (let i = 0 ; i < this.state.temp.length; i++){
+            if (this.state.temp[i].posAnswer === data.avaiableAnswer) {
+                this.state.temp[i].isCorrect = data.isAnswer;
+            } 
+        }
     }
 
     createAnswerPoles(){
-        // let poles = []
-        // console.log("create ", this.state.avaiableAnswers)
-        // poles = this.state.avaiableAnswers.map(answer => 
-        //     <CloseQuestionElement key = {uuid()} answer={answer} handlerFromParent={this.dataFromChildHandler}/> 
-        // )
-        // return(
-        // <p>{poles}</p>
-        //)
+        let poles = []
+        
+        poles = this.state.question.availableAnswers.map( avaiableAnswer => 
+                <CloseQuestionElement key = {uuid()} avaiableAnswer={avaiableAnswer} handlerFromParent={this.dataFromChildHandler}/> )
+       
+        return(
+        <p>{poles}</p>
+        )
     }
 
     submitHandler(evt){
-        // evt.preventDefault();
+        evt.preventDefault();
+        
+        let arr = []
+        for (let i = 0 ; i < this.state.temp.length; i ++) {
+            if (this.state.temp[i].isCorrect === true) {
+                arr.push(this.state.temp[i].posAnswer)
+            }
+        }
+        this.state.answer.answer = arr;
+  
 
-        // // let finalAnswer = ""
-        // let collectAnswers = []
-        // for (let i = 0; i < this.state.avaiableAnswers.length; i++) {
-        //     if(this.state.avaiableAnswers[i].isAnswer){
-        //         collectAnswers.push(this.state.avaiableAnswers[i].avaiableAnswer)
-        //     }
-        // }
-        // // finalAnswer = collectAnswers.join("|")
-        // //console.log(finalAnswer)
-        // let obj = {
-        //     //questionID: this.state.questionID,
-        //     answerContent: collectAnswers
-        // }
-        // this.props.handlerFromParant(obj);
+        this.props.handlerFromParent(this.state.answer);
     }
 
     render(){
         return(
             <div>
-                {/* <p>{this.state.data.questionContent}</p>
-                <form onSubmit={this.submitHandler}>                
-                    {this.createAnswerPoles()}
-                    <input type="submit"/>
-                </form>    */}
-                
+                <p>{this.state.question.questionContent}</p>
+                <div>
+                    <span>
+                        <form>
+                            {this.state.flag ? this.createAnswerPoles() : <p>Loading ...</p>}
+                        </form>
+                    </span>
+                    <span>
+                        <button onClick={this.submitHandler}>+</button>
+                    </span>
+                </div>
             </div>
             
         )
