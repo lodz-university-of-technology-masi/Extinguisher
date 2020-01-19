@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap&subset=latin-ext');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #fff;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.App {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    min-height: 100vh;
+    max-width: 1600px;
+}
+div.App > main {
+    flex-grow: 1;
+}
+
+footer {
+    text-align: center;
+    min-height: 4vh;
+}
+
+@media (min-width: 1024px) {
+    .App {
+    }
+}

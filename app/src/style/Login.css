@@ -1,0 +1,85 @@
+.App main div.login {
+    display: flex;
+    flex-grow: 1;
+    margin-left: 5%;
+}
+
+.App div.login form {
+    flex-grow: 1;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+.App div.Login form h2 {
+
+}
+
+.App div.login span {
+    display: block;
+    color: red;
+}
+
+.App div.login form input {
+    border: 2px solid #000;
+    color: #000;
+    /*align-self: flex-start;*/
+    width: 30%;
+    line-height: 60px;
+    transition: .4s;
+}
+
+.App div.login form input:hover {
+    width: 60%;
+}
+
+.App div.login form input::placeholder {
+    padding: 20px;
+    text-transform: capitalize;
+}
+
+
+.App div.login button {
+    background-color: transparent;
+    border: 2px solid #000;
+    text-transform: uppercase;
+    color: #000;
+    font-size: 20px;
+    padding: 15px;
+    margin: 0 auto 0 0 ;
+}
+
+.App div.login button:hover {
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+    transition: .4s;
+}
+
+.App div.login div.others {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.App div.login div.others> div {
+   transform: translateX(+50px);
+}
+
+@media (min-width: 1024px) {
+    .App div.login form button {
+        font-size: 40px;
+        padding: 20px;
+    }
+
+    .App div.login form input {
+
+        font-size: 30px;
+    }
+
+    .App div.login form label {
+        font-size: 40px;
+    }
+
+}

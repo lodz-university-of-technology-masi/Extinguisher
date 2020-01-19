@@ -1,0 +1,68 @@
+.App div.register {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.App div.register form {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.App div.register form input::placeholder {
+    padding: 15px;
+}
+
+.App div.register form input {
+    border: 2px solid #000;
+    align-self: center;
+    margin: auto 40px;
+    color: #000;
+    width: 50%;
+    line-height: 80px;
+    letter-spacing: 1px;
+}
+
+.App div.register form span {
+    display: block;
+    color: red;
+}
+
+.App div.register form button {
+    border: 2px solid #000;
+    color: #000;
+    font-size: 20px;
+    padding: 15px;
+    margin: auto;
+}
+
+.App div.register form button:hover {
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+    transition: .4s;
+}
+
+.App div.register form > div {
+    margin: 5% auto;
+}
+
+@media (min-width: 1024px) {
+
+
+    .App div.register form button {
+        font-size: 40px;
+    }
+
+    .App div.register form input {
+
+        font-size: 30px;
+    }
+
+    .App div.register form label {
+        font-size: 40px;
+    }
+
+}
