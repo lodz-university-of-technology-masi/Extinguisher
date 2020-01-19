@@ -45,7 +45,7 @@ class Login extends Component {
         let email = false;
         let password = false;
         let correct = false;
-        if (this.state.email.length >= 5 && this.state.email.indexOf(' ') === -1) {
+        if (this.state.email.length >= 4 && this.state.email.indexOf(' ') === -1) {
             email = true
         }
         if (this.state.password.length >= 6) {
