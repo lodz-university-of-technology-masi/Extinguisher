@@ -31,6 +31,15 @@ class Test{
         this.result = result;
     }
 
+    Test() {
+        this.userID = "-";
+        this.isSolved = false;
+        this.isChecked = false;
+        this.isPassed = false;
+        this.result = -1;
+        this.answersList = new ArrayList<String>();
+    }
+
     public List<String> getAnswersList() {
         return answersList;
     }
@@ -141,5 +150,7 @@ public List<AttributeValue> getAnswersListAttribute(){
     public void setQuestionsList(List<Question> questionsList) {
         this.questionsList = questionsList;
     }
+
+
 
 }
