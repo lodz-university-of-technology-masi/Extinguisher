@@ -21,6 +21,7 @@ const Header = () => {
                             <Nav.Link as={NavLink} exact to="/userPanel">UserPanel</Nav.Link>
                             <Nav.Link as={NavLink} exact to="/userTestList">UserTestList</Nav.Link>
                             <Nav.Link as={NavLink} exact to="/userTestView">UserTestView</Nav.Link>
+                            <Nav.Link as={NavLink} exact to="/recruiterPanel">RecruiterPanel</Nav.Link>
                             <Nav.Link as={NavLink} onClick={async () => {
                                 setUser(null);
                                 setIsAuthenticated(false);

@@ -1,24 +1,21 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import "./style/TestListPosition.css"
+import uuid from 'react-uuid'
+import { ButtonToolbar, Dropdown } from 'react-bootstrap';
 
-class TestListPosition extends Component {
-    constructor(props) {
+class RecruiterAssignedTestListPosition extends Component {
+    constructor(props){
         super(props);
         this.state = {
-            data: {}
+            data: {},
+            questionsNumber: 0
         }
     }
 
     async componentDidMount() {
-        await this.setState(
-            {
-                data: this.props.test
-            }
-        )
-
-        console.log("Moj data to przeslania",this.state.data)
-        
+        await this.setState({
+            data: this.props.test
+        })
         let liczba = this.state.data.questionsList.length
         this.setState({
             questionsNumber: liczba
@@ -28,7 +25,6 @@ class TestListPosition extends Component {
     countMaxResult(){
         let a =  this.state.questionsNumber
         let points = 2
-        
         return a * points
     }
 
@@ -51,22 +47,26 @@ class TestListPosition extends Component {
                     {this.state.data.testName}
                 </td>
                 <td>
-                    {this.setStatus()}
+                    {this.state.data.userID}
                 </td>
                 <td>
-                    {this.state.data.result} / {this.countMaxResult()}
+                  {this.state.data.result} / {this.countMaxResult()}
+                </td>
+                <td>
+                  {this.setStatus()}
                 </td>
                 <td>
                 <Link to={{
-                    pathname: '/userTestView',
+                    pathname: '/recruiterCheckTestView',
                     state: {
                         data: this.state.data
-                    }
-                }}>Open Test</Link>
-                </td>
+                        }
+                }}>Sprawdz test</Link>
+                </td>               
+            
             </tr>
         )
     }
 }
 
-export  default TestListPosition
+export default RecruiterAssignedTestListPosition;

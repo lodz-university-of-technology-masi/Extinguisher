@@ -15,7 +15,7 @@ class AddQuestion extends Component {
         },
     };
 
-    handleSwitchOpenQuestion = () => {
+  handleSwitchOpenQuestion = () => {
         this.setState({
             isOpen: true
         })
@@ -45,7 +45,7 @@ class AddQuestion extends Component {
         let arr = this.state.answers;
         arr[index] = e.target.value;
         this.setState({
-            anwers: arr
+            answers: arr
         })
     };
     handleChangeName = (e) => {
@@ -64,38 +64,41 @@ class AddQuestion extends Component {
     }
     handleOpenQuestionSubmit = () => {
         var numberOfAvaibleAnswers = 0;
-        var avaibleAnswers = ""
+        var avaibleAnswers = []
         var questionObj = {
             type: "O",
             language: "PL",
-            numberOfAvaibleAnswers: numberOfAvaibleAnswers,
             questionContent: this.state.question,
-            avaibleAnswers: avaibleAnswers
+            availableAnswers: avaibleAnswers,
+            correctAnswers: []
         }
 
         this.props.handleQuestionSubmit(questionObj);
     }
+
+
+  
+
     handleClosedQuestionSubmit = () => {
         let numberOfAvaibleAnswers = this.state.numberOfAvaibleAnswers;
-        let avaibleAnswers = ""
+        let avaibleAnswers = [];
+        let correctAnswers = [];
         let isCorrect = "";
         for (let i = 0; i < this.state.numberOfAvaibleAnswers; i++) {
-            avaibleAnswers += this.state.answers[i];
-            avaibleAnswers += "|";
-            isCorrect += this.state.ifAnswersAreCorrect[i];
-            isCorrect += "|";
+            avaibleAnswers.push(this.state.answers[i])
+            if (this.state.ifAnswersAreCorrect[i] ){
+                correctAnswers.push(this.state.answers[i])
+            }
         }
-        isCorrect = isCorrect.substring(0, isCorrect.length - 1);
-        avaibleAnswers = avaibleAnswers.substring(0, avaibleAnswers.length - 1);
+
         var questionObj = {
             type: "W",
             language: "PL",
-            numberOfAvaibleAnswers: numberOfAvaibleAnswers,
             questionContent: this.state.question,
-            avaibleAnswers: avaibleAnswers,
-            correctArray: isCorrect
+            availableAnswers: avaibleAnswers,
+            correctAnswers: correctAnswers
         }
-        console.log(questionObj);
+        //console.log(questionObj);
 
         this.props.handleQuestionSubmit(questionObj);
     }
@@ -141,10 +144,6 @@ class AddQuestion extends Component {
         );
     };
 
-    renderQuestion = () => {
-        return this.state.isOpen ? this.renderOpenQuestion() : this.renderClosedQuestion();
-    };
-
     render() {
         return (
             <>
@@ -158,7 +157,7 @@ class AddQuestion extends Component {
                             <input type="question" id="question" name="question" value={this.state.question}
                                    onChange={this.handleChangeName}/>
                         </label>
-                        {this.renderQuestion()}
+                        {this.state.isOpen ? this.renderOpenQuestion() : this.renderClosedQuestion()}
                     </div>
                 </div>
             </>

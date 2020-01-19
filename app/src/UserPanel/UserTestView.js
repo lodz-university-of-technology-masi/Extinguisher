@@ -1,274 +1,151 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+import {Button, Container, FormControl, FormLabel, Form} from "react-bootstrap";
+import OpenQuestion from './OpenQuestion'
+import ClosedQuestion from './CloseQuestion'
+import uuid from 'uuid';
 
 class UserTestView extends Component {
     constructor(props){
         super(props)
         this.state = {
-            CandidateID: "182182",
-            TestAnswersID: "",
-            data: null,
+            data: {},
             isSolved: false,
-            array: []
+            answers: [],
+            questions: [],
+            flag: false,
+            testView: true
         }
-
-        this.handleTestView = this.handleTestView.bind(this);
         this.handleData = this.handleData.bind(this);
         this.handleEndTest = this.handleEndTest.bind(this);
+        //this.createTest = this.createTest.bind(this);
     }
 
-    componentDidMount(){
-        this.setState({data: this.props.location.state.data,
-                        TestAnswersID: this.props.location.state.testID
-        })}
-
-    handleTestView(){
-        this.setState({isSolved: true})
+    async componentDidMount(){
+        await this.setState({data: this.props.location.state.data,
+                                flag: true });
     }
 
-    handleEndTest(){
-        let data={
-            TestID: this.state.TestAnswersID,
-            CandidateID: this.state.CandidateID,
-            questionList: this.state.array
+    createPoles() {
+        let temp = this.state.data.questionsList
+        
+        // // mapowanie, zeby na 100% połączyc ze sobą pytanie z dobrą odpowiedzią
+        for (let i = 0 ; i < temp.length; i++) {
+
+            let obj_b = {
+                index: i,
+                question: temp[i]
+            }
+
+            let obj_a = {
+                index: i,
+                answer: [],
+                isAnswered: false
+            }
+
+            this.state.questions.push(obj_b)
+            this.state.answers.push(obj_a)
+            this.state.testView = false;
         }
-        console.log(data)
-
-        //https://i2rgmeu549.execute-api.us-east-1.amazonaws.com/production/testanswers
-
-        console.log(JSON.stringify(data));
-        axios.post('https://i2rgmeu549.execute-api.us-east-1.amazonaws.com/production/testanswers', data)
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-    
-        console.log("Sending answers !");
     }
 
-    // handleChange(event){
-    //     this.setState({array: event.target.value})
-    // }
+    createTest() {
+        if (this.state.testView) {
+            this.createPoles();
+        }
+        let rendered = []
+    
+            rendered = this.state.questions.map(
+                question => {
+                    if (question.question.type == "O" || question.question.type == "o") {
+                         return <OpenQuestion key={uuid()} question={question.question} answer={this.state.answers[question.index]} handlerFromParent = {this.handleData}/>
+                    } else {
+                         return <ClosedQuestion key={uuid()} question={question.question} answer={this.state.answers[question.index]} handlerFromParent = {this.handleData}/>
+                    }
+                }
+            )
+       
+        
+        
+        //answer={this.state.answers[question.index]}
+        return (
+            <Form.Group>
+                {rendered}
+            </Form.Group>
+        )
+        
+    }
 
     handleData(data) {
-        this.setState(prevState => ({
-            array: [...prevState.array, data]
-        }))
-    }
 
-
-    createTest(){
-        let openData = this.state.data.filter((item)=>{
-            if ((item.type ==="O") || (item.type === "o")) 
-            {return item}
-        })
-
-        let closeData = this.state.data.filter((item)=>{
-            if ((item.type ==="W") || (item.type === "w")) 
-            {return item}
-        })
-
-        let openQuestions = openData.map((item) => <OpenQuestion key={item.QuestionID} item={item} handlerFromParant={this.handleData}/>)
-        let closedQuesions = closeData.map((item) => <ClosedQuestion key={item.QuestionID} item={item} handlerFromParant={this.handleData}/>)
-
-        return (
-            <div>
-                <div>
-                {openQuestions}
-            </div>
-            <div>
-                {closedQuesions}
-            </div>
-            </div>
-            
-        )
-    }
-
-    render(){
-        return(
-            <div>
-                <h1>Podgląd testu</h1>
-                {this.state.isSolved ? <button onClick={this.handleEndTest}>Close Your Test</button> : <button onClick={this.handleTestView}>Start Test</button>}
-                <div>{this.state.isSolved ? this.createTest() : null}</div>
-            </div>
-        )
-    }
-}
-
-class OpenQuestion extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            QuestionID: "",
-            question: "",
-            answer: ""
-        }
-
-       this.handleChange = this.handleChange.bind(this);
-       this.submitHandler = this.submitHandler.bind(this);
-    }
-
-    componentDidMount(){
-        this.setState({
-            QuestionID: this.props.item.QuestionID,
-            question: this.props.item.questionContent
-        })
-
-    }
-
-    handleChange(event){
-        this.setState({answer: event.target.value})
-    }
-
-    // nazwy do zmiany bo sa tragiczne !
-    submitHandler(evt){
-        evt.preventDefault();
-        let obj = {
-            QuestionID: this.state.QuestionID,
-            answerContent: this.state.answer
-        }
-        this.props.handlerFromParant(obj);
-    }
-
-    render(){
-        return(
-            <div>
-                <p>{this.state.question}</p>
-                <form onSubmit={this.submitHandler}>
-                    <input type="text" onChange={this.handleChange}/>
-                    <input type="submit"/>                       
-                </form> 
-            </div>
-        )
-    }
-}
-
-class ClosedQuestion extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            data: {},
-            avaibleAnswers: [],
-            answersNumber: 0,
-            givenAnswer: [],            
-        }
-        this.createAnswerPoles = this.createAnswerPoles.bind(this);
-        this.submitHandler = this.submitHandler.bind(this)
-        this.dataFromChildHandler = this.dataFromChildHandler.bind(this)
-        
-    }
-
-    componentDidMount(){
-        let avaibleAnswers = this.props.item.avaibleAnswers.split("|");
-        let ans = []
-        
-        for (let i = 0 ; i < avaibleAnswers.length ; i ++ ) {
-           ans = [...ans,{avaibleAnswer: avaibleAnswers[i], isAnswer: false}]
-        }
-
-        this.setState({
-            data: this.props.item,
-            QuestionID: this.props.item.QuestionID,
-            avaibleAnswers: ans,         
-            answersNumber: this.props.item.numberOfAvaibleAnswers
-                    })
-        
-    }
-
-
-    dataFromChildHandler(data){
-        let obj = []
-        for (let i = 0 ; i < this.state.avaibleAnswers.length ; i ++ ) {
-            if(data.avaibleAnswer == this.state.avaibleAnswers[i].avaibleAnswer){
-                obj = [...obj,{avaibleAnswer: this.state.avaibleAnswers[i].avaibleAnswer, isAnswer: data.isAnswer}]
+        let new_answers = []
+        for (let i = 0 ; i < this.state.answers.length; i++) {
+            if (data.index === this.state.answers[i].index) {
+                new_answers.push({index: data.index, answer: data.answer, isAnswered: true})
             } else {
-                obj = [...obj,{avaibleAnswer: this.state.avaibleAnswers[i].avaibleAnswer, isAnswer: this.state.avaibleAnswers[i].isAnswer}]
+                new_answers.push({index: this.state.answers[i].index, answer: this.state.answers[i].answer, isAnswered: this.state.answers[i].isAnswered})
             }
-         }
-         console.log(obj)
-         this.setState({avaibleAnswers: obj})
+        }     
+        this.setState({answers: new_answers})
+        
     }
 
-    createAnswerPoles(){
-        let poles = []
-        let key = 0;
- 
-        poles = this.state.avaibleAnswers.map(( answer , key) => 
-            <CloseQuestionElement key = {key+1} answer={answer} handlerFromParent={this.dataFromChildHandler}/> 
+    allowEndTest(){
+        
+        let isDone = false
+        for (let i = 0 ; i < this.state.answers.length; i++) {
+            if (isDone == false && this.state.answers[i].isAnswered == true) {
+                isDone = true;
+            } else {
+                isDone *= this.state.answers[i].isAnswered
+            }
+        }
+        
+        return isDone
+    }
+
+    async handleEndTest(){
+
+        //let questionsList = this.state.answers.map(answer => {return answer.answer})
+
+        let questionsList = this.state.answers.map(answer => {return answer.answer})
+        let arr2 = questionsList.flat()
+        console.log(arr2)
+        
+        await this.setState(
+            {
+                data: {
+                    recruiterID: this.state.data.recruiterID,
+                    result: this.state.data.result,
+                    testName: this.state.data.testName,
+                    questionsList: this.state.data.questionsList,
+                    answersList: arr2,
+                    userID: this.state.data.userID,
+                    isSolved: true,
+                    isChecked: this.state.data.isChecked,
+                    isPassed: this.state.data.isPassed,
+                }
+            }
         )
         
-        return(
-        <p>{poles}</p>
-        )
-    }
+        let data = JSON.stringify(this.state.data)
+        console.log(data)
 
-    submitHandler(evt){
-        evt.preventDefault();
-        let finalAnswer = ""
-        let collectAnswers = []
-        for (let i = 0; i < this.state.avaibleAnswers.length; i++) {
-            if(this.state.avaibleAnswers[i].isAnswer){
-                collectAnswers.push(this.state.avaibleAnswers[i].avaibleAnswer)
-            }
+        try {
+            await axios.post('https://ng6oznbmy0.execute-api.us-east-1.amazonaws.com/dev/modifycandidatetest', data);
+        } catch(error) {
+            console.log("error: ", error);
         }
-        finalAnswer = collectAnswers.join("|")
-        console.log(finalAnswer)
-        let obj = {
-            QuestionID: this.state.QuestionID,
-            answerContent: finalAnswer
-        }
-        this.props.handlerFromParant(obj);
     }
-
+    
     render(){
         return(
-            <div>
-                <p>{this.state.data.questionContent}</p>
-                <form onSubmit={this.submitHandler}>                
-                    {this.createAnswerPoles()}
-                    <input type="submit"/>
-                </form>   
-                
-            </div>
-            
-        )
-    }
-}
+            <Container>
+                <h1>Podgląd testu: {this.state.data.testName}</h1>
+                {this.state.flag ? this.createTest() : <p>Loading...</p>}
 
-class CloseQuestionElement extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            answer: "",
-            checked: false
-        }
-        this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this)
-    }
-
-    componentDidMount(){
-        this.setState({answer: this.props.answer.avaibleAnswer,
-                            checked: this.props.answer.isAnswer})
-    }
-
-    handleCheckBoxChange(event) {
-        this.setState({checked: event.target.checked});
-     
-        let obj = {
-            avaibleAnswer: this.state.answer,
-            isAnswer: !this.state.checked
-        } 
-  
-        this.props.handlerFromParent(obj)      
-    }
-
-    render(){
-        return(
-            <label>
-                {this.state.answer}
-                <input type="checkbox" value={this.state.checked} onChange={this.handleCheckBoxChange}/>
-            </label>
+                {this.allowEndTest() ? <button onClick={this.handleEndTest}>Zakoncz</button> : <p>Proszę, zatwierdź odpowiedzi</p>}          
+            </Container>
         )
     }
 }

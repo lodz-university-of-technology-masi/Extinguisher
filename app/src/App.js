@@ -17,6 +17,13 @@ import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import YandexTranslation from "./yandex/YandexTranslation";
 
+import RecruiterPanel from "./RecruiterPanel/RecruiterPanel"
+import RecruiterPlankTestList from "./RecruiterPanel/RecruiterPlankTests/RecruiterPlankTestList"
+import RecruiterPlankTestView from "./RecruiterPanel/RecruiterPlankTests/RecruiterPlankTestView"
+
+import RecruiterAssignedTestList from "./RecruiterPanel/RecruiterAssignedTests/RecruiterAssignedTestsList"
+import RecruiterCheckTestView from "./RecruiterPanel/RecruiterAssignedTests/RecruiterCheckTestView"
+
 class App extends Component {
 
     render() {
@@ -35,9 +42,24 @@ class App extends Component {
                                 <Route exact path="/yandex" component={YandexTranslation}/>
                                 <ProtectedRoute exact path="/addTest" component={AddTest}/>
                                 <ProtectedRoute exact path="/userPanel" component={UserPanel}/>
-                                <ProtectedRoute exact path="/userTestList" component={UserTestList}/>
+                                {/* <ProtectedRoute exact path="/userTestList" component={UserTestList}/>
                                 <ProtectedRoute exact path="/userTestView" component={UserTestView}/>
+                                <ProtectedRoute exact path="/recruiterPanel" component={RecruiterPanel}/>
+                                */}
 
+                                <Route exact path="/userTestList" component={UserTestList}/>
+                                <Route exact path="/userTestView" component={UserTestView}/>
+
+                                <Route exact path="/recruiterPanel" component={RecruiterPanel}/> 
+
+                                <Route exact path="/recruiterPlankTestView" component={RecruiterPlankTestView}/> 
+                                <Route exact path="/recruiterPlankTestList" component={RecruiterPlankTestList}/>
+
+                                <Route exact path="/recruiterAssignedTestList" component={RecruiterAssignedTestList}/>
+                                <Route exact path="/recruiterCheckTestView" component={RecruiterCheckTestView}/>
+
+
+                                
                                 <Route component={NotFound}/>
                             </Switch>
                         </main>

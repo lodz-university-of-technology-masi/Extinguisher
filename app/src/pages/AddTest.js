@@ -32,9 +32,29 @@ class AddTest extends Component {
         let data = {
             recruiterID: user.username,
             testName: this.state.testName,
-            questionsList: this.state.questionsList
+            questionsList: this.state.questionsList,
+            answersList: [],
+            userID: "-",
+            isSolved: "false",
+            isChecked: "false",
+            isPassed: "false",
+            result: "-1"
         }
-        console.log(JSON.stringify(data));
+
+
+        let data2 = JSON.stringify(data)
+        console.log(data2)
+        axios.post('https://ng6oznbmy0.execute-api.us-east-1.amazonaws.com/dev/newposttest', data2)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+/* Master brnach   
+
+console.log(JSON.stringify(data));
         // api.saveTest(data);
         var myJSON = JSON.stringify(data);
         // axios.post('https://d1yalzslbd.execute-api.us-east-1.amazonaws.com/prod/tests', myJSON)
@@ -60,6 +80,7 @@ class AddTest extends Component {
         this.setState({
             questionsList: arr
         })
+*/
     };
 
     render() {

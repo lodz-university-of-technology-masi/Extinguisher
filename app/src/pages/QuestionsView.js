@@ -11,6 +11,7 @@ const QuestionsView = (props) => {
         else
             type = "Open Question";
         questionList.push(<li key={i + "questionNumber"}> {props.questionArray[i].questionContent} {type}
+
             <button onClick={() => props.handleDeleteQuestion(i)}>Delete</button>
         </li>)
     }

@@ -2,28 +2,29 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import TestListPosition from './TestListPosition'
 import "./style/UserTestList.css"
+import uuid from 'react-uuid'
 
 class UserTestList extends Component {
     constructor(){
         super()
         this.state = {
             data: [],
-            isDownloaded: false
+            isDownloaded: false,
+            userId: "YoLepiejDamp"
         }
 
-        this.handleClick = this.handleClick.bind(this)
+      
     }
     
-    handleClick() {
-         
-        axios.get('https://wjdhyrfow4.execute-api.us-east-1.amazonaws.com/production/tests')
-        .then(res => {
-            let data = res.data;
-            let data2 = JSON.parse(data);
+    async componentDidMount() {
 
-            this.setState({data: data2})
-        }).catch(function (error) {
-            console.log(error)});
+        try {
+            let data = await axios.get('https://ng6oznbmy0.execute-api.us-east-1.amazonaws.com/dev/getcandidatestestsbyuserid'+'?userID='+this.state.userId);
+            this.setState({data: data.data.testArray})
+        } catch(error) {
+            console.log("error: ", error);
+        }
+        // dodać pobieranie nazwy uzytkownika
         this.setState({isDownloaded: true})
     }
 
@@ -31,17 +32,17 @@ class UserTestList extends Component {
         let arrLength = this.state.data.length     
         
         let TestList = this.state.data.map(test => 
-            <TestListPosition key={test.TestID} test = {test}/>
+            <TestListPosition key={uuid()} test = {test}/>
         )
         
         return (
             <table>
                 <thead>
                     <tr>
-                        <td>Test Id</td>
-                        <td>Recruiter Id</td>
-                        <td>Status</td>
-                        <td>Go to the test</td>
+                        <td>Nazwa Test</td>
+                        <td>Status</td> 
+                        <td>Wynik</td>
+                        <td>Rozwiaz test</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,7 +57,6 @@ class UserTestList extends Component {
         return(
             <div>
                 <h1>List testow !</h1>
-                <p><button onClick = {this.handleClick}>Download Test</button></p>
                 <div>{this.state.isDownloaded ? this.createTestList():<p>Not updated</p>}</div>
             </div>
         )
