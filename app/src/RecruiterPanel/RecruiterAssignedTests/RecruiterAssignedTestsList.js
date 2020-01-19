@@ -59,7 +59,7 @@ class RecruiterAssignedTestList extends Component {
         return(
             <div>
                 <h1>Lista testów wszystkich kandydatów</h1>                
-                {this.state.isDownloaded ? this.createTestList() : <div>Not yet</div>}
+                {this.state.isDownloaded ? this.createTestList() : <div>Loading ... </div>}
             </div>
         )
     }

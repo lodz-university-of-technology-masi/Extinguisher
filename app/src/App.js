@@ -22,6 +22,7 @@ import RecruiterPlankTestList from "./RecruiterPanel/RecruiterPlankTests/Recruit
 import RecruiterPlankTestView from "./RecruiterPanel/RecruiterPlankTests/RecruiterPlankTestView"
 
 import RecruiterAssignedTestList from "./RecruiterPanel/RecruiterAssignedTests/RecruiterAssignedTestsList"
+import RecruiterCheckTestView from "./RecruiterPanel/RecruiterAssignedTests/RecruiterCheckTestView"
 
 class App extends Component {
 
@@ -55,6 +56,7 @@ class App extends Component {
                                 <Route exact path="/recruiterPlankTestList" component={RecruiterPlankTestList}/>
 
                                 <Route exact path="/recruiterAssignedTestList" component={RecruiterAssignedTestList}/>
+                                <Route exact path="/recruiterCheckTestView" component={RecruiterCheckTestView}/>
 
 
                                 

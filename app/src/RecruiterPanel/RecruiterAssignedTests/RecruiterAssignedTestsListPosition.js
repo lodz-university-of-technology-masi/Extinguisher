@@ -56,7 +56,12 @@ class RecruiterAssignedTestListPosition extends Component {
                   {this.setStatus()}
                 </td>
                 <td>
-                    Wywołanie przejscia do okna sprawdzania
+                <Link to={{
+                    pathname: '/recruiterCheckTestView',
+                    state: {
+                        data: this.state.data
+                        }
+                }}>Sprawdz test</Link>
                 </td>               
             
             </tr>

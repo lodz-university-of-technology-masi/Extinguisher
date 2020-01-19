@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import uuid from 'react-uuid'
+import axios from 'axios'
 import { ButtonToolbar, Dropdown } from 'react-bootstrap';
 
 class RecruiterPlankTestListPosition extends Component {
@@ -8,8 +9,11 @@ class RecruiterPlankTestListPosition extends Component {
         super(props);
         this.state = {
             data: {},
-            users: []
+            users: [],
+            user: ""
         }
+        this.selectChanged = this.selectChanged.bind(this)
+        this.assignUser = this.assignUser.bind(this)
     }
 
     componentDidMount() {
@@ -21,14 +25,55 @@ class RecruiterPlankTestListPosition extends Component {
 
     }
 
+    async assignUser(){
+
+
+        await this.setState(
+            {
+                data: {
+                    recruiterID: this.state.data.recruiterID,
+                    result: this.state.data.result,
+                    testName: this.state.data.testName,
+                    questionsList: this.state.data.questionsList,
+                    answersList: [],
+                    userID: "-",
+                    isSolved: false,
+                    isChecked: this.state.data.isChecked,
+                    isPassed: this.state.data.isPassed,
+                }
+            }
+        )
+        let arr = []
+        arr.push(this.state.user)
+        let test =this.state.data
+        let input = {test,candidates: arr }
+
+        console.log(input)
+
+        let data = JSON.stringify(input)
+        console.log(data)
+
+        
+        try {
+            await axios.post('https://ng6oznbmy0.execute-api.us-east-1.amazonaws.com/dev/signcandidate', data);
+        } catch(error) {
+            console.log("error: ", error);
+        }
+
+        
+    }
+
+    selectChanged(event) {
+        let user = event.target.value
+        console.log(user)
+        this.setState({user: user})
+    }
+
     createCandidatesList(){
         
         let dropDownElements = []
-        dropDownElements = this.state.users.map(user => <Dropdown.Item key = {uuid()}>{user.userName}</Dropdown.Item>)
+        dropDownElements = this.state.users.map(user => <option key={uuid()} value={user.userName}>{user.userName}</option> )
         return dropDownElements
-
-        
-
     }
 
     render(){
@@ -49,15 +94,14 @@ class RecruiterPlankTestListPosition extends Component {
                 }}>Modyfikuj test</Link>
                 </td>
                 <td>
-                    <Dropdown>
-                    <Dropdown.Toggle>
-                            Wybierz Kandydata do przypisania
-                        </Dropdown.Toggle>
-
-                        <Dropdown.Menu>
-                            {this.createCandidatesList()}
-                        </Dropdown.Menu>
-                    </Dropdown>
+                    <select onChange={this.selectChanged}>
+                        {this.createCandidatesList()}
+                    </select>
+                </td>
+                <td>
+                    <button onClick={this.assignUser}>
+                        => X
+                    </button>
                 </td>
             </tr>
         )
@@ -65,3 +109,16 @@ class RecruiterPlankTestListPosition extends Component {
 }
 
 export default RecruiterPlankTestListPosition;
+
+
+{/* <Dropdown>
+<Dropdown.Toggle>
+        Wybierz Kandydata do przypisania
+    </Dropdown.Toggle>
+
+    <Dropdown.Menu>
+        {this.createCandidatesList()}
+    </Dropdown.Menu>
+</Dropdown> */}
+
+{/* <Dropdown.Item key = {user.userName} >{user.userName}</Dropdown.Item> */}

@@ -56,7 +56,8 @@ class ClosedQuestion extends Component {
 
     submitHandler(evt){
         evt.preventDefault();
-        
+
+        // Tutaj zamiast tablicy zrobic string
         let arr = []
         for (let i = 0 ; i < this.state.temp.length; i ++) {
             if (this.state.temp[i].isCorrect === true) {
