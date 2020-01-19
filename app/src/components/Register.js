@@ -4,6 +4,7 @@ import 'aws-amplify'
 import {Auth} from "aws-amplify";
 import {Redirect} from "react-router-dom";
 import {Alert, Button, Container, Form, FormControl, FormLabel, Spinner} from "react-bootstrap";
+import * as Api from '../api/Api'
 
 class Register extends Component {
     state = {
@@ -52,7 +53,7 @@ class Register extends Component {
             [name]: e.target.value
         })
     };
-    handleSubmit = e => {
+    handleSubmit = async e => {
         const {username, email, password} = this.state;
         e.preventDefault();
 
@@ -67,52 +68,26 @@ class Register extends Component {
                 loading: true
             });
 
-            Auth.signUp({
+            await Auth.signUp({
                 username,
                 password,
-                attributes: {email}
+                attributes: {
+                    email, 'custom:role': 'candidate'
+                }
             }).then(data => {
-                console.log(data);
-                this.setState({isOk: true})
+                this.setState({isOk: true});
+                Api.confirmUser({userID: username});
             })
                 .catch(err => {
-                    console.log(err);
                     this.setState({message: err.message})
                 })
                 .finally(this.setState({loading: false}))
+
 
             /*  var poolData = {
                   UserPoolId: 'us-east-1_BfxnMv90t',
                   ClientId: '61qf8cn3re4asgfmvp6kha15r2'
               };
-              var userPool = new CognitoUserPool(poolData);
-              var attributeList = [];
-
-              var dataEmail = {
-                  Name: 'email',
-                  Value: this.state.email
-              };
-
-              var attributeEmail = new CognitoUserAttribute(dataEmail);
-
-
-              attributeList.push(attributeEmail);
-
-
-
-
-            var cognitoUser;
-
-            userPool.signUp(this.state.username, this.state.password, attributeList, null, function (err, result) {
-                if (err) {
-                    alert(err);
-                    return;
-                }
-
-                cognitoUser = result.user;
-                cognitoUser.confirmRegistration = true;
-                console.log('user name is ' + cognitoUser.getUsername());
-            });
             */
         } else {
             this.setState({
@@ -125,19 +100,11 @@ class Register extends Component {
         }
     }
 
-    componentDidUpdate() {
-        if (this.state.message !== '') {
-            setTimeout(() => this.setState({
-                message: ''
-            }), 9000);
-        }
-    }
-
     render() {
         const {isOk, username, email, errors, loading, message, password} = this.state;
         if (isOk) {
             return (
-                <Redirect to="/confirm"/>);
+                <Redirect to="/login"/>);
         }
 
         return (
@@ -164,6 +131,18 @@ class Register extends Component {
                     />
                     {this.state.errors.password &&
                     <Alert variant="danger"> {this.messages.password_incorect}</Alert>}
+                    <div className="mb-3">
+                        <FormLabel>Role</FormLabel>
+                        <Form.Check
+                            type="radio"
+                            label="candidate"
+                        />
+
+                        <Form.Check
+                            type="radio"
+                            label="recruiter"
+                        />
+                    </div>
                     <Button variant="primary" type="submit">
                         Submit
                     </Button>

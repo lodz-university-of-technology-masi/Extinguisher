@@ -1,5 +1,5 @@
 import axios from "axios";
-import {testsUrl} from './Routes'
+import {testsUrl,userUrl} from './Routes'
 
 const get = url =>
     new Promise(((resolve, reject) => {
@@ -29,10 +29,9 @@ const post = (url, body) =>
         axios.post(url, body)
             .then(response => {
                 if (response.status === 201 || response.status===200) {
-                    alert("dziala")
                     resolve(response.data);
                 } else {
-                    alert("nie")
+                    alert("Something went wrong")
                     reject(response)
                 }
             })
@@ -44,10 +43,10 @@ const put = (url, body) =>
             .then(response => {
                 console.log(response.status)
                 if (response.status === 200 || response.status===204) {
-                    alert("działa")
+                    // alert("działa")
                     resolve(response.data.data) // put nie powinien zwracac body w response i status no content(204) a nie ok (200)
                 } else {
-                    alert("nie")
+                    alert("Something went wrong")
                     reject(response)
                 }
             })
@@ -66,3 +65,4 @@ const del = url =>
     }));
 
 export const saveTest = body => post(testsUrl(), body);
+export const confirmUser = body => post(userUrl(), body);

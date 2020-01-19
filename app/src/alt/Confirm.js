@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import '../style/Confirm.css'
+import './Confirm.css'
 import {Auth} from 'aws-amplify'
 import {Alert, Button, Container, Form, FormControl, FormLabel, Spinner} from "react-bootstrap";
 
@@ -80,7 +80,7 @@ class Confirm extends Component {
                 <Form onSubmit={this.handleSubmit}>
                     <h1>Confirm Account</h1>
                     <FormLabel>Email</FormLabel>
-                    <FormControl type="email" placeholder="Email" value={email} onChange={(event) => {
+                    <FormControl type="text" placeholder="Email" value={email} onChange={(event) => {
                         this.setState({email: event.target.value})
                     }}
                     />
@@ -107,23 +107,6 @@ class Confirm extends Component {
                 }}>Resend code</Button>
 
             </Container>
-
-
-            //
-            // <div className="confirm">
-            //     <form onSubmit={this.handleSubmit}>
-            //         <input placeholder="Email" type="text" id="user" name="email" value={this.state.email}
-            //                onChange={this.handleChange}/>
-            //         {this.state.errors.email && <span> {this.messages.username_incorect}</span>}
-            //         <input placeholder="Code" type="code" name="code" id="code" value={this.state.code}
-            //                onChange={this.handleChange}/>
-            //         {this.state.errors.code && <span> {this.messages.code_incorect}</span>}
-            //
-            //         <button>Confirm</button>
-            //     </form>
-            //     {this.state.message && <h3>{this.state.message}</h3>}
-            //
-            // < /div>
         );
     }
 }
