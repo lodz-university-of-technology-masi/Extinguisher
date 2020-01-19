@@ -12,11 +12,15 @@ class Question {
     List<String> availableAnswers;
     List<String> correctAnswers;
 
+    Question() {
+        this.correctAnswers = new ArrayList<String>();
+    }
+
     public void validateQuestion() throws QuestionException {
 
 
-        if (!type.equals("O") && !type.equals("W")) {
-            throw new QuestionException("Illegal type of question. Given: " + type + " Expected: O or W.");
+        if (!type.equals("O") && !type.equals("W") && !type.equals("L")) {
+            throw new QuestionException("Illegal type of question. Given: " + type + " Expected: O or W or L.");
         }
 
         if (!language.equals("PL") && !language.equals("EN")) {
@@ -117,6 +121,10 @@ class Question {
 
     public List<String> getAvailableAnswers() {
         return availableAnswers;
+    }
+
+    public void setAvaibleAnswers(List<String> avaibleAnswers) {
+        this.availableAnswers = avaibleAnswers;
     }
 
     public List<String> getCorrectAnswers() {
