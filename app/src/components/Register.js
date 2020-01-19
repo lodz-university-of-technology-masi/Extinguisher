@@ -32,10 +32,10 @@ class Register extends Component {
         let password = false;
         let email = false;
         let correct = false;
-        if (this.state.username.length > 6 && this.state.username.indexOf(' ') === -1) {
+        if (this.state.username.length >=4 && this.state.username.indexOf(' ') === -1) {
             username = true
         }
-        if (this.state.password.length > 8) {
+        if (this.state.password.length >= 8) {
             password = true;
         }
         if (this.state.email.indexOf('@') !== -1) {
