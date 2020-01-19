@@ -10,8 +10,10 @@ const QuestionsView = (props) => {
             type = `Closed Question with ${props.questionArray[i].numberOfAvaibleAnswers} answers`;
         else
             type = "Open Question";
-        questionList.push(<li key={i + "questionNumber"}> {props.questionArray[i].questionContent} {type}
-
+        questionList.push(
+            <li key={i + "questionNumber"}>
+                {props.questionArray[i].questionContent}
+                {type}
             <button onClick={() => props.handleDeleteQuestion(i)}>Delete</button>
         </li>)
     }
