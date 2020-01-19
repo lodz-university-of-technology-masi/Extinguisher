@@ -9,6 +9,7 @@ import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.regions.Regions;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
 
 import java.util.HashMap;

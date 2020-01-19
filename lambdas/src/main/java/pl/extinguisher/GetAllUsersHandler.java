@@ -23,7 +23,7 @@ import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
 import com.amazonaws.services.dynamodbv2.document.spec.ScanSpec;
 import com.amazonaws.services.dynamodbv2.document.ItemCollection;
 import com.amazonaws.services.cognitoidp.*;
-
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 public class GetAllUsersHandler implements RequestHandler<Object, ApiGatewayResponse> {
     @Override
     public ApiGatewayResponse handleRequest(Object input, Context context) {

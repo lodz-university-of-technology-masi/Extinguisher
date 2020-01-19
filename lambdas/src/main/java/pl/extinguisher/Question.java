@@ -1,9 +1,8 @@
 package pl.extinguisher;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import java.util.*;
 
 class Question {
@@ -54,9 +53,6 @@ class Question {
     }
     public Map<String, AttributeValue> getAttributeValueMap() throws QuestionException {
         validateQuestion();
-        final Logger LOG = LogManager.getLogger(DeleteUserById.class);
-        LOG.info(availableAnswers.toString());
-        LOG.info(correctAnswers.toString());
         Map<String, AttributeValue> ret = new HashMap<String,AttributeValue>();
         List<AttributeValue> list = new ArrayList<>();
         for(int i=0;i<availableAnswers.size();i++)

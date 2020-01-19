@@ -22,7 +22,7 @@ import com.amazonaws.services.dynamodbv2.model.ReturnValue;
 import com.amazonaws.services.dynamodbv2.model.UpdateItemRequest;
 import com.amazonaws.services.dynamodbv2.model.UpdateItemResult;
 import com.google.gson.Gson;
-
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
 import java.util.*;
 import java.lang.Exception;

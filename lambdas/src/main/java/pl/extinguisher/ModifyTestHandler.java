@@ -25,7 +25,7 @@ import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import java.util.*;
 import java.lang.Exception;
 import java.io.StringWriter;

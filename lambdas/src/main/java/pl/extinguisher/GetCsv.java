@@ -63,7 +63,7 @@ public class GetCsv implements RequestHandler<Map<String, Object>, ApiGatewayRes
 
         // ApiGatewayResponse res = new ApiGatewayResponse(200, testID.getTestID());
         // return res;
-        
+
 
 
         lambdaClient = new AWSLambdaClient(new EnvironmentVariableCredentialsProvider());
@@ -82,7 +82,7 @@ public class GetCsv implements RequestHandler<Map<String, Object>, ApiGatewayRes
     //   Gson gson = new Gson();
     //   TestID testID = gson.fromJson(request.get("body").toString(), TestID.class);
         // if(inputMap.get("TestID") == null) {
-            
+
         //     ApiGatewayResponse res = new ApiGatewayResponse(500, "wrong");
         //     return res;
         // }

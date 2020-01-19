@@ -23,11 +23,10 @@ import com.amazonaws.services.cognitoidp.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
         public class DeleteUserById implements RequestHandler<Map<String, Object>, ApiGatewayResponse> {
-            private static final Logger LOG = LogManager.getLogger(DeleteUserById.class);
+
             @Override
             public ApiGatewayResponse handleRequest(Map<String, Object> request, Context context) {
 

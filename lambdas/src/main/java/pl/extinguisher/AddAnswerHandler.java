@@ -8,6 +8,7 @@ import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.regions.Regions;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
 import java.util.LinkedHashMap;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import com.google.gson.Gson;
 public class AddAnswerHandler implements RequestHandler<Map<String, Object>, ApiGatewayResponse> {
     @Override
     public ApiGatewayResponse handleRequest(Map<String, Object> request, Context context) {
+
         context.getLogger().log("Input: " + request.toString());
         
         Answer answer;

@@ -16,7 +16,7 @@ import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
 import com.amazonaws.services.dynamodbv2.document.spec.ScanSpec;
 import com.amazonaws.services.dynamodbv2.document.ItemCollection;
-
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
 public class GetAllCandidatesTests implements RequestHandler<Object, ApiGatewayResponse> {
     @Override

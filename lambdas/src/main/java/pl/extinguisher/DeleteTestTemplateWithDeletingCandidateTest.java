@@ -18,7 +18,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.dynamodbv2.document.spec.ScanSpec;
 import com.amazonaws.services.cognitoidp.*;
 import com.google.gson.Gson;
-
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 public class DeleteTestTemplateWithDeletingCandidateTest implements RequestHandler<Map<String, Object>, ApiGatewayResponse> {
     @Override
     public ApiGatewayResponse handleRequest(Map<String, Object> request, Context context) {
