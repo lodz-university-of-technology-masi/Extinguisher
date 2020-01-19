@@ -76,15 +76,31 @@ class RecruiterPlankTestView extends Component {
 
     render() {
         return (
-            <div>
-                <h1>Test: {this.state.data.testName}</h1>
+            <Container>
+                <h1><input type="text" placeholder={this.state.data.testName}/></h1>
                 <div>
                     {this.state.isReady ? this.generateTestView() : <p>Loading ...</p>}
                 </div>
                 <div>
+                    <label>
+                        Czy sprawdzony ?
+                        <input type="checkbox" value={this.state.data.isChecked}/>
+                    </label>
+                    <label>
+                        Czy rozwiązany ?
+                        <input type="checkbox" value={this.state.data.isSolved}/>
+                    </label>
+                    <label>
+                        Czy zdany ?
+                        <input type="checkbox" value={this.state.data.isPassed}/>
+                    </label>
+                    
+         
+                </div>
+                <div>
                     <button onClick={this.handlerEdit}>Zakończ edycje</button>
                 </div>
-            </div>
+            </Container>
         )
     }
 }
