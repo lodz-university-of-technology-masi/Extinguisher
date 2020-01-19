@@ -65,7 +65,7 @@ class RecruiterPlankTestListPosition extends Component {
 
     selectChanged(event) {
         let user = event.target.value
-        console.log(user)
+        //console.log(user)
         this.setState({user: user})
     }
 

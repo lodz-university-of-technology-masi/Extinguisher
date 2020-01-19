@@ -111,11 +111,7 @@ class UserTestView extends Component {
         let questionsList = this.state.answers.map(answer => {return answer.answer})
         let arr2 = questionsList.flat()
         console.log(arr2)
-
         
-
-
-
         await this.setState(
             {
                 data: {
