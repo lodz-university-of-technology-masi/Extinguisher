@@ -34,14 +34,17 @@ class App extends Component {
                     <div className="App">
                         <Header/>
                         <main>
+                            <YandexTranslation/>>
                             <Switch>
                                 <Route exact path="/" component={Main}/>
                                 <Route exact path="/login" component={Login}/>
                                 <Route exact path="/register" component={Register}/>
                                 <Route exact path="/logout" render={() => (<Redirect to="/"/>)}/>
+
                                 <Route exact path="/yandex" component={YandexTranslation}/>
                                 <ProtectedRoute exact path="/addTest" role="recruiter" component={AddTest}/>
                                 <ProtectedRoute exact path="/userPanel" role="candidate" component={UserPanel}/>
+
 
                                 <ProtectedRoute exact path="/userTestList"
                                        role="candidate"
@@ -57,6 +60,7 @@ class App extends Component {
                                        role="recruiter"
                                        component={RecruiterPanel}/>
 
+
                                 <ProtectedRoute exact path="/recruiterPlankTestView"
                                        role="recruiter"
                                        component={RecruiterPlankTestView}/>
@@ -70,6 +74,9 @@ class App extends Component {
                                 <ProtectedRoute exact path="/recruiterCheckTestView"
                                        role="recruiter"
                                        component={RecruiterCheckTestView}/>
+
+
+
 
 
                                 <Route component={NotFound}/>
