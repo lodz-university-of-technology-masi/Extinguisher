@@ -13,6 +13,11 @@ export const ProtectedRoute = ({component: Component, ...rest}) => {
             render={
                 props => {
                     if (isAuthenticated) {
+                        if (rest.role !== user.getSignInUserSession().getIdToken().payload['custom:role']) {
+                            return <Container>
+                                <h1>No Access</h1>
+                            </Container>
+                        }
                         return <Component {...props}/>;
                     } else {
                         return (

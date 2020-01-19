@@ -15,29 +15,40 @@ const Header = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    {isAuthenticated ?
-                        <>
-                            <Nav.Link as={NavLink} exact to="/addTest">AddTest</Nav.Link>
-                            <Nav.Link as={NavLink} exact to="/userPanel">UserPanel</Nav.Link>
-                            <Nav.Link as={NavLink} exact to="/userTestList">UserTestList</Nav.Link>
-                            <Nav.Link as={NavLink} exact to="/userTestView">UserTestView</Nav.Link>
-                            <Nav.Link as={NavLink} exact to="/recruiterPanel">RecruiterPanel</Nav.Link>
-                            <Nav.Link as={NavLink} onClick={async () => {
-                                setUser(null);
-                                setIsAuthenticated(false);
-                                await user.signOut();
-                            }} exact to="/logout">Logout</Nav.Link>
-                        </>
-                        :
-                        <>
-                            <Nav.Link as={NavLink} exact to="/login">Login</Nav.Link>
-                            < Nav.Link as={NavLink} exact to="/register"> Register</Nav.Link>
-                            {/*<Nav.Link as={NavLink} exact to="/confirm"> Confirm</Nav.Link>*/}
-                        </>}
+                    {isAuthenticated && (
+                        user !== null ?
+                            <>
+
+                                {user.getSignInUserSession().getIdToken().payload['custom:role'] === "candidate" ?
+                                    <>
+                                        <Nav.Link as={NavLink} exact to="/userPanel">UserPanel</Nav.Link>
+                                        <Nav.Link as={NavLink} exact to="/userTestList">UserTestList</Nav.Link>
+                                        <Nav.Link as={NavLink} exact to="/userTestView">UserTestView</Nav.Link>
+                                    </> :
+                                    <>
+                                        <Nav.Link as={NavLink} exact to="/addTest">AddTest</Nav.Link>
+                                        <Nav.Link as={NavLink} exact to="/recruiterPanel">RecruiterPanel</Nav.Link>
+                                        <Nav.Link as={NavLink} exact to="/users">ManageUsers</Nav.Link>
+                                    </>
+                                }
+                                <Nav.Link as={NavLink} onClick={async () => {
+                                    setUser(null);
+                                    setIsAuthenticated(false);
+                                    await user.signOut();
+                                }} exact to="/logout">Logout</Nav.Link>
+                            </>
+                            :
+                            <>
+                            </>
+                    )}
+                    {!isAuthenticated &&
+                    <>
+                        <Nav.Link as={NavLink} exact to="/login">Login</Nav.Link>
+                        < Nav.Link as={NavLink} exact to="/register"> Register</Nav.Link>
+                    </>}
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
-
     );
 }
 
