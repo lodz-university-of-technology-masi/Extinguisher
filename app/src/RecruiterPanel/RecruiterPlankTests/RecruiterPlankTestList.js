@@ -46,6 +46,7 @@ class RecruiterPlankTestList extends Component {
                         <td>Nazwa Testu</td>
                         <td>Identyfikator Rekrutera</td>
                         <td>Modyfikuj</td>
+                        <td>Usun</td>
                         <td>Wybierz Kandydata</td>
                         <td>Przypisz</td>
                     </tr>

@@ -1,5 +1,6 @@
-import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
+import React, { Component } from 'react'
+import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 class RecruiterAssignedTestListPosition extends Component {
     constructor(props) {
@@ -8,6 +9,7 @@ class RecruiterAssignedTestListPosition extends Component {
             data: {},
             questionsNumber: 0
         }
+        this.delete = this.delete.bind(this)
     }
 
     async componentDidMount() {
@@ -38,6 +40,17 @@ class RecruiterAssignedTestListPosition extends Component {
         }
     }
 
+    delete() {
+        let name = this.state.data.testName
+        let user = this.state.data.userID
+        //?testName=xxxxx&userName=xxxxx
+        try {
+            axios.delete('https://ng6oznbmy0.execute-api.us-east-1.amazonaws.com/dev/modifycandidatetest' + '?testName=' + name+'&userName='+user);
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    }
+
     render() {
         return (
             <tr>
@@ -60,6 +73,9 @@ class RecruiterAssignedTestListPosition extends Component {
                             data: this.state.data
                         }
                     }}>Sprawdz test</Link>
+                </td>
+                <td>
+                    <button onClick={this.delete}>X</button>
                 </td>
 
             </tr>

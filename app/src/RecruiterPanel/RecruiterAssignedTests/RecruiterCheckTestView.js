@@ -22,20 +22,10 @@ class RecruiterCheckTestView extends Component {
 
     }
 
-    // Wczytanie wszystkich danych
-    // wyswietlenie obok siebie
-    // jestli sugerowana odp to tez podac
-    // punktacja 0,1,2
-
-    //podsumowac i odesłac 75% zalicza elo
 
     generateTestView() {
         let toRender = [];
         let key = 0
-
-        // toRender = this.state.data.questionsList.map(
-        //     question => <CheckTestPosition key={key} index = {key} question={question} answer={this.state.data.answersList[key]}/>
-        // )
 
         for (let i = 0 ; i < this.state.data.questionsList.length; i ++ ) {
             toRender.push(<CheckTestPosition key={i+1} index = {i} question={this.state.data.questionsList[i]} 
