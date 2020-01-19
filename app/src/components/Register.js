@@ -3,7 +3,7 @@ import '../style/Register.css'
 import 'aws-amplify'
 import {Auth} from "aws-amplify";
 import {Redirect} from "react-router-dom";
-import {Alert, Button, Container, Form, FormControl, FormLabel, Spinner} from "react-bootstrap";
+import {Alert, Button, Col, Container, Form, FormControl, FormLabel, Spinner} from "react-bootstrap";
 import * as Api from '../api/Api'
 
 class Register extends Component {
@@ -12,6 +12,7 @@ class Register extends Component {
         email: "",
         password: "",
         message: '',
+        role: 'candidate',
         isOk: false,
         loading: false,
         errors: {
@@ -54,7 +55,7 @@ class Register extends Component {
         })
     };
     handleSubmit = async e => {
-        const {username, email, password} = this.state;
+        const {username, email, password, role} = this.state;
         e.preventDefault();
 
         const validation = this.formValidation();
@@ -72,7 +73,7 @@ class Register extends Component {
                 username,
                 password,
                 attributes: {
-                    email, 'custom:role': 'candidate'
+                    email, 'custom:role': role
                 }
             }).then(data => {
                 this.setState({isOk: true});
@@ -99,9 +100,17 @@ class Register extends Component {
             })
         }
     }
+    toggleRole = (id) => {
+        const {role} = this.state;
+        if (role === "candidate") {
+            this.setState({role: "recruiter"})
+        } else {
+            this.setState({role: "candidate"})
+        }
+    }
 
     render() {
-        const {isOk, username, email, errors, loading, message, password} = this.state;
+        const {isOk, username, email, errors, loading, message, password, role} = this.state;
         if (isOk) {
             return (
                 <Redirect to="/login"/>);
@@ -131,18 +140,29 @@ class Register extends Component {
                     />
                     {this.state.errors.password &&
                     <Alert variant="danger"> {this.messages.password_incorect}</Alert>}
-                    <div className="mb-3">
-                        <FormLabel>Role</FormLabel>
-                        <Form.Check
-                            type="radio"
-                            label="candidate"
-                        />
+                    <Form.Group as={Form.Row}>
+                        <Form.Label as="legend" column sm={2}>
+                            Role
+                        </Form.Label>
+                        <Col sm={10}>
+                            <Form.Check
+                                type="radio"
+                                label="Candidate"
+                                checked={role !== "recruiter"}
+                                onChange={e => this.toggleRole(e.target.id)}
+                                id="candidate"
+                            />
+                            <Form.Check
+                                type="radio"
+                                label="Recruiter"
+                                checked={role !== "candidate"}
+                                onChange={e => this.toggleRole(e.target.id)}
 
-                        <Form.Check
-                            type="radio"
-                            label="recruiter"
-                        />
-                    </div>
+                                id="recruiter"
+                            />
+                        </Col>
+                    </Form.Group>
+
                     <Button variant="primary" type="submit">
                         Submit
                     </Button>

@@ -23,6 +23,7 @@ import RecruiterPlankTestView from "./RecruiterPanel/RecruiterPlankTests/Recruit
 
 import RecruiterAssignedTestList from "./RecruiterPanel/RecruiterAssignedTests/RecruiterAssignedTestsList"
 import RecruiterCheckTestView from "./RecruiterPanel/RecruiterAssignedTests/RecruiterCheckTestView"
+import DisplayAllCandidates from "./RecruiterPanel/DisplayAllCandidates";
 
 class App extends Component {
 
@@ -38,25 +39,43 @@ class App extends Component {
                                 <Route exact path="/" component={Main}/>
                                 <Route exact path="/login" component={Login}/>
                                 <Route exact path="/register" component={Register}/>
-                                {/*<Route exact path="/confirm" component={Confirm}/>*/}
                                 <Route exact path="/logout" render={() => (<Redirect to="/"/>)}/>
-                                <ProtectedRoute exact path="/addTest" component={AddTest}/>
-                                <ProtectedRoute exact path="/userPanel" component={UserPanel}/>
-                                {/* <ProtectedRoute exact path="/userTestList" component={UserTestList}/>
-                                <ProtectedRoute exact path="/userTestView" component={UserTestView}/>
-                                <ProtectedRoute exact path="/recruiterPanel" component={RecruiterPanel}/>
-                                */}
 
-                                <Route exact path="/userTestList" component={UserTestList}/>
-                                <Route exact path="/userTestView" component={UserTestView}/>
+                                <Route exact path="/yandex" component={YandexTranslation}/>
+                                <ProtectedRoute exact path="/addTest" role="recruiter" component={AddTest}/>
+                                <ProtectedRoute exact path="/userPanel" role="candidate" component={UserPanel}/>
 
-                                <Route exact path="/recruiterPanel" component={RecruiterPanel}/>
 
-                                <Route exact path="/recruiterPlankTestView" component={RecruiterPlankTestView}/>
-                                <Route exact path="/recruiterPlankTestList" component={RecruiterPlankTestList}/>
+                                <ProtectedRoute exact path="/userTestList"
+                                       role="candidate"
+                                       component={UserTestList}/>
+                                <ProtectedRoute exact path="/userTestView"
+                                       role="candidate"
+                                       component={UserTestView}/>
+                                       
+                                <ProtectedRoute exact path="/users"
+                                                role="recruiter"
+                                                component={DisplayAllCandidates}/>
+                                <ProtectedRoute exact path="/recruiterPanel"
+                                       role="recruiter"
+                                       component={RecruiterPanel}/>
 
-                                <Route exact path="/recruiterAssignedTestList" component={RecruiterAssignedTestList}/>
-                                <Route exact path="/recruiterCheckTestView" component={RecruiterCheckTestView}/>
+
+                                <ProtectedRoute exact path="/recruiterPlankTestView"
+                                       role="recruiter"
+                                       component={RecruiterPlankTestView}/>
+                                <ProtectedRoute exact path="/recruiterPlankTestList"
+                                       role="recruiter"
+                                       component={RecruiterPlankTestList}/>
+
+                                <ProtectedRoute exact path="/recruiterAssignedTestList"
+                                       role="recruiter"
+                                       component={RecruiterAssignedTestList}/>
+                                <ProtectedRoute exact path="/recruiterCheckTestView"
+                                       role="recruiter"
+                                       component={RecruiterCheckTestView}/>
+
+
 
 
 
