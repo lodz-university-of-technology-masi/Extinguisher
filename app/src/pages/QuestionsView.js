@@ -7,7 +7,7 @@ const QuestionsView = (props) => {
         let type;
         console.log(props.questionArray);
         if (props.questionArray[i].type === "W")
-            type = `Closed Question with ${props.questionArray[i].numberOfAvaibleAnswers} answers`;
+            type = `Closed Question `;
         else
             type = "Open Question";
         questionList.push(<li key={i + "questionNumber"}> {props.questionArray[i].questionContent} {type}
