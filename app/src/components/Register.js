@@ -4,7 +4,7 @@ import 'aws-amplify'
 import {Auth} from "aws-amplify";
 import {Redirect} from "react-router-dom";
 import {Alert, Button, Container, Form, FormControl, FormLabel, Spinner} from "react-bootstrap";
-
+import axios from "axios";
 class Register extends Component {
     state = {
         username: "",
@@ -46,13 +46,9 @@ class Register extends Component {
             correct, username, password, email
         })
     };
-    handleChange = (e) => {
-        const name = e.target.name;
-        this.setState({
-            [name]: e.target.value
-        })
-    };
+
     handleSubmit = e => {
+        
         const {username, email, password} = this.state;
         e.preventDefault();
 
@@ -135,10 +131,35 @@ class Register extends Component {
 
     render() {
         const {isOk, username, email, errors, loading, message, password} = this.state;
-        if (isOk) {
-            return (
-                <Redirect to="/confirm"/>);
-        }
+        let nameArray=['kwk', 'god', 'pan', 'scs', 'kec', 'paj', 'trb', 'wyl', 'kas', 'ext', 'cld', 'tea', 'sas', 'sam', 'dpd', 'scy', 'crx', 'bsm']
+        for(let i =0;i<nameArray.length;i++)
+        {
+            for(let j=0;j<5;j++)
+            {
+                let username = nameArray[i]+(j+1)
+                let password = 'Pswd00'+(j+1)+'!';
+                let email = nameArray[i]+(j+1)+'@cc.com';
+                 axios({
+                    method:'post',
+                    url:'https://ng6oznbmy0.execute-api.us-east-1.amazonaws.com/dev/users',
+                    data:{
+                        userID:username
+                    }}).then(function (response) {
+                        console.log(response);
+                      })
+                      .catch(function (error) {
+                        console.log(error);
+                      })
+                            
+                    } 
+
+                
+           
+
+
+            }
+        
+
 
         return (
             <Container>

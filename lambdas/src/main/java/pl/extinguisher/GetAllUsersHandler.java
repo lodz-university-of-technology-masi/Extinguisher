@@ -34,31 +34,41 @@ public class GetAllUsersHandler implements RequestHandler<Object, ApiGatewayResp
         client.withRegion(Regions.US_EAST_1);
         String output = "{\"userArray\":[";
         try {
-            List<UserType> listResult = cognitoClient.listUsers(new ListUsersRequest().withUserPoolId("us-east-1_M3dMBNpHE")).getUsers();
-            for(int i =0;i<listResult.size();i++)
-            {
-                output+= "{";
-                output += "\"userName\":\"" + listResult.get(i).getUsername()+ "\",";
-                List<AttributeType> attributes = listResult.get(i).getAttributes();
-                for(int j=0;j<attributes.size();j++)
-                {
-                    if(attributes.get(j).getName().equals("custom:role"))
-                        attributes.get(j).setName("custom_role");
-                    output += "\"" + attributes.get(j).getName() + "\":\"" + attributes.get(j).getValue()+ "\",";
-                }
-                output = output.substring(0,output.length()-1);
-                output+= "},";
+            ListUsersRequest listUsersRequest = new ListUsersRequest().withUserPoolId("us-east-1_M3dMBNpHE");
+            ListUsersResult requestResult = cognitoClient.listUsers(listUsersRequest);
+
+            List<UserType> listResult = new ArrayList<>();
+            listResult.addAll(requestResult.getUsers());
+            while(requestResult.getPaginationToken()!= null) {
+
+                listUsersRequest.setPaginationToken(requestResult.getPaginationToken());
+
+                requestResult = cognitoClient.listUsers(listUsersRequest);
+                listResult.addAll(requestResult.getUsers());
             }
-            output = output.substring(0,output.length()-1);
-            output += "]}";
-        } catch(Exception e) {
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-            String sStackTrace = sw.toString();
-            ApiGatewayResponse res = new ApiGatewayResponse(400, "Unable to scan users" + e.getMessage());
-            return res;
-        }
+                for (int i = 0; i < listResult.size(); i++) {
+                    output += "{";
+                    output += "\"userName\":\"" + listResult.get(i).getUsername() + "\",";
+                    List<AttributeType> attributes = listResult.get(i).getAttributes();
+                    for (int j = 0; j < attributes.size(); j++) {
+                        if (attributes.get(j).getName().equals("custom:role"))
+                            attributes.get(j).setName("custom_role");
+                        output += "\"" + attributes.get(j).getName() + "\":\"" + attributes.get(j).getValue() + "\",";
+                    }
+                    output = output.substring(0, output.length() - 1);
+                    output += "},";
+                }
+                output = output.substring(0, output.length() - 1);
+                output += "]}";
+            } catch(Exception e){
+                StringWriter sw = new StringWriter();
+                PrintWriter pw = new PrintWriter(sw);
+                e.printStackTrace(pw);
+                String sStackTrace = sw.toString();
+                ApiGatewayResponse res = new ApiGatewayResponse(400, "Unable to scan users" + e.getMessage());
+                return res;
+            }
+
         ApiGatewayResponse res = new ApiGatewayResponse(200, output);
         return res;
     }
