@@ -30,6 +30,10 @@ class AddTest extends Component {
         e.preventDefault();
         const {userp, auth} = this.context;
         const [user, setUser] = userp;
+
+        let temp_test_name = this.state.testName
+        temp_test_name = temp_test_name.replace(/ /g,"_")
+
         let data = {
             recruiterID: user.username,
             testName: this.state.testName,

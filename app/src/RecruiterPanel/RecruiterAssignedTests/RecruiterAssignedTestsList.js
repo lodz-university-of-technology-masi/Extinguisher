@@ -42,6 +42,7 @@ class RecruiterAssignedTestList extends Component {
                                     <td>Wynik</td>
                                     <td>Status</td>
                                     <td>Sprawdz</td>
+                                    <td>Usuń</td>
                                 </tr>
                                 </thead>
                                 <tbody>

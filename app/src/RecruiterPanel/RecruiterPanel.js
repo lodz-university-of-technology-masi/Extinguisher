@@ -21,7 +21,7 @@ class RecruiterPanel extends Component {
     render(){
         return(
             <div>
-                <h1>Witaj Rekruterze</h1>
+                <h1>Centrum zarzadzania testami</h1>
                  <ul>
                     <li><Link to="/recruiterPlankTestList">Zarządzaj testami</Link></li>
                     <li><Link to="/recruiterAssignedTestList">Zarządzaj testami kandydatów</Link></li>       
