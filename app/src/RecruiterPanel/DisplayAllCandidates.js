@@ -28,7 +28,7 @@ class DisplayAllCandidates extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {users.map(user =>
+                    {users.length > 0 && users.map(user =>
                         <Candidate key={user.userName} candidate={user}/>)}
                     </tbody>
                 </table>

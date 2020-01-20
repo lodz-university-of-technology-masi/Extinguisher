@@ -26,7 +26,8 @@ class AddTest extends Component {
             questionsList: arr
         })
     }
-    handleSendRequest = () => {
+    handleSendRequest = (e) => {
+        e.preventDefault();
         const {userp, auth} = this.context;
         const [user, setUser] = userp;
 
