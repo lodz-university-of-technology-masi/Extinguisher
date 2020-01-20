@@ -40,6 +40,7 @@ const Header = () => {
                                         <Nav.Link as={NavLink} exact to="/userTestView">UserTestView</Nav.Link>
                                     </> :
                                     <>
+                                        <Nav.Link as={NavLink} exact to="/register">Add User</Nav.Link>
                                         <Nav.Link as={NavLink} exact to="/addTest">AddTest</Nav.Link>
                                         <Nav.Link as={NavLink} exact to="/recruiterPanel">RecruiterPanel</Nav.Link>
                                         <Nav.Link as={NavLink} exact to="/users">ManageUsers</Nav.Link>
@@ -58,7 +59,6 @@ const Header = () => {
                     {!isAuthenticated &&
                     <>
                         <Nav.Link as={NavLink} exact to="/login">Login</Nav.Link>
-                        < Nav.Link as={NavLink} exact to="/register"> Register</Nav.Link>
                     </>}
                 </Nav>
             </Navbar.Collapse>
