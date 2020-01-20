@@ -7,10 +7,10 @@ const Candidate = (props) => {
     return (
         <tr>
             <th>{candidate.userName}</th>
-            <td>{candidate.custom_role}</td>
-            <td><Button variant="danger" onClick={() => {
+            <th>{candidate.custom_role}</th>
+            <th><Button variant="danger" onClick={() => {
                 Api.deleteUser(candidate.userName)
-            }}>X</Button></td>
+            }}>X</Button></th>
         </tr>
     );
 };

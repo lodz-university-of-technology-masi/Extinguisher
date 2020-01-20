@@ -1,14 +1,28 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import '../style/Header.css'
 import {AppContext} from "../context/AppContext";
 import {Nav, Navbar} from "react-bootstrap";
 import {NavLink} from "react-router-dom";
+import {Auth} from "aws-amplify";
 
 const Header = () => {
 
     const {userp, auth} = useContext(AppContext);
     const [user, setUser] = userp;
     const [isAuthenticated, setIsAuthenticated] = auth;
+
+    useEffect(() => {
+        if (!isAuthenticated) {
+            Auth.currentAuthenticatedUser()
+                .then(r => {
+                    setUser(r);
+                    setIsAuthenticated(true);
+                })
+                .catch(error => {
+                });
+        }
+    }, []);
+
     return (
         <Navbar bg="light" expand="lg">
             <Navbar.Brand as={NavLink} exact to="/">Home</Navbar.Brand>
