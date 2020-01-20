@@ -1,4 +1,5 @@
 import React from 'react';
+import {Button} from "react-bootstrap";
 
 const QuestionsView = (props) => {
     let questionList = [];
@@ -10,15 +11,17 @@ const QuestionsView = (props) => {
             type = `Closed Question `;
         else
             type = "Open Question";
-        questionList.push(<li key={i + "questionNumber"}> {props.questionArray[i].questionContent} {type}
+        questionList.push(<li className="list-group-item" key={i + "questionNumber"}> {props.questionArray[i].questionContent} {type}
 
-            <button onClick={() => props.handleDeleteQuestion(i)}>Delete</button>
+            <Button variant="danger" onClick={() => props.handleDeleteQuestion(i)}>Delete</Button>
         </li>)
     }
 
     return (
         <div>
+            <ul className="list-group">
             {questionList}
+            </ul>
         </div>
     );
 };
