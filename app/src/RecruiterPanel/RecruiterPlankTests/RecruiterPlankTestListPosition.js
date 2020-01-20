@@ -14,6 +14,7 @@ class RecruiterPlankTestListPosition extends Component {
         }
         this.selectChanged = this.selectChanged.bind(this)
         this.assignUser = this.assignUser.bind(this)
+        this.delete = this.delete.bind(this)
     }
 
     componentDidMount() {
@@ -63,9 +64,23 @@ class RecruiterPlankTestListPosition extends Component {
         
     }
 
+    delete(){
+        let name = this.state.data.testName
+        console.log(name)
+
+
+
+            try {
+                axios.delete('https://ng6oznbmy0.execute-api.us-east-1.amazonaws.com/dev/deletesttemplatewithout'+'?testName='+name);
+            } catch(error) {
+                console.log("error: ", error);
+            } 
+
+    }
+
     selectChanged(event) {
         let user = event.target.value
-        //console.log(user)
+        console.log(user)
         this.setState({user: user})
     }
 
@@ -92,6 +107,9 @@ class RecruiterPlankTestListPosition extends Component {
                         data: this.state.data
                         }
                 }}>Modyfikuj test</Link>
+                </td>
+                <td>
+                    <button onClick={this.delete}>X</button>
                 </td>
                 <td>
                     <select onChange={this.selectChanged}>
