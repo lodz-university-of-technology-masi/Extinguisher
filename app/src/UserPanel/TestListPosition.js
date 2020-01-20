@@ -17,7 +17,7 @@ class TestListPosition extends Component {
             }
         )
 
-        console.log("Moj data to przeslania",this.state.data)
+        //console.log("Moj data to przeslania",this.state.data)
         
         let liczba = this.state.data.questionsList.length
         this.setState({
