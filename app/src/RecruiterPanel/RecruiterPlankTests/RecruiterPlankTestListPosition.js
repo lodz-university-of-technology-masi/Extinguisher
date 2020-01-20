@@ -84,10 +84,17 @@ class RecruiterPlankTestListPosition extends Component {
         this.setState({user: user})
     }
 
+    
     createCandidatesList(){
-        
+        function filter(value){
+            if(value.custom_role=='candidate')
+            return true
+            return false
+        }    
         let dropDownElements = []
-        dropDownElements = this.state.users.map(user => <option key={uuid()} value={user.userName}>{user.userName}</option> )
+        let userArr = this.state.users.filter(filter)
+        dropDownElements = userArr.map(user => <option key={uuid()} value={user.userName}>{user.userName}</option> )
+
         return dropDownElements
     }
 
