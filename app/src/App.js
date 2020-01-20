@@ -38,14 +38,14 @@ class App extends Component {
                             <Switch>
                                 <Route exact path="/" component={Main}/>
                                 <Route exact path="/login" component={Login}/>
-                                <Route exact path="/register" component={Register}/>
+                             
                                 <Route exact path="/logout" render={() => (<Redirect to="/"/>)}/>
 
                                 <Route exact path="/yandex" component={YandexTranslation}/>
                                 <ProtectedRoute exact path="/addTest" role="recruiter" component={AddTest}/>
                                 <ProtectedRoute exact path="/userPanel" role="candidate" component={UserPanel}/>
 
-
+                                <ProtectedRoute exact path="/register"  role="recruiter" component={Register}/>
                                 <ProtectedRoute exact path="/userTestList"
                                        role="candidate"
                                        component={UserTestList}/>

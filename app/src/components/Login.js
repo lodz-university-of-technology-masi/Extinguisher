@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import '../style/Login.css'
 import {Auth} from 'aws-amplify'
-import {Redirect} from 'react-router-dom'
+
+import {Redirect, withRouter} from 'react-router-dom'
 import {AppContext} from "../context/AppContext";
 import {Alert, Button, Container, Form, FormControl, FormLabel, Spinner} from "react-bootstrap";
 
@@ -90,6 +91,7 @@ class Login extends Component {
                         this.setState({
                             redirect: true
                         })
+                    
                     })
                     .catch(err => this.setState({
                         message: err.message,

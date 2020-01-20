@@ -66,5 +66,5 @@ const del = url =>
 
 export const saveTest = body => post(testsUrl(), body);
 export const confirmUser = body => post(userUrl(), body);
-export const deleteUser = param => del(userUrl() + `/userName=${param}`);
+export const deleteUser = param => del(userUrl() + `?userName=${param}`);
 export const getUsers = () => getAll(userUrl());

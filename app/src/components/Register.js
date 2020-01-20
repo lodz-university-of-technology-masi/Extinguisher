@@ -113,7 +113,7 @@ class Register extends Component {
         const {isOk, username, email, errors, loading, message, password, role} = this.state;
         if (isOk) {
             return (
-                <Redirect to="/login"/>);
+                <Redirect to="/"/>);
         }
 
         return (
